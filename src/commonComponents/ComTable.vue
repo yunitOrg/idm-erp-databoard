@@ -1,17 +1,26 @@
 <template>
   <div class="table-wrapper">
     <a-table :columns="columns" :data-source="dataSource" :pagination="false">
-      <span slot="flag"><svg-icon icon-class="flag" /></span>
+      <span
+        slot="flag"
+        slot-scope="text, record"
+        :style="`color:${
+          record.completionRate >= 100 ? '#00B78E ' : '#EF4444'
+        }`"
+        ><svg-icon icon-class="flag"
+      /></span>
       <span
         slot="completionRate"
         slot-scope="text, record"
-        :style="`color:${record.completionRate > 100 ? '#00B78E' : '#EF4444'}`"
+        :style="`color:${
+          record.completionRate >= 100 ? '#00B78E ' : '#EF4444'
+        }`"
         >{{ record.completionRate }}%</span
       >
       <span
         slot="gap"
         slot-scope="text, record"
-        :style="`color:${record.gap > 0 ? '#00B78E' : '#EF4444'}`"
+        :style="`color:${record.gap >= 0 ? '#00B78E' : '#EF4444'}`"
         >{{ record.gap }}</span
       >
     </a-table>
