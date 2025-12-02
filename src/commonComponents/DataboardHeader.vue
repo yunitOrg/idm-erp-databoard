@@ -48,6 +48,7 @@ export default {
   padding: 0 30px;
   color: #333333;
   box-shadow: 0px 4px 9px 0px rgba(0,0,0,0.06);
+  background-color: #fff;
 
   .databoard-header-left {
     .title {

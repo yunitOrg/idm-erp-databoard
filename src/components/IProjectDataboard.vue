@@ -5,203 +5,295 @@
     id：使用moduleObject.id，如果id不使用这个将会被idm-ctrl-id属性替换
     idm-ctrl-id：组件的id，这个必须不能为空
   -->
-  <div idm-ctrl="idm_module"
-   :id="moduleObject.id" 
-   :idm-ctrl-id="moduleObject.id" 
-   class="idm-project-databoard-outer">
+  <div
+    idm-ctrl="idm_module"
+    :id="moduleObject.id"
+    :idm-ctrl-id="moduleObject.id"
+    class="idm-project-databoard-outer"
+  >
     <DataboardHeader
       title="项目数据看板"
       rightTitle="合同与回款周度数据概览"
       @refreshData="refreshData"
     />
     <div class="container">
+      <DataboardContainer title="回款进展看板" :iconUrl="paymentCollectionIcon">
+        <ComBoard :items="paymentCollectionItems"> </ComBoard>
+      </DataboardContainer>
       <DataboardContainer
-        title="回款进展看板"
-        :iconUrl="paymentCollectionIcon"
-      >abc</DataboardContainer>
-      <DataboardContainer
-        style="margin-top: 16px;"
+        style="margin-top: 16px"
         title="验收进展看板"
         :iconUrl="acceptanceIcon"
-      >abc</DataboardContainer>
+        ><ComBoard :items="acceptanceItems"> </ComBoard></DataboardContainer
+      >
     </div>
   </div>
 </template>
 
 <script>
-import DataboardHeader from '@/commonComponents/DataboardHeader.vue'
-import DataboardContainer from '@/commonComponents/DataboardContainer.vue'
-import acceptanceIcon from '@/assets/acceptance.png'
-import paymentCollectionIcon from '@/assets/payment_collection.png'
+import DataboardHeader from "@/commonComponents/DataboardHeader.vue";
+import DataboardContainer from "@/commonComponents/DataboardContainer.vue";
+import ComBoard from "@/commonComponents/ComBoard.vue";
+import acceptanceIcon from "@/assets/acceptance.png";
+import paymentCollectionIcon from "@/assets/payment_collection.png";
+import performanceIndicatorIcon from "@/assets/performance_indicator.png";
+import performanceGapIcon from "@/assets/performance_gap.png";
+import paymentReceivedIcon from "@/assets/payment_received.png";
+import completionRateIcon from "@/assets/completion_rate.png";
+import actualAcceptanceIcon from "@/assets/actual_acceptance.png";
+import planAcceptanceIcon from "@/assets/plan_acceptance.png";
+
+
 export default {
-  name: 'IProjectDataboard',
-  components:{
+  name: "IProjectDataboard",
+  components: {
     DataboardHeader,
-    DataboardContainer
+    DataboardContainer,
+    ComBoard,
   },
-  data(){
+  data() {
     return {
-      moduleObject:{},
-      propData:this.$root.propData.compositeAttr||{
-      },
+      moduleObject: {},
+      propData: this.$root.propData.compositeAttr || {},
       acceptanceIcon,
       paymentCollectionIcon,
-    }
+      performanceIndicatorIcon,
+      performanceGapIcon,
+      paymentReceivedIcon,
+      completionRateIcon,
+      paymentCollectionItems: [
+        {
+          title: "绩效指标金额（万元）",
+          value: "4,500",
+          imgUrl: performanceIndicatorIcon,
+        },
+        {
+          title: "已回款（万元）",
+          value: "4,500",
+          imgUrl: paymentReceivedIcon,
+        },
+        {
+          title: "完成率",
+          value: 63.00,
+          isPercent: true,
+          color: "#EF4444",
+          imgUrl: completionRateIcon,
+        },
+        {
+          title: "实际-计划（万元）",
+          value: "-1,665",
+          color: "#EF4444",
+          imgUrl: performanceGapIcon,
+        },
+      ],
+      acceptanceItems: [
+        {
+          title: "计划验收金额（万元）",
+          value: "3,850",
+          imgUrl: planAcceptanceIcon,
+        },
+        {
+          title: "实际验收金额（万元）",
+          value: "4,500",
+          imgUrl: actualAcceptanceIcon,
+        },
+        {
+          title: "完成率",
+          value: 72.52,
+          isPercent: true,
+          color: "#EF4444",
+          imgUrl: completionRateIcon,
+        }
+      ],
+    };
   },
-  props: {
-  },
+  props: {},
   created() {
-    this.moduleObject = this.$root.moduleObject
+    this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
   },
-  mounted() {
-  },
+  mounted() {},
   destroyed() {},
   methods: {
-    refreshData(){
-    },
+    refreshData() {},
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
-    propDataWatchHandle(propData){
-      this.propData = propData.compositeAttr||{};
+    propDataWatchHandle(propData) {
+      this.propData = propData.compositeAttr || {};
       this.convertAttrToStyleObject();
     },
     /**
      * 把属性转换成样式对象
      */
-    convertAttrToStyleObject(){
+    convertAttrToStyleObject() {
       var styleObject = {};
-      if(this.propData.bgSize&&this.propData.bgSize=="custom"){
-        styleObject["background-size"]=(this.propData.bgSizeWidth?this.propData.bgSizeWidth.inputVal+this.propData.bgSizeWidth.selectVal:"auto")+" "+(this.propData.bgSizeHeight?this.propData.bgSizeHeight.inputVal+this.propData.bgSizeHeight.selectVal:"auto")
-      }else if(this.propData.bgSize){
-        styleObject["background-size"]=this.propData.bgSize;
+      if (this.propData.bgSize && this.propData.bgSize == "custom") {
+        styleObject["background-size"] =
+          (this.propData.bgSizeWidth
+            ? this.propData.bgSizeWidth.inputVal +
+              this.propData.bgSizeWidth.selectVal
+            : "auto") +
+          " " +
+          (this.propData.bgSizeHeight
+            ? this.propData.bgSizeHeight.inputVal +
+              this.propData.bgSizeHeight.selectVal
+            : "auto");
+      } else if (this.propData.bgSize) {
+        styleObject["background-size"] = this.propData.bgSize;
       }
-      if(this.propData.positionX&&this.propData.positionX.inputVal){
-        styleObject["background-position-x"]=this.propData.positionX.inputVal+this.propData.positionX.selectVal;
+      if (this.propData.positionX && this.propData.positionX.inputVal) {
+        styleObject["background-position-x"] =
+          this.propData.positionX.inputVal + this.propData.positionX.selectVal;
       }
-      if(this.propData.positionY&&this.propData.positionY.inputVal){
-        styleObject["background-position-y"]=this.propData.positionY.inputVal+this.propData.positionY.selectVal;
+      if (this.propData.positionY && this.propData.positionY.inputVal) {
+        styleObject["background-position-y"] =
+          this.propData.positionY.inputVal + this.propData.positionY.selectVal;
       }
       for (const key in this.propData) {
         if (this.propData.hasOwnProperty.call(this.propData, key)) {
           const element = this.propData[key];
-          if(!element&&element!==false&&element!=0){
+          if (!element && element !== false && element != 0) {
             continue;
           }
           switch (key) {
             case "width":
             case "height":
-              styleObject[key]=element;
+              styleObject[key] = element;
               break;
             case "bgColor":
-              if(element&&element.hex8){
-                styleObject["background-color"]=element.hex8;
+              if (element && element.hex8) {
+                styleObject["background-color"] = element.hex8;
               }
               break;
             case "box":
-              if(element.marginTopVal){
-                styleObject["margin-top"]=`${element.marginTopVal}`;
+              if (element.marginTopVal) {
+                styleObject["margin-top"] = `${element.marginTopVal}`;
               }
-              if(element.marginRightVal){
-                styleObject["margin-right"]=`${element.marginRightVal}`;
+              if (element.marginRightVal) {
+                styleObject["margin-right"] = `${element.marginRightVal}`;
               }
-              if(element.marginBottomVal){
-                styleObject["margin-bottom"]=`${element.marginBottomVal}`;
+              if (element.marginBottomVal) {
+                styleObject["margin-bottom"] = `${element.marginBottomVal}`;
               }
-              if(element.marginLeftVal){
-                styleObject["margin-left"]=`${element.marginLeftVal}`;
+              if (element.marginLeftVal) {
+                styleObject["margin-left"] = `${element.marginLeftVal}`;
               }
-              if(element.paddingTopVal){
-                styleObject["padding-top"]=`${element.paddingTopVal}`;
+              if (element.paddingTopVal) {
+                styleObject["padding-top"] = `${element.paddingTopVal}`;
               }
-              if(element.paddingRightVal){
-                styleObject["padding-right"]=`${element.paddingRightVal}`;
+              if (element.paddingRightVal) {
+                styleObject["padding-right"] = `${element.paddingRightVal}`;
               }
-              if(element.paddingBottomVal){
-                styleObject["padding-bottom"]=`${element.paddingBottomVal}`;
+              if (element.paddingBottomVal) {
+                styleObject["padding-bottom"] = `${element.paddingBottomVal}`;
               }
-              if(element.paddingLeftVal){
-                styleObject["padding-left"]=`${element.paddingLeftVal}`;
+              if (element.paddingLeftVal) {
+                styleObject["padding-left"] = `${element.paddingLeftVal}`;
               }
               break;
             case "bgImgUrl":
-              styleObject["background-image"]=`url(${window.IDM.url.getWebPath(element)})`;
+              styleObject[
+                "background-image"
+              ] = `url(${window.IDM.url.getWebPath(element)})`;
               break;
             case "positionX":
               //背景横向偏移
-              
+
               break;
             case "positionY":
               //背景纵向偏移
-              
+
               break;
             case "bgRepeat":
               //平铺模式
-                styleObject["background-repeat"]=element;
+              styleObject["background-repeat"] = element;
               break;
             case "bgAttachment":
               //背景模式
-                styleObject["background-attachment"]=element;
+              styleObject["background-attachment"] = element;
               break;
             case "border":
-              if(element.border.top.width>0){
-                styleObject["border-top-width"]=element.border.top.width+element.border.top.widthUnit;
-                styleObject["border-top-style"]=element.border.top.style;
-                if(element.border.top.colors.hex8){
-                  styleObject["border-top-color"]=element.border.top.colors.hex8;
+              if (element.border.top.width > 0) {
+                styleObject["border-top-width"] =
+                  element.border.top.width + element.border.top.widthUnit;
+                styleObject["border-top-style"] = element.border.top.style;
+                if (element.border.top.colors.hex8) {
+                  styleObject["border-top-color"] =
+                    element.border.top.colors.hex8;
                 }
               }
-              if(element.border.right.width>0){
-                styleObject["border-right-width"]=element.border.right.width+element.border.right.widthUnit;
-                styleObject["border-right-style"]=element.border.right.style;
-                if(element.border.right.colors.hex8){
-                  styleObject["border-right-color"]=element.border.right.colors.hex8;
+              if (element.border.right.width > 0) {
+                styleObject["border-right-width"] =
+                  element.border.right.width + element.border.right.widthUnit;
+                styleObject["border-right-style"] = element.border.right.style;
+                if (element.border.right.colors.hex8) {
+                  styleObject["border-right-color"] =
+                    element.border.right.colors.hex8;
                 }
               }
-              if(element.border.bottom.width>0){
-                styleObject["border-bottom-width"]=element.border.bottom.width+element.border.bottom.widthUnit;
-                styleObject["border-bottom-style"]=element.border.bottom.style;
-                if(element.border.bottom.colors.hex8){
-                  styleObject["border-bottom-color"]=element.border.bottom.colors.hex8;
+              if (element.border.bottom.width > 0) {
+                styleObject["border-bottom-width"] =
+                  element.border.bottom.width + element.border.bottom.widthUnit;
+                styleObject["border-bottom-style"] =
+                  element.border.bottom.style;
+                if (element.border.bottom.colors.hex8) {
+                  styleObject["border-bottom-color"] =
+                    element.border.bottom.colors.hex8;
                 }
               }
-              if(element.border.left.width>0){
-                styleObject["border-left-width"]=element.border.left.width+element.border.left.widthUnit;
-                styleObject["border-left-style"]=element.border.left.style;
-                if(element.border.left.colors.hex8){
-                  styleObject["border-left-color"]=element.border.left.colors.hex8;
+              if (element.border.left.width > 0) {
+                styleObject["border-left-width"] =
+                  element.border.left.width + element.border.left.widthUnit;
+                styleObject["border-left-style"] = element.border.left.style;
+                if (element.border.left.colors.hex8) {
+                  styleObject["border-left-color"] =
+                    element.border.left.colors.hex8;
                 }
               }
-              
-              styleObject["border-top-left-radius"]=element.radius.leftTop.radius+element.radius.leftTop.radiusUnit;
-              styleObject["border-top-right-radius"]=element.radius.rightTop.radius+element.radius.rightTop.radiusUnit;
-              styleObject["border-bottom-left-radius"]=element.radius.leftBottom.radius+element.radius.leftBottom.radiusUnit;
-              styleObject["border-bottom-right-radius"]=element.radius.rightBottom.radius+element.radius.rightBottom.radiusUnit;
+
+              styleObject["border-top-left-radius"] =
+                element.radius.leftTop.radius +
+                element.radius.leftTop.radiusUnit;
+              styleObject["border-top-right-radius"] =
+                element.radius.rightTop.radius +
+                element.radius.rightTop.radiusUnit;
+              styleObject["border-bottom-left-radius"] =
+                element.radius.leftBottom.radius +
+                element.radius.leftBottom.radiusUnit;
+              styleObject["border-bottom-right-radius"] =
+                element.radius.rightBottom.radius +
+                element.radius.rightBottom.radiusUnit;
               break;
             case "font":
-              styleObject["font-family"]=element.fontFamily;
-              if(element.fontColors.hex8){
-                styleObject["color"]=element.fontColors.hex8;
+              styleObject["font-family"] = element.fontFamily;
+              if (element.fontColors.hex8) {
+                styleObject["color"] = element.fontColors.hex8;
               }
-              styleObject["font-weight"]=element.fontWeight&&element.fontWeight.split(" ")[0];
-              styleObject["font-style"]=element.fontStyle;
-              styleObject["font-size"]=element.fontSize+element.fontSizeUnit;
-              styleObject["line-height"]=element.fontLineHeight+(element.fontLineHeightUnit=="-"?"":element.fontLineHeightUnit);
-              styleObject["text-align"]=element.fontTextAlign;
-              styleObject["text-decoration"]=element.fontDecoration;
+              styleObject["font-weight"] =
+                element.fontWeight && element.fontWeight.split(" ")[0];
+              styleObject["font-style"] = element.fontStyle;
+              styleObject["font-size"] =
+                element.fontSize + element.fontSizeUnit;
+              styleObject["line-height"] =
+                element.fontLineHeight +
+                (element.fontLineHeightUnit == "-"
+                  ? ""
+                  : element.fontLineHeightUnit);
+              styleObject["text-align"] = element.fontTextAlign;
+              styleObject["text-decoration"] = element.fontDecoration;
               break;
           }
         }
       }
-      window.IDM.setStyleToPageHead(this.moduleObject.id,styleObject);
+      window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
       this.initData();
     },
     /**
      * 通用的url参数对象
      * 所有地址的url参数转换
      */
-    commonParam(){
+    commonParam() {
       let urlObject = IDM.url.queryObject();
       var params = {
         pageId:
@@ -215,39 +307,55 @@ export default {
     /**
      * 重新加载
      */
-    reload(){
+    reload() {
       //请求数据源
       this.initData();
     },
     /**
      * 加载动态数据
      */
-    initData(){
+    initData() {
       let that = this;
       //所有地址的url参数转换
       var params = that.commonParam();
       switch (this.propData.dataSourceType) {
         case "customInterface":
-          this.propData.customInterfaceUrl&&window.IDM.http.get(this.propData.customInterfaceUrl,params)
-          .then((res) => {
-            //res.data
-            that.$set(that.propData,"fontContent",that.getExpressData("resultData",that.propData.dataFiled,res.data));
-            // that.propData.fontContent = ;
-          })
-          .catch(function (error) {
-            
-          });
+          this.propData.customInterfaceUrl &&
+            window.IDM.http
+              .get(this.propData.customInterfaceUrl, params)
+              .then((res) => {
+                //res.data
+                that.$set(
+                  that.propData,
+                  "fontContent",
+                  that.getExpressData(
+                    "resultData",
+                    that.propData.dataFiled,
+                    res.data
+                  )
+                );
+                // that.propData.fontContent = ;
+              })
+              .catch(function (error) {});
           break;
         case "pageCommonInterface":
           //使用通用接口直接跳过，在setContextValue执行
           break;
         case "customFunction":
-          if(this.propData.customFunction&&this.propData.customFunction.length>0){
+          if (
+            this.propData.customFunction &&
+            this.propData.customFunction.length > 0
+          ) {
             var resValue = "";
             try {
-              resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{...params,...this.propData.customFunction[0].param,moduleObject:this.moduleObject});
-            } catch (error) {
-            }
+              resValue =
+                window[this.propData.customFunction[0].name] &&
+                window[this.propData.customFunction[0].name].call(this, {
+                  ...params,
+                  ...this.propData.customFunction[0].param,
+                  moduleObject: this.moduleObject,
+                });
+            } catch (error) {}
             that.propData.fontContent = resValue;
           }
           break;
@@ -256,15 +364,12 @@ export default {
     /**
      * 通用的获取表达式匹配后的结果
      */
-    getExpressData(dataName,dataFiled,resultData){
+    getExpressData(dataName, dataFiled, resultData) {
       //给defaultValue设置dataFiled的值
       var _defaultVal = undefined;
-      if(dataFiled){
+      if (dataFiled) {
         var filedExp = dataFiled;
-        filedExp =
-          dataName +
-          (filedExp.startsWiths("[") ? "" : ".") +
-          filedExp;
+        filedExp = dataName + (filedExp.startsWiths("[") ? "" : ".") + filedExp;
         var dataObject = { IDM: window.IDM };
         dataObject[dataName] = resultData;
         _defaultVal = window.IDM.express.replace.call(
@@ -274,35 +379,43 @@ export default {
         );
       }
       //对结果进行再次函数自定义
-      if(this.propData.customFunction&&this.propData.customFunction.length>0){
+      if (
+        this.propData.customFunction &&
+        this.propData.customFunction.length > 0
+      ) {
         var params = this.commonParam();
         var resValue = "";
         try {
-          resValue = window[this.propData.customFunction[0].name]&&window[this.propData.customFunction[0].name].call(this,{
-            ...params,
-            ...this.propData.customFunction[0].param,
-            moduleObject:this.moduleObject,
-            expressData:_defaultVal,interfaceData:resultData
-          });
-        } catch (error) {
-        }
+          resValue =
+            window[this.propData.customFunction[0].name] &&
+            window[this.propData.customFunction[0].name].call(this, {
+              ...params,
+              ...this.propData.customFunction[0].param,
+              moduleObject: this.moduleObject,
+              expressData: _defaultVal,
+              interfaceData: resultData,
+            });
+        } catch (error) {}
         _defaultVal = resValue;
       }
-      
+
       return _defaultVal;
     },
     /**
      * 文本点击事件
      */
-    textClickHandle(){
+    textClickHandle() {
       let that = this;
-      if(this.moduleObject.env=="develop"){
+      if (this.moduleObject.env == "develop") {
         //开发模式下不执行此事件
         return;
       }
       //获取所有的URL参数、页面ID（pageId）、以及所有组件的返回值（用范围值去调用IDM提供的方法取出所有的组件值）
       let urlObject = window.IDM.url.queryObject(),
-      pageId = window.IDM.broadcast&&window.IDM.broadcast.pageModule?window.IDM.broadcast.pageModule.id:"";
+        pageId =
+          window.IDM.broadcast && window.IDM.broadcast.pageModule
+            ? window.IDM.broadcast.pageModule.id
+            : "";
       //自定义函数
       /**
        * [
@@ -310,19 +423,21 @@ export default {
        * ]
        */
       var clickFunction = this.propData.clickFunction;
-      clickFunction&&clickFunction.forEach(item=>{
-        window[item.name]&&window[item.name].call(this,{
-          urlData:urlObject,
-          pageId,
-          customParam:item.param,
-          _this:this
+      clickFunction &&
+        clickFunction.forEach((item) => {
+          window[item.name] &&
+            window[item.name].call(this, {
+              urlData: urlObject,
+              pageId,
+              customParam: item.param,
+              _this: this,
+            });
         });
-      })
     },
-    showThisModuleHandle(){
+    showThisModuleHandle() {
       this.propData.defaultStatus = "default";
     },
-    hideThisModuleHandle(){
+    hideThisModuleHandle() {
       this.propData.defaultStatus = "hidden";
     },
     /**
@@ -333,13 +448,13 @@ export default {
      *  message:{发送的时候传输的消息对象数据}
      *  messageKey:"消息数据的key值，代表数据类型是什么，常用于表单交互上，比如通过这个key判断是什么数据"
      *  isAcross:如果为true则代表发送来源是其他页面的组件，默认为false
-     * } object 
+     * } object
      */
-    receiveBroadcastMessage(object){
-      console.log("组件收到消息",object)
-      if(object.type&&object.type=="linkageShowModule"){
+    receiveBroadcastMessage(object) {
+      console.log("组件收到消息", object);
+      if (object.type && object.type == "linkageShowModule") {
         this.showThisModuleHandle();
-      }else if(object.type&&object.type=="linkageHideModule"){
+      } else if (object.type && object.type == "linkageHideModule") {
         this.hideThisModuleHandle();
       }
     },
@@ -352,10 +467,10 @@ export default {
      *  rangeModule:"为空发送给全部，根据配置的属性中设定的值（值的内容是组件的packageid数组），不取子表的，比如直接 this.$root.propData.compositeAttr["attrKey"]（注意attrKey是属性中定义的bindKey）,这里的格式为：['1','2']"",
      *  className:"指定的组件类型，比如只给待办组件发送，然后再去过滤上面的值"
      *  globalSend:如果为true则全站发送消息，注意全站rangeModule是无效的，只有className才有效，默认为false
-     * } object 
+     * } object
      */
-    sendBroadcastMessage(object){
-        window.IDM.broadcast&&window.IDM.broadcast.send(object);
+    sendBroadcastMessage(object) {
+      window.IDM.broadcast && window.IDM.broadcast.send(object);
     },
     /**
      * 交互功能：设置组件的上下文内容值
@@ -373,20 +488,27 @@ export default {
       //这里使用的是子表，所以要循环匹配所有子表的属性然后再去设置修改默认值
       if (object.key == this.propData.dataName) {
         // this.propData.fontContent = this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data);
-        this.$set(this.propData,"fontContent",this.getExpressData(this.propData.dataName,this.propData.dataFiled,object.data));
+        this.$set(
+          this.propData,
+          "fontContent",
+          this.getExpressData(
+            this.propData.dataName,
+            this.propData.dataFiled,
+            object.data
+          )
+        );
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style scoped lang="scss">
 .idm-project-databoard-outer {
   width: 100%;
   width: 100%;
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   .container {
     padding: 20px;
   }
 }
-
 </style>
