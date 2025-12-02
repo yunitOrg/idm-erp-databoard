@@ -1,9 +1,13 @@
 <template>
   <div class="databoard-container">
-    <div class="databoard-header">
+    <div class="header">
+      <img :src="iconUrl">
       <span class="title">
         {{ title }}
       </span>
+    </div>
+    <div class="content">
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -14,46 +18,36 @@ export default {
     title: {
       type: String,
       default: "",
+    },
+    iconUrl: {
+      type: String,
+      default: "",
     }
   },
 };
 </script>
 
 <style scoped lang="scss">
-.databoard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 30px 29px;
+.databoard-container {
   color: #333333;
-  box-shadow: 0px 4px 9px 0px rgba(0,0,0,0.06);
+  padding: 0 20px 20px;
+  background-color: #fff;
 
-  .databoard-header-left {
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 20px 0  17px;
+    img {
+      width: 38px;
+      height: 38px;
+      margin-right: 14px;
+    }
     .title {
       font-family: PingFang-SC-Bold;
-      font-size: 32px;
+      font-size: 24px;
+      color: #333333;
+      line-height: 32px;
       font-weight: 700;
-    }
-    .right-title {
-      font-size: 18px;
-      color: #666666;
-      font-weight: 400;
-      margin-left: 10px;
-    }
-  }
-
-  .databoard-header-right {
-    .ant-btn  {
-      height: 44px;
-      font-size: 18px;
-      background-color: #F9FAFB;
-      border: 1px solid rgba(223,236,254,1);
-      color: #2563EB;
-      &.ant-btn-primary {
-        background-color: #2563EB;
-        border: 1px solid #DFECFE;
-        color: #FFFFFF;
-      }
     }
   }
 }

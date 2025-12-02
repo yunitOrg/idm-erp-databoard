@@ -17,7 +17,13 @@
     <div class="container">
       <DataboardContainer
         title="回款进展看板"
-      />
+        :iconUrl="paymentCollectionIcon"
+      >abc</DataboardContainer>
+      <DataboardContainer
+        style="margin-top: 16px;"
+        title="验收进展看板"
+        :iconUrl="acceptanceIcon"
+      >abc</DataboardContainer>
     </div>
   </div>
 </template>
@@ -25,6 +31,8 @@
 <script>
 import DataboardHeader from '@/components/commonComponents/DataboardHeader.vue'
 import DataboardContainer from '@/components/commonComponents/DataboardContainer.vue'
+import acceptanceIcon from '@/assets/acceptance.png'
+import paymentCollectionIcon from '@/assets/payment_collection.png'
 export default {
   name: 'IProjectDataboard',
   components:{
@@ -35,7 +43,9 @@ export default {
     return {
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
-      }
+      },
+      acceptanceIcon,
+      paymentCollectionIcon,
     }
   },
   props: {
@@ -369,3 +379,14 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+.idm-project-databoard-outer {
+  width: 100%;
+  width: 100%;
+  background-color: #F6F6F6;
+  .container {
+    padding: 20px;
+  }
+}
+
+</style>
