@@ -130,6 +130,7 @@ export default {
           title: " ",
           scopedSlots: { customRender: "flag" },
           align: "center",
+          width: 200,
         },
         {
           title: "周次",
