@@ -19,6 +19,13 @@
       "comLangue": "vue"
     },
     {
+      "classId": "idm.component.idmErpDataboard.saleleaderdataboard",
+      "comName": "销售领导数据看板",
+      "className": "ISaleLeaderDataBoard",
+      "comType": "common",
+      "comLangue": "vue"
+    },
+    {
       "classId": "idm.component.idmErpDataboard.projectdataboard",
       "comName": "项目数据看板",
       "className": "IProjectDataboard",

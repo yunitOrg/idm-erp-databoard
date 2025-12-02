@@ -1,23 +1,28 @@
 <template>
-  <div idm-ctrl="idm_module" :id="moduleObject.id" :idm-ctrl-id="moduleObject.id" class="ILeaderDataBoard_app">
+  <div idm-ctrl="idm_module" :id="moduleObject.id" :idm-ctrl-id="moduleObject.id" class="ISaleLeaderDataBoard_app">
     <DataboardHeader
-      title="销售数据看板"
+      title="项目数据看板"
       rightTitle="合同与回款周度数据概览"
       @refreshData="refreshData"
     />
     <div class="ILeaderDataBoard_app_main">
       <div class="data_block">
-        <DataboardContainer title="合同进展看板" :iconUrl="contract_process" >
+        <DataboardContainer title="回款进展看板" :iconUrl="payment_collection" >
           <div class="grid_block">
             <ComBoard :items="contract_process_grid_list"> </ComBoard >
           </div>
+          <div class="date_filter_block">
+            <div @click="handleClickDateFilter(item, 'contract_date_value')" v-for="(item) in date_filter_list" :key="item.value" class="list" :class="item.value == contract_date_value ? 'active' : ''">
+              {{ item.name }}
+            </div>
+          </div>
           <div class="table_block">
-            <ComTable :columns="contract_table_columns" :dataSource="contract_table_data" :bordered="true"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="contract_table_data"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
       <div class="data_block data_block_backmoney">
-        <DataboardContainer title="回款进展看板" :iconUrl="payment_collection" >
+        <DataboardContainer title="验收进展看板" :iconUrl="acceptance" >
           <div class="grid_block">
             <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
@@ -43,6 +48,7 @@ import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import contract_process from "@/assets/contract_process.png"
+import acceptance from "@/assets/acceptance.png"
 
 
 export default {
@@ -52,7 +58,7 @@ export default {
     DataboardContainer,
     ComBoard
   },
-  name: 'ILeaderDataBoard',
+  name: 'ISaleLeaderDataBoard',
   data(){
     return {
       contract_process,
@@ -60,6 +66,7 @@ export default {
       paymentReceivedIcon,
       completionRateIcon,
       performanceGapIcon,
+      acceptance,
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
         contentField:"description",
@@ -84,7 +91,7 @@ export default {
           imgUrl: completionRateIcon,
         },
         {
-          title: "绩效差额（万元）",
+          title: "实际-计划（万元）",
           value: "-1,665",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
@@ -93,237 +100,91 @@ export default {
       border: true,
       contract_table_columns: [
         {
-          title: "销售老大",
+          title: "项目DT",
           dataIndex: "week",
           key: "name"
         },
         {
-          title: "第一周（11.24-11.30）",
-          dataIndex: "week",
-          children: [
-            {
-              title: "计划金额（万元）",
-              dataIndex: "planAmount1",
-              key: "planAmount1"
-            },
-            {
-              title: "实际金额（万元）",
-              dataIndex: "actualAmount1",
-              key: "actualAmount1"
-            },
-            {
-              title: "完成率",
-              dataIndex: "completionRate1",
-              key: "completionRate1",
-            },
-            {
-              title: "差额",
-              dataIndex: "gap1",
-              key: "gap1"
-            }
-          ]
+          title: "计划金额（万元）",
+          dataIndex: "planAmount1",
+          key: "planAmount1"
         },
         {
-          title: "第二周（12.01-12.07）",
-          dataIndex: "week",
-          children: [
-            {
-              title: "计划金额（万元）",
-              dataIndex: "planAmount2",
-              key: "planAmount2"
-            },
-            {
-              title: "实际金额（万元）",
-              dataIndex: "actualAmount2",
-              key: "actualAmount2"
-            },
-            {
-              title: "完成率",
-              dataIndex: "completionRate2",
-              key: "completionRate2",
-            },
-            {
-              title: "差额",
-              dataIndex: "gap2",
-              key: "gap2"
-            }
-          ]
+          title: "实际金额（万元）",
+          dataIndex: "actualAmount1",
+          key: "actualAmount1"
         },
         {
-          title: "第三周（12.08-12.14）",
-          dataIndex: "week",
-          children: [
-            {
-              title: "计划金额（万元）",
-              dataIndex: "planAmount3",
-              key: "planAmount3"
-            },
-            {
-              title: "实际金额（万元）",
-              dataIndex: "actualAmount3",
-              key: "actualAmount3"
-            },
-            {
-              title: "完成率",
-              dataIndex: "completionRate3",
-              key: "completionRate3",
-            },
-            {
-              title: "差额",
-              dataIndex: "gap3",
-              key: "gap3"
-            }
-          ]
+          title: "完成率",
+          dataIndex: "completionRate1",
+          key: "completionRate1",
         },
         {
-          title: "第四周（12.15-12.21）",
-          dataIndex: "week",
-          children: [
-            {
-              title: "计划金额（万元）",
-              dataIndex: "planAmount4",
-              key: "planAmount4"
-            },
-            {
-              title: "实际金额（万元）",
-              dataIndex: "actualAmount4",
-              key: "actualAmount4"
-            },
-            {
-              title: "完成率",
-              dataIndex: "completionRate4",
-              key: "completionRate4",
-            },
-            {
-              title: "差额",
-              dataIndex: "gap4",
-              key: "gap4"
-            }
-          ]
+          title: "差额",
+          dataIndex: "gap1",
+          key: "gap1"
         }
       ],
       contract_table_data: [ ],
       // 回款模块
+      date_filter_list: [
+        {
+          name: "第一周（11.24-11.30）",
+          value: 1
+        },
+        {
+          name: " 第二周（12.01-12.07）",
+          value: 2
+        },
+        {
+          name: "第三周（12.08-12.14）",
+          value: 3
+        },
+        {
+          name: "第四周（12.15-12.21）",
+          value: 4
+        },
+        {
+          name: "第五周（12.22-12.28）",
+          value: 5
+        },
+        {
+          name: "第六周（12.29-01.04）",
+          value: 6
+        }
+      ],
+      contract_date_value: 1,
       backMoneyColumns: [
         {
-          title: "销售老大",
+          title: "项目DT",
           dataIndex: "week",
           key: "name"
         },
         {
-          title: "第一周（11.24-11.30）",
-          dataIndex: "week",
-          children: [
-            {
-              title: "计划金额（万元）",
-              dataIndex: "planAmount1",
-              key: "planAmount1"
-            },
-            {
-              title: "实际金额（万元）",
-              dataIndex: "actualAmount1",
-              key: "actualAmount1"
-            },
-            {
-              title: "完成率",
-              dataIndex: "completionRate1",
-              key: "completionRate1",
-            },
-            {
-              title: "差额",
-              dataIndex: "gap1",
-              key: "gap1"
-            }
-          ]
+          title: "计划验收金额（万元）",
+          dataIndex: "planAmount1",
+          key: "planAmount1"
         },
         {
-          title: "第二周（12.01-12.07）",
-          dataIndex: "week",
-          children: [
-            {
-              title: "计划金额（万元）",
-              dataIndex: "planAmount2",
-              key: "planAmount2"
-            },
-            {
-              title: "实际金额（万元）",
-              dataIndex: "actualAmount2",
-              key: "actualAmount2"
-            },
-            {
-              title: "完成率",
-              dataIndex: "completionRate2",
-              key: "completionRate2",
-            },
-            {
-              title: "差额",
-              dataIndex: "gap2",
-              key: "gap2"
-            }
-          ]
+          title: "实际验收金额（万元）",
+          dataIndex: "actualAmount1",
+          key: "actualAmount1"
         },
         {
-          title: "第三周（12.08-12.14）",
-          dataIndex: "week",
-          children: [
-            {
-              title: "计划金额（万元）",
-              dataIndex: "planAmount3",
-              key: "planAmount3"
-            },
-            {
-              title: "实际金额（万元）",
-              dataIndex: "actualAmount3",
-              key: "actualAmount3"
-            },
-            {
-              title: "完成率",
-              dataIndex: "completionRate3",
-              key: "completionRate3",
-            },
-            {
-              title: "差额",
-              dataIndex: "gap3",
-              key: "gap3"
-            }
-          ]
-        },
-        {
-          title: "第四周（12.15-12.21）",
-          dataIndex: "week",
-          children: [
-            {
-              title: "计划金额（万元）",
-              dataIndex: "planAmount4",
-              key: "planAmount4"
-            },
-            {
-              title: "实际金额（万元）",
-              dataIndex: "actualAmount4",
-              key: "actualAmount4"
-            },
-            {
-              title: "完成率",
-              dataIndex: "completionRate4",
-              key: "completionRate4",
-            },
-            {
-              title: "差额",
-              dataIndex: "gap4",
-              key: "gap4"
-            }
-          ]
+          title: "完成率",
+          dataIndex: "completionRate1",
+          key: "completionRate1",
         }
       ],
       backMoneyTableData: [ ],
       backMoneyGridList: [
         {
-          title: "绩效指标金额（万元）",
+          title: "计划验收金额（万元）",
           value: "4,500",
           imgUrl: performanceIndicatorIcon,
         },
         {
-          title: "已回款（万元）",
+          title: "实际验收金额（万元）",
           value: "4,500",
           imgUrl: paymentReceivedIcon,
         },
@@ -333,13 +194,7 @@ export default {
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
-        },
-        {
-          title: "实际-计划（万元）",
-          value: "-1,665",
-          color: "#EF4444",
-          imgUrl: performanceGapIcon,
-        },
+        }
       ],
     }
   },
@@ -584,7 +439,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.ILeaderDataBoard_app{
+.ISaleLeaderDataBoard_app{
   height: 100vh;
   background: #f5f5f5;
   .ILeaderDataBoard_app_main{

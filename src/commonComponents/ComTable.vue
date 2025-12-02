@@ -38,6 +38,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    bordered: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
