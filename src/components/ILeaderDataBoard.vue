@@ -1,53 +1,30 @@
 <template>
-  <div idm-ctrl="idm_module" :id="moduleObject.id" :idm-ctrl-id="moduleObject.id" class="IAbstractTemplate_app">
-    <div class="IAbstractTemplate_app_header">
-      <div class="input_box">
-        <a-textarea v-model="abstractValue" :placeholder="propData?.abstractPlaceholder" :rows="propData.rows" allowClear />
+  <div idm-ctrl="idm_module" :id="moduleObject.id" :idm-ctrl-id="moduleObject.id" class="ILeaderDataBoard_app">
+    <div class="ILeaderDataBoard_app_header flex_between">
+      <div class="left">
+        <span class="title">销售数据看板</span>
+        <span class="tip">合同与回款周度数据概览</span>
+      </div>
+      <div class="right flex_end">
+        <div class="button_box flex_center">
+          <svg-icon icon-class="refresh" />
+          <span>刷新数据</span>
+        </div>
+        <div class="button_box flex_center">
+          <span>汇报视图</span>
+        </div>
       </div>
     </div>
-    <div class="IAbstractTemplate_app_main">
-      <div class="search_block flex_between">
-        <div class="input_box">
-          <a-input v-model="keywords" :placeholder="propData?.searchPlaceholder" allowClear />
-        </div>
-        <div class="btn_box">
-          <a-button @click="handleSearch()" type="primary">搜索</a-button>
-        </div>
-      </div>
-      <div class="main">
-        <vue-scroll ref="vuescroll" :ops="scrollOps" @handle-scroll="handleScroll">
-          <div @click="handleClickItem(item)" v-for="(item, index) in dataList" :key="index" class="list" :title="item[propData?.contentField]">
-            <div class="title">{{ item[propData?.titleField] }}</div>
-            <div class="content">{{ item[propData?.contentField] }}</div>
-          </div>
-        </vue-scroll>
-      </div>
-      <div class="pagination_block">
-        <a-pagination
-          :current="currentPage"
-          :page-size="pageSize"
-          :total="total"
-          show-size-changer
-          show-quick-jumper
-          :show-total="total => `总共 ${total} 条`"
-          :page-size-options="pageSizeOptions"
-          @change="handlePageChange"
-          @showSizeChange="handlePageSizeChange"
-        />
-      </div>
-    </div>
-    <div class="IAbstractTemplate_app_footer flex_end">
-        <a-button @click="handleCancel()">取消</a-button>
-        <a-button @click="handleSubmit()" type="primary">确定</a-button>
-      </div>
   </div>
 </template>
 
 <script>
 import { getAbstractTemplateList } from "@/mockData"
 import vuescroll from '../mixins/vueScroll'
+import SvgIcon from '../icons/SvgIcon.vue'
 export default {
-  name: 'IAbstractTemplate',
+  components: { SvgIcon },
+  name: 'ILeaderDataBoard',
   mixins: [vuescroll],
   data(){
     return {
@@ -334,83 +311,59 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.IAbstractTemplate_app{
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 16px 12px;
-  .IAbstractTemplate_app_header{
-    margin-bottom: 15px;
-  }
-  .IAbstractTemplate_app_main{
-    height: 0;
-    flex-grow: 2;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    .search_block{
-      margin-bottom: 10px;
-      .input_box{
-        width: 100%;
-        margin-right: 10px;
+.ILeaderDataBoard_app{
+  .ILeaderDataBoard_app_header{
+    height: 96px;
+    padding: 0 30px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 9px 0px rgba(0,0,0,0.06);
+    .left{
+      .title{
+        margin-right: 20px;
+        font-family: PingFang-SC-Bold;
+        font-size: 32px;
+        color: #333333;
+        letter-spacing: 0;
+        font-weight: 700;
+      }
+      .tip{
+        font-family: PingFangSC-Regular;
+        font-size: 18px;
+        color: #666666;
+        letter-spacing: 0;
+        font-weight: 400;
       }
     }
-    &>.main{
-      width: 100%;
-      flex-grow: 2;
-      overflow-y: hidden;
-      .list{
-        height: auto;
-        padding: 10px 12px;
-        border-radius: 10px;
-        box-sizing: border-box;
-        background: #f3f7fb;
-        border: 1px solid #e8e8e8;
+    .right{
+      .button_box{
+        height: 44px;
+        margin-left: 20px;
+        text-align: center;
+        font-family: PingFangSC-Regular;
+        font-size: 18px;
+        letter-spacing: 0;
+        font-weight: 400;
         cursor: pointer;
-        &:hover{
-          border: 1px solid #1890ff;
+        &:nth-child(1){
+          width: 128px;
+          color: #2563EB;
+          background: #F9FAFB;
+          border: 1px solid rgba(223,236,254,1);
+          border-radius: 4px;
+          .svg-icon{
+            margin-right: 10px;
+            color: #2563EB;
+            font-size: 17px;
+          }
         }
-        .title{
-          margin-bottom: 4px;
-          color: #333;
-          font-weight: 700;
-          font-size: 14px;
+        &:nth-child(2){
+          width: 108px;
+          color: #FFFFFF;
+          background: #2563EB;
+          border: 1px solid rgba(223,236,254,1);
+          border-radius: 4px;
         }
-        .content{
-          color: #666;
-          font-size: 14px;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;  /* 限制显示行数 */
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
-      
-    }
-    .pagination_block{
-      margin: 15px 0;
-      .ant-pagination{
-        text-align: right;
-      }
-    }
-  }
-  .IAbstractTemplate_app_footer{
-    .ant-btn{
-      margin-left: 10px;
-    }
-  }
-}
-</style>
-<style lang="scss">
-.IAbstractTemplate_app{
-  .IAbstractTemplate_app_main{
-    .main{
-      .__view{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr; /* 等分两列 */
-        gap: 10px 10px;
-        grid-auto-rows: min-content; /* 行高根据内容自适应 */
       }
     }
   }

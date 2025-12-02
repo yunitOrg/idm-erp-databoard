@@ -10,6 +10,13 @@
       "className": "IText",
       "comType": "common",
       "comLangue": "vue"
+    },
+    {
+      "classId": "idm.component.idmErpDataboard.leaderdataboard",
+      "comName": "领导数据看板",
+      "className": "ILeaderDataBoard",
+      "comType": "common",
+      "comLangue": "vue"
     }
   ]
 }
