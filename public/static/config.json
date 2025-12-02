@@ -19,9 +19,23 @@
       "comLangue": "vue"
     },
     {
-      "classId": "idm.component.idmErpDataboard.projectDataboard",
+      "classId": "idm.component.idmErpDataboard.projectdataboard",
       "comName": "项目数据看板",
       "className": "IProjectDataboard",
+      "comType": "common",
+      "comLangue": "vue"
+    },
+    {
+      "classId": "idm.component.idmErpDataboard.salesdataboard",
+      "comName": "销售数据看板",
+      "className": "ISalesDataboard",
+      "comType": "common",
+      "comLangue": "vue"
+    },
+    {
+      "classId": "idm.component.idmErpDataboard.salesweekDataboardsalesweekdataboard",
+      "comName": "销售本周数据看板",
+      "className": "ISalesWeekDataboard",
       "comType": "common",
       "comLangue": "vue"
     }

@@ -9,25 +9,31 @@
     idm-ctrl="idm_module"
     :id="moduleObject.id"
     :idm-ctrl-id="moduleObject.id"
-    class="idm-project-databoard-outer"
+    class="idm-sales-week-databoard-outer"
   >
     <DataboardHeader
-      title="项目数据看板"
-      rightTitle="合同与回款周度数据概览"
-      :ctrld="moduleObject.id"
+      title="合同与回款数据看板-第二周（12.1到12.7）"
+      rightTitle="实时监控销售合同与回款进度"
+      :ctrlId="moduleObject.id"
+      :showRefreshBtn="false"
       @refreshData="refreshData"
     />
     <div class="container">
-      <DataboardContainer title="回款进展看板" :iconUrl="paymentCollectionIcon">
-        <ComBoard :items="paymentCollectionItems"> </ComBoard>
-        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData"> </ComTable>
-      </DataboardContainer>
-      <DataboardContainer
-        style="margin-top: 16px"
-        title="验收进展看板"
-        :iconUrl="acceptanceIcon"
-        ><ComBoard :items="acceptanceItems"> </ComBoard
-      ></DataboardContainer>
+      <div class="row">
+        <DataboardContainer
+          title="合同进展看板"
+          :iconUrl="paymentCollectionIcon"
+        >
+          <ComBoard :items="paymentCollectionItems" isWrap> </ComBoard>
+        </DataboardContainer>
+        <DataboardContainer
+          title="回款进展看板"
+          :iconUrl="paymentCollectionIcon"
+        >
+          <ComBoard :items="paymentCollectionItems" isWrap> </ComBoard>
+        </DataboardContainer>
+      </div>
+      <div class="tips">{{ tips }}</div>
     </div>
   </div>
 </template>
@@ -36,23 +42,15 @@
 import DataboardHeader from "@/commonComponents/DataboardHeader.vue";
 import DataboardContainer from "@/commonComponents/DataboardContainer.vue";
 import ComBoard from "@/commonComponents/ComBoard.vue";
-import ComTable from "@/commonComponents/ComTable.vue";
 import acceptanceIcon from "@/assets/acceptance.png";
 import paymentCollectionIcon from "@/assets/payment_collection.png";
-import performanceIndicatorIcon from "@/assets/performance_indicator.png";
-import performanceGapIcon from "@/assets/performance_gap.png";
-import paymentReceivedIcon from "@/assets/payment_received.png";
-import completionRateIcon from "@/assets/completion_rate.png";
-import actualAcceptanceIcon from "@/assets/actual_acceptance.png";
-import planAcceptanceIcon from "@/assets/plan_acceptance.png";
 
 export default {
-  name: "IProjectDataboard",
+  name: "ISalesWeekDataboard",
   components: {
     DataboardHeader,
     DataboardContainer,
     ComBoard,
-    ComTable,
   },
   data() {
     return {
@@ -60,125 +58,53 @@ export default {
       propData: this.$root.propData.compositeAttr || {},
       acceptanceIcon,
       paymentCollectionIcon,
-      performanceIndicatorIcon,
-      performanceGapIcon,
-      paymentReceivedIcon,
-      completionRateIcon,
       paymentCollectionItems: [
         {
-          title: "绩效指标金额（万元）",
-          value: "4,500",
-          imgUrl: performanceIndicatorIcon,
+          title: "本年绩效责任书税后净合同额（万元） ",
+          value: "¥ 4,500",
+          width: "calc(33.33% - 14px)",
         },
         {
-          title: "已回款（万元）",
-          value: "4,500",
-          imgUrl: paymentReceivedIcon,
+          title: "本年实际签订税后净合同额（万元）",
+          value: "¥ 4,500",
+          width: "calc(33.33% - 14px)",
         },
         {
           title: "完成率",
           value: 63.0,
           isPercent: true,
           color: "#EF4444",
-          imgUrl: completionRateIcon,
+          width: "calc(33.33% - 14px)",
         },
         {
-          title: "绩效差额（万元）",
-          value: "-1,665",
-          color: "#EF4444",
-          imgUrl: performanceGapIcon,
-        },
-      ],
-      acceptanceItems: [
-        {
-          title: "计划验收金额（万元）",
-          value: "3,850",
-          imgUrl: planAcceptanceIcon,
+          title: "本周计划签订税后净合同额（万元）",
+          value: "¥ 1,665",
+          width: "calc(33.33% - 14px)",
         },
         {
-          title: "实际验收金额（万元）",
-          value: "4,500",
-          imgUrl: actualAcceptanceIcon,
+          title: "本周实际签订税后合同额（万元）",
+          value: "¥ 1,665",
+          width: "calc(33.33% - 14px)",
         },
         {
           title: "完成率",
-          value: 72.52,
+          value: 63.0,
           isPercent: true,
           color: "#EF4444",
-          imgUrl: completionRateIcon,
+          width: "calc(33.33% - 14px)",
+        },
+        {
+          title: "下周计划签订税后净合同额（万元）",
+          value: "¥ 5,280",
+          width: "calc(50% - 10px)",
+        },
+        {
+          title: "绩效指标与实际指标差额税后（万元）",
+          value: "¥ 5,280",
+          width: "calc(50% - 10px)",
         },
       ],
-      paymentCollectionColumns: [
-        {
-          title: " ",
-          scopedSlots: { customRender: "flag" },
-          align: "center",
-        },
-        {
-          title: "周次",
-          dataIndex: "week",
-        },
-        {
-          title: "计划金额（万元）",
-          dataIndex: "planAmount",
-        },
-        {
-          title: "实际金额（万元）",
-          dataIndex: "actualAmount",
-        },
-        {
-          title: "完成率",
-          scopedSlots: { customRender: "completionRate" },
-        },
-        {
-          title: "实际-计划",
-          scopedSlots: { customRender: "gap" },
-        },
-      ],
-      paymentCollectionData: [
-        {
-          week: "第六周（12.29-01.04）",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 50,
-          gap: "100",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 20,
-          gap: "200",
-        },
-      ],
+      tips: "本周数据已锁定，下周数据锁定时间 12月6日 12:00",
     };
   },
   props: {},
@@ -577,12 +503,24 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.idm-project-databoard-outer {
+.idm-sales-week-databoard-outer {
   width: 100%;
   width: 100%;
   background-color: #f6f6f6;
   .container {
     padding: 20px;
+
+    .row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .tips {
+      font-size: 22px;
+      color: #333333;
+      text-align: center;
+      margin: 70px 0 20px;
+    }
   }
 }
 </style>

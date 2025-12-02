@@ -1,6 +1,6 @@
 <template>
-  <div class="board-wrapper">
-    <div v-for="item in items" :key="item.title" class="board-item">
+  <div class="board-wrapper" :style="{ flexWrap: isWrap ? 'wrap' : 'nowrap' }">
+    <div v-for="item in items" :key="item.title" class="board-item" :style="`width: ${item.width? item.width : 'auto'};flex: ${item.width? '0 0 auto' : '1 1 auto'}`">
       <div class="left">
         <div class="title">
           {{ item.title }}
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="right">
-        <img :src="item.imgUrl" alt="" />
+        <img v-if="item.imgUrl" :src="item.imgUrl" alt="" />
       </div>
     </div>
   </div>
@@ -28,6 +28,10 @@ export default {
     items: {
       type: Array,
       default: () => [],
+    },
+    isWrap: {
+      type: Boolean,
+      default: false,
     },
   },
 };

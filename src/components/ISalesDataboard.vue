@@ -9,24 +9,35 @@
     idm-ctrl="idm_module"
     :id="moduleObject.id"
     :idm-ctrl-id="moduleObject.id"
-    class="idm-project-databoard-outer"
+    class="idm-sales-databoard-outer"
   >
     <DataboardHeader
-      title="项目数据看板"
+      title="销售数据看板"
       rightTitle="合同与回款周度数据概览"
-      :ctrld="moduleObject.id"
+      :ctrlId="moduleObject.id"
       @refreshData="refreshData"
     />
     <div class="container">
-      <DataboardContainer title="回款进展看板" :iconUrl="paymentCollectionIcon">
+      <DataboardContainer title="合同进展看板" :iconUrl="contractProgressIcon">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
-        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData"> </ComTable>
+        <ComTable
+          style="margin-top: 30px"
+          :columns="paymentCollectionColumns"
+          :dataSource="contractProgressData"
+        >
+        </ComTable>
       </DataboardContainer>
       <DataboardContainer
         style="margin-top: 16px"
-        title="验收进展看板"
-        :iconUrl="acceptanceIcon"
+        title="回款进展看板"
+        :iconUrl="paymentCollectionIcon"
         ><ComBoard :items="acceptanceItems"> </ComBoard
+        ><ComTable
+          style="margin-top: 30px"
+          :columns="paymentCollectionColumns"
+          :dataSource="paymentCollectionData"
+        >
+        </ComTable
       ></DataboardContainer>
     </div>
   </div>
@@ -37,17 +48,15 @@ import DataboardHeader from "@/commonComponents/DataboardHeader.vue";
 import DataboardContainer from "@/commonComponents/DataboardContainer.vue";
 import ComBoard from "@/commonComponents/ComBoard.vue";
 import ComTable from "@/commonComponents/ComTable.vue";
-import acceptanceIcon from "@/assets/acceptance.png";
+import contractProgressIcon from "@/assets/contract_progress.png";
 import paymentCollectionIcon from "@/assets/payment_collection.png";
 import performanceIndicatorIcon from "@/assets/performance_indicator.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
-import actualAcceptanceIcon from "@/assets/actual_acceptance.png";
-import planAcceptanceIcon from "@/assets/plan_acceptance.png";
 
 export default {
-  name: "IProjectDataboard",
+  name: "ISalesDataboard",
   components: {
     DataboardHeader,
     DataboardContainer,
@@ -58,7 +67,7 @@ export default {
     return {
       moduleObject: {},
       propData: this.$root.propData.compositeAttr || {},
-      acceptanceIcon,
+      contractProgressIcon,
       paymentCollectionIcon,
       performanceIndicatorIcon,
       performanceGapIcon,
@@ -91,21 +100,27 @@ export default {
       ],
       acceptanceItems: [
         {
-          title: "计划验收金额（万元）",
-          value: "3,850",
-          imgUrl: planAcceptanceIcon,
+          title: "绩效指标金额（万元）",
+          value: "4,500",
+          imgUrl: performanceIndicatorIcon,
         },
         {
-          title: "实际验收金额（万元）",
+          title: "已回款（万元）",
           value: "4,500",
-          imgUrl: actualAcceptanceIcon,
+          imgUrl: paymentReceivedIcon,
         },
         {
           title: "完成率",
-          value: 72.52,
+          value: 63.0,
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
+        },
+        {
+          title: "绩效差额（万元）",
+          value: "-1,665",
+          color: "#EF4444",
+          imgUrl: performanceGapIcon,
         },
       ],
       paymentCollectionColumns: [
@@ -133,6 +148,50 @@ export default {
         {
           title: "实际-计划",
           scopedSlots: { customRender: "gap" },
+        },
+      ],
+      contractProgressData: [
+        {
+          week: "第六周（12.29-01.04）",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 120,
+          gap: "-200",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 120,
+          gap: "-200",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 120,
+          gap: "-200",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 50,
+          gap: "100",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 120,
+          gap: "-200",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 20,
+          gap: "200",
         },
       ],
       paymentCollectionData: [
@@ -577,7 +636,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.idm-project-databoard-outer {
+.idm-sales-databoard-outer {
   width: 100%;
   width: 100%;
   background-color: #f6f6f6;
