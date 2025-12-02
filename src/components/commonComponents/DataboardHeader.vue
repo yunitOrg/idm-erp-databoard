@@ -44,7 +44,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 22px 30px 29px;
+  height: 96px;
+  padding: 0 30px;
   color: #333333;
   box-shadow: 0px 4px 9px 0px rgba(0,0,0,0.06);
 
