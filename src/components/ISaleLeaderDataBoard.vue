@@ -91,7 +91,7 @@ export default {
           imgUrl: completionRateIcon,
         },
         {
-          title: "实际-计划（万元）",
+          title: "绩效差额（万元）",
           value: "-1,665",
           color: "#EF4444",
           imgUrl: performanceGapIcon,

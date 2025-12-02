@@ -12,6 +12,9 @@
             <ComBoard :items="contract_process_grid_list"> </ComBoard >
           </div>
           <div class="table_block">
+            <div class="tip">
+              单位：万元，差额=实际-计划
+            </div>
             <ComTable :columns="contract_table_columns" :dataSource="contract_table_data" :bordered="true"> </ComTable>
           </div>
         </DataboardContainer>
@@ -22,6 +25,9 @@
             <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
           <div class="table_block">
+            <div class="tip">
+              单位：万元，差额=实际-计划
+            </div>
             <ComTable :columns="backMoneyColumns" :dataSource="backMoneyTableData"> </ComTable>
           </div>
         </DataboardContainer>
@@ -72,7 +78,7 @@ export default {
           imgUrl: performanceIndicatorIcon,
         },
         {
-          title: "已回款（万元）",
+          title: "已签订（万元）",
           value: "4,500",
           imgUrl: paymentReceivedIcon,
         },
@@ -102,12 +108,12 @@ export default {
           dataIndex: "week",
           children: [
             {
-              title: "计划金额（万元）",
+              title: "计划金额",
               dataIndex: "planAmount1",
               key: "planAmount1"
             },
             {
-              title: "实际金额（万元）",
+              title: "实际金额",
               dataIndex: "actualAmount1",
               key: "actualAmount1"
             },
@@ -128,12 +134,12 @@ export default {
           dataIndex: "week",
           children: [
             {
-              title: "计划金额（万元）",
+              title: "计划金额",
               dataIndex: "planAmount2",
               key: "planAmount2"
             },
             {
-              title: "实际金额（万元）",
+              title: "实际金额",
               dataIndex: "actualAmount2",
               key: "actualAmount2"
             },
@@ -154,12 +160,12 @@ export default {
           dataIndex: "week",
           children: [
             {
-              title: "计划金额（万元）",
+              title: "计划金额",
               dataIndex: "planAmount3",
               key: "planAmount3"
             },
             {
-              title: "实际金额（万元）",
+              title: "实际金额",
               dataIndex: "actualAmount3",
               key: "actualAmount3"
             },
@@ -180,12 +186,12 @@ export default {
           dataIndex: "week",
           children: [
             {
-              title: "计划金额（万元）",
+              title: "计划金额",
               dataIndex: "planAmount4",
               key: "planAmount4"
             },
             {
-              title: "实际金额（万元）",
+              title: "实际金额",
               dataIndex: "actualAmount4",
               key: "actualAmount4"
             },
@@ -215,12 +221,12 @@ export default {
           dataIndex: "week",
           children: [
             {
-              title: "计划金额（万元）",
+              title: "计划金额",
               dataIndex: "planAmount1",
               key: "planAmount1"
             },
             {
-              title: "实际金额（万元）",
+              title: "实际金额",
               dataIndex: "actualAmount1",
               key: "actualAmount1"
             },
@@ -241,12 +247,12 @@ export default {
           dataIndex: "week",
           children: [
             {
-              title: "计划金额（万元）",
+              title: "计划金额",
               dataIndex: "planAmount2",
               key: "planAmount2"
             },
             {
-              title: "实际金额（万元）",
+              title: "实际金额",
               dataIndex: "actualAmount2",
               key: "actualAmount2"
             },
@@ -267,12 +273,12 @@ export default {
           dataIndex: "week",
           children: [
             {
-              title: "计划金额（万元）",
+              title: "计划金额",
               dataIndex: "planAmount3",
               key: "planAmount3"
             },
             {
-              title: "实际金额（万元）",
+              title: "实际金额",
               dataIndex: "actualAmount3",
               key: "actualAmount3"
             },
@@ -293,12 +299,12 @@ export default {
           dataIndex: "week",
           children: [
             {
-              title: "计划金额（万元）",
+              title: "计划金额",
               dataIndex: "planAmount4",
               key: "planAmount4"
             },
             {
-              title: "实际金额（万元）",
+              title: "实际金额",
               dataIndex: "actualAmount4",
               key: "actualAmount4"
             },
@@ -335,7 +341,7 @@ export default {
           imgUrl: completionRateIcon,
         },
         {
-          title: "实际-计划（万元）",
+          title: "绩效差额（万元）",
           value: "-1,665",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
@@ -638,6 +644,15 @@ export default {
       }
       .table_block{
         margin-top: 30px;
+        .tip{
+          margin-bottom: 6px;
+          text-align: right;
+          font-family: PingFang-SC-Bold;
+          font-size: 20px;
+          color: #333333;
+          letter-spacing: 0;
+          font-weight: 700;
+        }
       }
     }
   }
