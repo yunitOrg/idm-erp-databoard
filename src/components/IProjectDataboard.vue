@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import DataboardHeader from '@/components/commonComponents/DataboardHeader.vue'
-import DataboardContainer from '@/components/commonComponents/DataboardContainer.vue'
+import DataboardHeader from '@/commonComponents/DataboardHeader.vue'
+import DataboardContainer from '@/commonComponents/DataboardContainer.vue'
 import acceptanceIcon from '@/assets/acceptance.png'
 import paymentCollectionIcon from '@/assets/payment_collection.png'
 export default {
