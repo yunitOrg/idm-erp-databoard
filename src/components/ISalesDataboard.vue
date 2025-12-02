@@ -88,6 +88,7 @@ export default {
           title: "完成率",
           value: 63.0,
           isPercent: true,
+          flex: "3 3 0%",
           color: "#EF4444",
           imgUrl: completionRateIcon,
         },
@@ -112,6 +113,7 @@ export default {
         {
           title: "完成率",
           value: 63.0,
+          flex: "3 3 0%",
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,

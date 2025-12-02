@@ -46,6 +46,7 @@ export default {
       font-family: PingFang-SC-Bold;
       font-size: 24px;
       color: #333333;
+      letter-spacing: 0;
       line-height: 32px;
       font-weight: 700;
     }

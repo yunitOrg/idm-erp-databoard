@@ -93,7 +93,7 @@ export default {
 
       // 第四步：下载图片
       const link = document.createElement("a");
-      link.download = this.title + '.png';
+      link.download = this.title + ".png";
       link.href = finalCanvas.toDataURL("image/png");
       link.click();
     },
@@ -116,11 +116,15 @@ export default {
     .title {
       font-family: PingFang-SC-Bold;
       font-size: 32px;
+      color: #333333;
+      letter-spacing: 0;
       font-weight: 700;
     }
     .right-title {
+      font-family: PingFangSC-Regular;
       font-size: 18px;
       color: #666666;
+      letter-spacing: 0;
       font-weight: 400;
       margin-left: 10px;
     }
@@ -133,6 +137,10 @@ export default {
       background-color: #f9fafb;
       border: 1px solid rgba(223, 236, 254, 1);
       color: #2563eb;
+      font-family: PingFangSC-Regular;
+      font-size: 18px;
+      letter-spacing: 0;
+      font-weight: 400;
       &.ant-btn-primary {
         background-color: #2563eb;
         border: 1px solid #dfecfe;

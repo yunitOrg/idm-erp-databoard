@@ -1,12 +1,20 @@
 <template>
   <div class="board-wrapper" :style="{ flexWrap: isWrap ? 'wrap' : 'nowrap' }">
-    <div v-for="item in items" :key="item.title" class="board-item" :style="`width: ${item.width? item.width : 'auto'};flex: ${item.width? '0 0 auto' : '1 1 auto'}`">
+    <div
+      v-for="item in items"
+      :key="item.title"
+      class="board-item"
+      :style="`width: ${item.width ? item.width : 'auto'};flex: ${
+        item.width ? '0 0 auto' : item.flex ? item.flex : '1 1 auto'
+      }`"
+    >
       <div class="left">
         <div class="title">
           {{ item.title }}
         </div>
         <div class="value" :style="`color: ${item.color}`">
-          <span>{{ item.isPercent? item.value.toFixed(2) : item.value }}</span><span v-if="item.isPercent">%</span>
+          <span>{{ item.isPercent ? item.value.toFixed(2) : item.value }}</span
+          ><span v-if="item.isPercent">%</span>
         </div>
         <div v-if="item.isPercent" class="progress">
           <div
@@ -55,13 +63,18 @@ export default {
       flex-direction: column;
       flex: 1;
       .title {
+        font-family: PingFang-SC-Bold;
         font-size: 18px;
         color: #666666;
+        letter-spacing: 0;
+        font-weight: 700;
       }
       .value {
+        font-family: MicrosoftYaHei-Bold;
         font-size: 40px;
+        color: #333333;
+        letter-spacing: 0;
         font-weight: 700;
-        margin: 8px 0;
       }
       .progress {
         height: 10px;

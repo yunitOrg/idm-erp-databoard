@@ -80,6 +80,7 @@ export default {
           value: 63.0,
           isPercent: true,
           color: "#EF4444",
+          flex: "3 3 0%",
           imgUrl: completionRateIcon,
         },
         {
