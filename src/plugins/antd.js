@@ -8,7 +8,8 @@ import {
   Input, 
   Button,
   Pagination,
-  Space
+  Space,
+  Table
 } from 'ant-design-vue'
 
 Vue.use(ConfigProvider)
@@ -16,3 +17,4 @@ Vue.use(Input)
 Vue.use(Button)
 Vue.use(Pagination)
 Vue.use(Space)
+Vue.use(Table)

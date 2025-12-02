@@ -19,13 +19,14 @@
     <div class="container">
       <DataboardContainer title="回款进展看板" :iconUrl="paymentCollectionIcon">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
+        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData"> </ComTable>
       </DataboardContainer>
       <DataboardContainer
         style="margin-top: 16px"
         title="验收进展看板"
         :iconUrl="acceptanceIcon"
-        ><ComBoard :items="acceptanceItems"> </ComBoard></DataboardContainer
-      >
+        ><ComBoard :items="acceptanceItems"> </ComBoard
+      ></DataboardContainer>
     </div>
   </div>
 </template>
@@ -34,6 +35,7 @@
 import DataboardHeader from "@/commonComponents/DataboardHeader.vue";
 import DataboardContainer from "@/commonComponents/DataboardContainer.vue";
 import ComBoard from "@/commonComponents/ComBoard.vue";
+import ComTable from "@/commonComponents/ComTable.vue";
 import acceptanceIcon from "@/assets/acceptance.png";
 import paymentCollectionIcon from "@/assets/payment_collection.png";
 import performanceIndicatorIcon from "@/assets/performance_indicator.png";
@@ -43,13 +45,13 @@ import completionRateIcon from "@/assets/completion_rate.png";
 import actualAcceptanceIcon from "@/assets/actual_acceptance.png";
 import planAcceptanceIcon from "@/assets/plan_acceptance.png";
 
-
 export default {
   name: "IProjectDataboard",
   components: {
     DataboardHeader,
     DataboardContainer,
     ComBoard,
+    ComTable,
   },
   data() {
     return {
@@ -74,7 +76,7 @@ export default {
         },
         {
           title: "完成率",
-          value: 63.00,
+          value: 63.0,
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
@@ -103,7 +105,78 @@ export default {
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
-        }
+        },
+      ],
+      paymentCollectionColumns: [
+        {
+          title: " ",
+          scopedSlots: { customRender: "flag" },
+          align: "center",
+        },
+        {
+          title: "周次",
+          dataIndex: "week",
+        },
+        {
+          title: "计划金额（万元）",
+          dataIndex: "planAmount",
+        },
+        {
+          title: "实际金额（万元）",
+          dataIndex: "actualAmount",
+        },
+        {
+          title: "完成率",
+          scopedSlots: { customRender: "completionRate" },
+        },
+        {
+          title: "差额",
+          scopedSlots: { customRender: "gap" },
+        },
+      ],
+      paymentCollectionData: [
+        {
+          week: "第六周（12.29-01.04）",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 120,
+          gap: "-200",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 120,
+          gap: "-200",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 120,
+          gap: "-200",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 50,
+          gap: "100",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 120,
+          gap: "-200",
+        },
+        {
+          week: "第1周",
+          planAmount: "1,000",
+          actualAmount: "1,200",
+          completionRate: 20,
+          gap: "200",
+        },
       ],
     };
   },
