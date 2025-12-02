@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "lasttime": "2025-10-23 11:23:39",
+  "author": "yangyk",
+  "className": "idmErpDataboard",
+  "module": [
+    {
+      "classId": "idm.component.idmErpDataboard.text",
+      "comName": "文本",
+      "className": "IText",
+      "comType": "common",
+      "comLangue": "vue"
+    }
+  ]
+}
