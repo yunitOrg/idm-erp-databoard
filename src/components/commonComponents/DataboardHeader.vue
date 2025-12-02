@@ -9,10 +9,8 @@
       </span>
     </div>
     <div class="databoard-header-right">
-      <a-space>
-        <a-button @click="refreshData"><svg-icon icon-class="refresh" />刷新数据</a-button>
-        <a-button type="primary">汇报视图</a-button>
-      </a-space>
+      <a-button v-if="showRefreshBtn" @click="refreshData"><svg-icon icon-class="refresh" />刷新数据</a-button>
+      <a-button style="margin-left: 20px;" type="primary">汇报视图</a-button>
     </div>
   </div>
 </template>
@@ -28,6 +26,10 @@ export default {
       type: String,
       default: "",
     },
+    showRefreshBtn: {
+      type: Boolean,
+      default: true,
+    }
   },
   methods: {
     refreshData(){
