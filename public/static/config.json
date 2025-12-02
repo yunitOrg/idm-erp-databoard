@@ -17,6 +17,13 @@
       "className": "ILeaderDataBoard",
       "comType": "common",
       "comLangue": "vue"
+    },
+    {
+      "classId": "idm.component.idmErpDataboard.projectDataboard",
+      "comName": "项目数据看板",
+      "className": "IProjectDataboard",
+      "comType": "common",
+      "comLangue": "vue"
     }
   ]
 }
