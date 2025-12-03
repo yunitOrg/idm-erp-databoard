@@ -12,12 +12,12 @@
             <ComBoard :items="contract_process_grid_list"> </ComBoard >
           </div>
           <div class="date_filter_block">
-            <div @click="handleClickDateFilter(item, 'contract_date_value')" v-for="(item) in date_filter_list" :key="item.value" class="list" :class="item.value == contract_date_value ? 'active' : ''">
+            <div @click="handleClickDateFilter(item, 'weekNumber')" v-for="(item) in date_filter_list" :key="item.value" class="list" :class="item.value == weekNumber ? 'active' : ''">
               {{ item.name }}
             </div>
           </div>
           <div class="table_block">
-            <ComTable :columns="contract_table_columns" :dataSource="contract_table_data"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="resultData?.hksj?.hkDetail" rowKey="bdId"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -27,7 +27,7 @@
             <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
           <div class="table_block">
-            <ComTable :columns="backMoneyColumns" :dataSource="backMoneyTableData"> </ComTable>
+            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -36,12 +36,6 @@
 </template>
 
 <script>
-import DataboardHeader from '@/commonComponents/DataboardHeader.vue'
-import ComTable from "@/commonComponents/ComTable.vue";
-import DataboardContainer from "@/commonComponents/DataboardContainer.vue";
-import ComBoard from "@/commonComponents/ComBoard.vue";
-
-
 import payment_collection from "@/assets/payment_collection.png"
 import performanceIndicatorIcon from "@/assets/performance_indicator.png";
 import paymentReceivedIcon from "@/assets/payment_received.png";
@@ -50,6 +44,11 @@ import performanceGapIcon from "@/assets/performance_gap.png";
 import contract_process from "@/assets/contract_process.png"
 import acceptance from "@/assets/acceptance.png"
 
+import DataboardHeader from '@/commonComponents/DataboardHeader.vue'
+import ComTable from "@/commonComponents/ComTable.vue";
+import DataboardContainer from "@/commonComponents/DataboardContainer.vue";
+import ComBoard from "@/commonComponents/ComBoard.vue";
+import { getCurrentWeekNumber, getProcessColor, getGapValueColor } from "@/utils"
 
 export default {
   components: { 
@@ -75,58 +74,58 @@ export default {
       contract_process_grid_list: [
         {
           title: "绩效指标金额（万元）",
-          value: "4,500",
+          value: "",
           imgUrl: performanceIndicatorIcon,
         },
         {
           title: "已回款（万元）",
-          value: "4,500",
+          value: "",
           imgUrl: paymentReceivedIcon,
         },
         {
           title: "完成率",
-          value: 63.0,
+          value: "",
           isPercent: true,
-          color: "#EF4444",
+          color: '',
           imgUrl: completionRateIcon,
         },
         {
           title: "绩效差额（万元）",
-          value: "-1,665",
-          color: "#EF4444",
+          value: "",
+          color: '',
           imgUrl: performanceGapIcon,
         }
       ],
-      border: true,
       contract_table_columns: [
         {
           title: "项目DT",
-          dataIndex: "week",
+          dataIndex: "name",
           key: "name"
         },
         {
           title: "计划金额（万元）",
-          dataIndex: "planAmount1",
-          key: "planAmount1"
+          dataIndex: "jhje",
+          key: "jhje"
         },
         {
           title: "实际金额（万元）",
-          dataIndex: "actualAmount1",
-          key: "actualAmount1"
+          dataIndex: "sjje",
+          key: "sjje"
         },
         {
           title: "完成率",
-          dataIndex: "completionRate1",
-          key: "completionRate1",
+          dataIndex: "wcl",
+          key: "wcl",
+          scopedSlots: { customRender: "completionRate" },
         },
         {
           title: "差额",
-          dataIndex: "gap1",
-          key: "gap1"
+          dataIndex: "bzce",
+          key: "bzce",
+          scopedSlots: { customRender: "gap" },
         }
       ],
-      contract_table_data: [ ],
-      // 回款模块
+      // 验收模块
       date_filter_list: [
         {
           name: "第一周（11.24-11.30）",
@@ -153,49 +152,50 @@ export default {
           value: 6
         }
       ],
-      contract_date_value: 1,
+      weekNumber: 1,
       backMoneyColumns: [
         {
           title: "项目DT",
-          dataIndex: "week",
+          dataIndex: "name",
           key: "name"
         },
         {
           title: "计划验收金额（万元）",
-          dataIndex: "planAmount1",
-          key: "planAmount1"
+          dataIndex: "jhje",
+          key: "jhje"
         },
         {
           title: "实际验收金额（万元）",
-          dataIndex: "actualAmount1",
-          key: "actualAmount1"
+          dataIndex: "sjje",
+          key: "sjje"
         },
         {
           title: "完成率",
-          dataIndex: "completionRate1",
-          key: "completionRate1",
+          dataIndex: "wcl",
+          key: "wcl",
+          scopedSlots: { customRender: "completionRate" },
         }
       ],
-      backMoneyTableData: [ ],
       backMoneyGridList: [
         {
           title: "计划验收金额（万元）",
-          value: "4,500",
+          value: "",
           imgUrl: performanceIndicatorIcon,
         },
         {
           title: "实际验收金额（万元）",
-          value: "4,500",
+          value: "",
           imgUrl: paymentReceivedIcon,
         },
         {
           title: "完成率",
-          value: 63.0,
+          value: '',
           isPercent: true,
-          color: "#EF4444",
+          color: "",
           imgUrl: completionRateIcon,
         }
       ],
+      resultData: {},
     }
   },
   props: {
@@ -203,14 +203,48 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
+    this.getWeekNumber()
+    this.getInitData()
   },
   mounted() {
     
   },
   destroyed() {},
   methods:{
+    refreshData() {
+      this.getInitData()
+    },
+    getInitData() {
+      IDM.http.get('/ctrl/insertXsHztj/getSj', {
+        type: 4,
+        week: this.weekNumber,
+      }).then((res) => {
+        if(res?.data?.type == 'success') {
+          this.resultData = res.data.data ?? {};
+          this.contract_process_grid_list[0].value = this.resultData.hksj?.jxxbje;
+          this.contract_process_grid_list[1].value = this.resultData.hksj?.haveDo;
+          this.contract_process_grid_list[2].value = this.resultData.hksj?.wcl;
+          this.contract_process_grid_list[3].value = this.resultData.hksj?.jxce;
+          this.backMoneyGridList[0].value = this.resultData.yssj?.jxxbje;
+          this.backMoneyGridList[1].value = this.resultData.yssj?.haveDo;
+          this.backMoneyGridList[2].value = this.resultData.yssj?.wcl;
+
+          this.contract_process_grid_list[2].color = getProcessColor(this.resultData.hksj?.wcl);
+          this.backMoneyGridList[2].color = getProcessColor(this.resultData.yssj?.wcl);
+          this.contract_process_grid_list[3].color = getGapValueColor(this.resultData.hksj?.jxce);
+        } else {
+          this.resultData = {}
+        }
+      }).error((err) => {
+        console.log(err)
+      })
+    },
+    getWeekNumber() {
+      this.weekNumber = getCurrentWeekNumber()
+    },
     handleClickDateFilter(item, key) {
       this.$set(this, key, item.value)
+      this.getInitData()
     },
     handleCustomFunction() {
       this.propData.createdFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.createdFunction,{

@@ -1,6 +1,6 @@
 <template>
   <div class="table-wrapper">
-    <a-table :columns="columns" :data-source="dataSource" :pagination="false" :bordered="bordered" rowKey="id">
+    <a-table :columns="columns" :data-source="dataSource" :pagination="false" :bordered="bordered" :rowKey="rowKey">
       <span
         slot="flag"
         slot-scope="text, record"
@@ -41,6 +41,10 @@ export default {
     bordered: {
       type: Boolean,
       default: false,
+    },
+    rowKey: {
+      type: String,
+      default: 'id',
     },
   },
 };

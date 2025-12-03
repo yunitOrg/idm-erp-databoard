@@ -15,7 +15,7 @@
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
-            <ComTable :columns="contract_table_columns" :dataSource="contract_table_data" :bordered="true"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="resultData?.xsht?.xshtDetail" :bordered="true"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -24,11 +24,11 @@
           <div class="grid_block">
             <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
-          <div class="table_block">
+          <div class="table_block" :class="`table_block${weekNumber}`">
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
-            <ComTable :columns="backMoneyColumns" :dataSource="backMoneyTableData" :bordered="true"> </ComTable>
+            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.hksj?.hkDetail" :bordered="true"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -50,6 +50,7 @@ import completionRateIcon from "@/assets/completion_rate.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import contract_process from "@/assets/contract_process.png"
 import addressIcon from "@/assets/address.png"
+import { getCurrentWeekNumber, getProcessColor, getGapValueColor } from "@/utils"
 
 
 export default {
@@ -76,33 +77,30 @@ export default {
       contract_process_grid_list: [
         {
           title: "绩效指标金额（万元）",
-          value: "4,500",
+          value: "",
           imgUrl: performanceIndicatorIcon,
         },
         {
           title: "已签订（万元）",
-          value: "4,500",
+          value: "",
           imgUrl: paymentReceivedIcon,
         },
         {
           title: "完成率",
-          value: 63.0,
+          value: "",
           isPercent: true,
-          color: "#EF4444",
           imgUrl: completionRateIcon,
         },
         {
           title: "绩效差额（万元）",
-          value: "-1,665",
-          color: "#EF4444",
+          value: "",
           imgUrl: performanceGapIcon,
         }
       ],
-      border: true,
       contract_table_columns: [
         {
           title: "销售老大",
-          dataIndex: "week",
+          dataIndex: "name",
           key: "name"
         },
         {
@@ -120,23 +118,25 @@ export default {
           children: [
             {
               title: "计划金额",
-              dataIndex: "planAmount1",
-              key: "planAmount1"
+              dataIndex: "firstJhje",
+              key: "firstJhje"
             },
             {
               title: "实际金额",
-              dataIndex: "actualAmount1",
-              key: "actualAmount1"
+              dataIndex: "firstSjje",
+              key: "firstSjje"
             },
             {
               title: "完成率",
-              dataIndex: "completionRate1",
-              key: "completionRate1",
+              dataIndex: "firstWcl",
+              key: "firstWcl",
+              scopedSlots: { customRender: "completionRate" },
             },
             {
               title: "差额",
-              dataIndex: "gap1",
-              key: "gap1"
+              dataIndex: "firstJxce",
+              key: "firstJxce",
+              scopedSlots: { customRender: "gap" },
             }
           ]
         },
@@ -155,23 +155,25 @@ export default {
           children: [
             {
               title: "计划金额",
-              dataIndex: "planAmount2",
-              key: "planAmount2"
+              dataIndex: "secondJhje",
+              key: "secondJhje"
             },
             {
               title: "实际金额",
-              dataIndex: "actualAmount2",
-              key: "actualAmount2"
+              dataIndex: "secondSjje",
+              key: "secondSjje"
             },
             {
               title: "完成率",
-              dataIndex: "completionRate2",
-              key: "completionRate2",
+              dataIndex: "secondWcl",
+              key: "secondWcl",
+              scopedSlots: { customRender: "completionRate" },
             },
             {
               title: "差额",
-              dataIndex: "gap2",
-              key: "gap2"
+              dataIndex: "secondJxce",
+              key: "secondJxce",
+              scopedSlots: { customRender: "gap" },
             }
           ]
         },
@@ -190,23 +192,25 @@ export default {
           children: [
             {
               title: "计划金额",
-              dataIndex: "planAmount3",
-              key: "planAmount3"
+              dataIndex: "thirdJhje",
+              key: "thirdJhje"
             },
             {
               title: "实际金额",
-              dataIndex: "actualAmount3",
-              key: "actualAmount3"
+              dataIndex: "thirdSjje",
+              key: "thirdSjje"
             },
             {
               title: "完成率",
-              dataIndex: "completionRate3",
-              key: "completionRate3",
+              dataIndex: "thirdWcl",
+              key: "thirdWcl",
+              scopedSlots: { customRender: "completionRate" },
             },
             {
               title: "差额",
-              dataIndex: "gap3",
-              key: "gap3"
+              dataIndex: "thirdJxce",
+              key: "thirdJxce",
+              scopedSlots: { customRender: "gap" },
             }
           ],
         },
@@ -225,227 +229,209 @@ export default {
           children: [
             {
               title: "计划金额",
-              dataIndex: "planAmount4",
-              key: "planAmount4"
+              dataIndex: "fourthJhje",
+              key: "fourthJhje"
             },
             {
               title: "实际金额",
-              dataIndex: "actualAmount4",
-              key: "actualAmount4"
+              dataIndex: "fourthSjje",
+              key: "fourthSjje"
             },
             {
               title: "完成率",
-              dataIndex: "completionRate4",
-              key: "completionRate4",
+              dataIndex: "fourthWcl",
+              key: "fourthWcl",
+              scopedSlots: { customRender: "completionRate" },
             },
             {
               title: "差额",
-              dataIndex: "gap4",
-              key: "gap4"
+              dataIndex: "fourthJxce",
+              key: "fourthJxce",
+              scopedSlots: { customRender: "gap" },
             }
           ]
-        }
-      ],
-      contract_table_data: [
-        {
-          id: 1,
-          week: "王小虎",
-          planAmount1: "4,500",
-          actualAmount1: "4,500",
-          completionRate1: 63.0,
-          gap1: "-1,665",
-          planAmount2: "4,500",
-          actualAmount2: "4,500",
-          completionRate2: 63.0,
-          gap2: "-1,665",
-          planAmount3: "4,500",
-          actualAmount3: "4,500",
-          completionRate3: 63.0,
-          gap3: "-1,665",
-          planAmount4: "4,500",
-          actualAmount4: "4,500",
-          completionRate4: 63.0,
-          gap4: "-1,665",
-        },
-        {
-          id: 2,
-          week: "王小虎",
-          planAmount1: "4,500",
-          actualAmount1: "4,500",
-          completionRate1: 63.0,
-          gap1: "-1,665",
-          planAmount2: "4,500",
-          actualAmount2: "4,500",
-          completionRate2: 63.0,
-          gap2: "-1,665",
-          planAmount3: "4,500",
-          actualAmount3: "4,500",
-          completionRate3: 63.0,
-          gap3: "-1,665",
-          planAmount4: "4,500",
-          actualAmount4: "4,500",
-          completionRate4: 63.0,
-          gap4: "-1,665",
-        },
-        {
-          id: 3,
-          week: "王小虎",
-          planAmount1: "4,500",
-          actualAmount1: "4,500",
-          completionRate1: 63.0,
-          gap1: "-1,665",
-          planAmount2: "4,500",
-          actualAmount2: "4,500",
-          completionRate2: 63.0,
-          gap2: "-1,665",
-          planAmount3: "4,500",
-          actualAmount3: "4,500",
-          completionRate3: 63.0,
-          gap3: "-1,665",
-          planAmount4: "4,500",
-          actualAmount4: "4,500",
-          completionRate4: 63.0,
-          gap4: "-1,665",
         }
       ],
       // 回款模块
       backMoneyColumns: [
         {
           title: "销售老大",
-          dataIndex: "week",
+          dataIndex: "name",
           key: "name"
         },
         {
-          title: "第一周（11.24-11.30）",
+          title: () => {
+            return (
+              <div class="flex_center">
+                {
+                  this.weekNumber == 1 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                }
+                <div>第一周（11.24-11.30）</div>
+              </div>
+            );
+          },
           dataIndex: "week",
           children: [
             {
               title: "计划金额",
-              dataIndex: "planAmount1",
-              key: "planAmount1"
+              dataIndex: "firstJhje",
+              key: "firstJhje"
             },
             {
               title: "实际金额",
-              dataIndex: "actualAmount1",
-              key: "actualAmount1"
+              dataIndex: "firstSjje",
+              key: "firstSjje"
             },
             {
               title: "完成率",
-              dataIndex: "completionRate1",
-              key: "completionRate1",
+              dataIndex: "firstWcl",
+              key: "firstWcl",
+              scopedSlots: { customRender: "completionRate" },
             },
             {
               title: "差额",
-              dataIndex: "gap1",
-              key: "gap1"
+              dataIndex: "firstJxce",
+              key: "firstJxce",
+              scopedSlots: { customRender: "gap" },
             }
           ]
         },
         {
-          title: "第二周（12.01-12.07）",
+          title: () => {
+            return (
+              <div class="flex_center">
+                {
+                  this.weekNumber == 2 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                }
+                <div>第二周（12.01-12.07）</div>
+              </div>
+            );
+          },
           dataIndex: "week",
           children: [
             {
               title: "计划金额",
-              dataIndex: "planAmount2",
-              key: "planAmount2"
+              dataIndex: "secondJhje",
+              key: "secondJhje"
             },
             {
               title: "实际金额",
-              dataIndex: "actualAmount2",
-              key: "actualAmount2"
+              dataIndex: "secondSjje",
+              key: "secondSjje"
             },
             {
               title: "完成率",
-              dataIndex: "completionRate2",
-              key: "completionRate2",
+              dataIndex: "secondWcl",
+              key: "secondWcl",
+              scopedSlots: { customRender: "completionRate" },
             },
             {
               title: "差额",
-              dataIndex: "gap2",
-              key: "gap2"
+              dataIndex: "secondJxce",
+              key: "secondJxce",
+              scopedSlots: { customRender: "gap" },
             }
           ]
         },
         {
-          title: "第三周（12.08-12.14）",
+          title: () => {
+            return (
+              <div class="flex_center">
+                {
+                  this.weekNumber == 3 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                }
+                <div>第三周（12.08-12.14）</div>
+              </div>
+            );
+          },
           dataIndex: "week",
           children: [
             {
               title: "计划金额",
-              dataIndex: "planAmount3",
-              key: "planAmount3"
+              dataIndex: "thirdJhje",
+              key: "thirdJhje"
             },
             {
               title: "实际金额",
-              dataIndex: "actualAmount3",
-              key: "actualAmount3"
+              dataIndex: "thirdSjje",
+              key: "thirdSjje"
             },
             {
               title: "完成率",
-              dataIndex: "completionRate3",
-              key: "completionRate3",
+              dataIndex: "thirdWcl",
+              key: "thirdWcl",
+              scopedSlots: { customRender: "completionRate" },
             },
             {
               title: "差额",
-              dataIndex: "gap3",
-              key: "gap3"
+              dataIndex: "thirdJxce",
+              key: "thirdJxce",
+              scopedSlots: { customRender: "gap" },
             }
-          ]
+          ],
         },
         {
-          title: "第四周（12.15-12.21）",
+          title: () => {
+            return (
+              <div class="flex_center">
+                {
+                  this.weekNumber == 4 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                }
+                <div>第四周（12.15-12.21）</div>
+              </div>
+            );
+          },
           dataIndex: "week",
           children: [
             {
               title: "计划金额",
-              dataIndex: "planAmount4",
-              key: "planAmount4"
+              dataIndex: "fourthJhje",
+              key: "fourthJhje"
             },
             {
               title: "实际金额",
-              dataIndex: "actualAmount4",
-              key: "actualAmount4"
+              dataIndex: "fourthSjje",
+              key: "fourthSjje"
             },
             {
               title: "完成率",
-              dataIndex: "completionRate4",
-              key: "completionRate4",
+              dataIndex: "fourthWcl",
+              key: "fourthWcl",
+              scopedSlots: { customRender: "completionRate" },
             },
             {
               title: "差额",
-              dataIndex: "gap4",
-              key: "gap4"
+              dataIndex: "fourthJxce",
+              key: "fourthJxce",
+              scopedSlots: { customRender: "gap" },
             }
           ]
         }
       ],
-      backMoneyTableData: [ ],
       backMoneyGridList: [
         {
           title: "绩效指标金额（万元）",
-          value: "4,500",
+          value: "",
           imgUrl: performanceIndicatorIcon,
         },
         {
           title: "已回款（万元）",
-          value: "4,500",
+          value: "",
           imgUrl: paymentReceivedIcon,
         },
         {
           title: "完成率",
-          value: 63.0,
+          value: 0,
           isPercent: true,
-          color: "#EF4444",
           imgUrl: completionRateIcon,
         },
         {
           title: "绩效差额（万元）",
-          value: "-1,665",
-          color: "#EF4444",
+          value: "",
           imgUrl: performanceGapIcon,
         },
       ],
+      resultData: {}
     }
   },
   props: {
@@ -453,29 +439,45 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
-    this.getCurrentWeekNumber()
+    this.getWeekNumber()
+    this.getInitData()
   },
   mounted() {
     
   },
   destroyed() {},
   methods:{
-    getCurrentWeekNumber(startDate = '2025-11-24') {
-      const start = new Date(startDate);
-      const now = new Date();
-      
-      // 清空时间部分，只比较日期
-      start.setHours(0, 0, 0, 0);
-      now.setHours(0, 0, 0, 0);
-      
-      // 计算天数差
-      const timeDiff = now.getTime() - start.getTime();
-      const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-      
-      // 计算周数（第一周是0-6天，第二周是7-13天，以此类推）
-      const weekNumber = Math.floor(dayDiff / 7) + 1;
-      this.weekNumber = weekNumber;
-      console.log(`第${weekNumber}周`);
+    refreshData() {
+      this.getInitData()
+    },
+    getInitData() {
+      IDM.http.get('/ctrl/insertXsHztj/getSj', {
+        type: 1,
+        week: 1,
+      }).then((res) => {
+        if(res?.data?.type == 'success') {
+          this.resultData = res.data.data ?? {};
+          this.contract_process_grid_list[0].value = Number(this.resultData.xsht?.jxxbje);
+          this.contract_process_grid_list[1].value = Number(this.resultData.xsht?.haveDo);
+          this.contract_process_grid_list[2].value = this.resultData.xsht?.wcl;
+          this.contract_process_grid_list[3].value = this.resultData.xsht?.jxce;
+          this.backMoneyGridList[0].value = Number(this.resultData.hksj?.jxxbje);
+          this.backMoneyGridList[1].value = Number(this.resultData.hksj?.haveDo);
+          this.backMoneyGridList[2].value = this.resultData.hksj?.wcl;
+          this.backMoneyGridList[3].value = this.resultData.hksj?.jxce;
+          this.contract_process_grid_list[2].color = getProcessColor(this.resultData.xsht?.wcl);
+          this.backMoneyGridList[2].color = getProcessColor(this.resultData.hksj?.wcl);
+          this.contract_process_grid_list[3].color = getGapValueColor(this.resultData.xsht?.jxce);
+          this.backMoneyGridList[3].color = getGapValueColor(this.resultData.hksj?.jxce);
+        } else {
+          this.resultData = {}
+        }
+      }).error((err) => {
+        console.log(err)
+      })
+    },
+    getWeekNumber() {
+      this.weekNumber = getCurrentWeekNumber()
     },
     handleClickDateFilter(item, key) {
       this.$set(this, key, item.value)
