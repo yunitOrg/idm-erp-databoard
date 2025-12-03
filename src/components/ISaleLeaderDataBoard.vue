@@ -2,7 +2,7 @@
   <div idm-ctrl="idm_module" :id="moduleObject.id" :idm-ctrl-id="moduleObject.id" class="ISaleLeaderDataBoard_app">
     <DataboardHeader
       title="项目数据看板"
-      rightTitle="合同与回款周度数据概览"
+      rightTitle="回款与验收进展数据概览"
       :ctrlId="moduleObject.id"
       printClass="ILeaderDataBoard_app_main"
       @refreshData="refreshData"
