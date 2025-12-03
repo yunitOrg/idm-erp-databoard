@@ -1,6 +1,6 @@
 <template>
   <div class="table-wrapper">
-    <a-table :columns="columns" :data-source="dataSource" :pagination="false">
+    <a-table :columns="columns" :data-source="dataSource" :pagination="false" :bordered="bordered" rowKey="id">
       <span
         slot="flag"
         slot-scope="text, record"
@@ -23,6 +23,11 @@
         :style="`color:${record.gap >= 0 ? '#00B78E' : '#EF4444'}`"
         >{{ record.gap }}</span
       >
+      <template slot="baseInfoTitle" slot-scope="text">
+        <div style="text-align: center; background: #fafafa;">
+          <span style="margin-left: 8px; font-weight: bold;">基本信息{{ text }}</span>
+        </div>
+      </template>
     </a-table>
   </div>
 </template>
