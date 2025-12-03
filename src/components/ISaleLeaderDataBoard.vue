@@ -89,6 +89,7 @@ export default {
           value: "",
           isPercent: true,
           color: '',
+          flex: "3 3 0%",
           imgUrl: completionRateIcon,
         },
         {
@@ -484,7 +485,7 @@ export default {
     box-sizing: border-box;
     overflow-y: auto;
     .data_block{
-      padding: 0 0px 30px 0px;
+      // padding: 0 0px 30px 0px;
       background: #FFFFFF;
       &.data_block_backmoney{
         margin-top: 20px;
