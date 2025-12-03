@@ -6,8 +6,8 @@
         <span class="title">
           {{ title }}
         </span>
-        <span class="right-title">
-          金额：均为税后净合同额
+        <span v-if="titleTip" class="right-title">
+          {{ titleTip }}
         </span>
       </div>
       <div class="header-right">
@@ -32,6 +32,10 @@ export default {
       default: "",
     },
     tips: {
+      type: String,
+      default: "",
+    },
+    titleTip: {
       type: String,
       default: "",
     }
