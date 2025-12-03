@@ -18,7 +18,7 @@
       @refreshData="refreshData"
     />
     <div class="container">
-      <DataboardContainer title="合同进展看板" :iconUrl="contractProgressIcon">
+      <DataboardContainer title="合同进展看板" :iconUrl="contractProgressIcon" :tips="tips">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
         <ComTable
           style="margin-top: 30px"
@@ -39,7 +39,6 @@
         >
         </ComTable
       ></DataboardContainer>
-      <div class="tips">{{ tips }}</div>
     </div>
   </div>
 </template>

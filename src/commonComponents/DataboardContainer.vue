@@ -1,10 +1,15 @@
 <template>
   <div class="databoard-container">
     <div class="header">
-      <img :src="iconUrl">
-      <span class="title">
-        {{ title }}
-      </span>
+      <div class="header-left">
+        <img :src="iconUrl">
+        <span class="title">
+          {{ title }}
+        </span>
+      </div>
+      <div class="header-right">
+        {{tips}}
+      </div>
     </div>
     <div class="content">
       <slot></slot>
@@ -22,6 +27,10 @@ export default {
     iconUrl: {
       type: String,
       default: "",
+    },
+    tips: {
+      type: String,
+      default: "",
     }
   },
 };
@@ -36,6 +45,7 @@ export default {
   .header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 20px 0  17px;
     img {
       width: 38px;
@@ -49,6 +59,14 @@ export default {
       letter-spacing: 0;
       line-height: 32px;
       font-weight: 700;
+    }
+
+    .header-right {
+      font-family: PingFangSC-Regular;
+      font-size: 18px;
+      color: #333333;
+      letter-spacing: 0;
+      font-weight: 400;
     }
   }
 }
