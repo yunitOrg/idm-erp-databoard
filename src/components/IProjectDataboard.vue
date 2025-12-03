@@ -13,14 +13,14 @@
   >
     <DataboardHeader
       title="项目数据看板"
-      rightTitle="合同与回款周度数据概览"
+      rightTitle="回款与验收进展数据概览"
       :ctrlId="moduleObject.id"
       @refreshData="refreshData"
     />
     <div class="container">
       <DataboardContainer title="回款进展看板"  titleTip="金额：均为税后净回款额" :iconUrl="paymentCollectionIcon">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
-        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :rowClickFunction="rowClickFunction"> </ComTable>
+        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :rowClickFunction="rowClickFunction" :moduleObject="moduleObject"> </ComTable>
       </DataboardContainer>
       <DataboardContainer
         style="margin-top: 16px"

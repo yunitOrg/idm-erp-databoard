@@ -22,8 +22,8 @@
         >{{ text }}</span
       >
       <template slot="zc" scope="text,record,index">
-        <img class="address-icon" :src="addressIcon" alt="" v-if="getCurrentWeekNumber() === index">
-        {{ text }}
+        <span>{{ text }}</span>
+        <img v-if="getCurrentWeekNumber() === index + 1" class="address-icon" :src="getImageSrc('', 'address')">
       </template>
     </a-table>
   </div>
@@ -31,7 +31,6 @@
 
 <script>
 import {getProcessColor,getGapValueColor, getCurrentWeekNumber} from '@/utils/index.js'
-import addressIcon from "@/assets/address.png";
 export default {
   props: {
     columns: {
@@ -57,26 +56,35 @@ export default {
     rowClickFunction: {
       type: Function,
       default: () => {},
-    }
+    },
+    moduleObject: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
       getProcessColor,
       getGapValueColor,
-      getCurrentWeekNumber,
-      addressIcon
+      getCurrentWeekNumber
     }
   },
   methods: {
+    getImageSrc(url,name) {
+      if ( url ) {
+        return IDM.url.getWebPath(url)
+      } else {
+        return IDM.url.getModuleAssetsWebPath(require(`../assets/${name}.png`),this.moduleObject)
+      }
+    },
     customRow(row, index) {
       return {
         style: {
-          backgroundColor: getCurrentWeekNumber() === index  ? '#f5faff' : '#FFFFFF',
+          backgroundColor: getCurrentWeekNumber() === index + 1 ? '#f5faff' : '#FFFFFF',
         },
         on: {
           click: () => {
             this.rowClickFunction(row,index);
-            
           },
         },
       };
@@ -117,7 +125,7 @@ export default {
 
     .address-icon {
       width: 26px;
-      margin-right: 10px;
+      margin-left: 10px;
     }
   }
 }

@@ -13,7 +13,7 @@
   >
     <DataboardHeader
       title="销售数据看板"
-      rightTitle="合同与回款周度数据概览"
+      rightTitle="合同与回款进展数据概览"
       :ctrlId="moduleObject.id"
       @refreshData="refreshData"
     />
@@ -25,6 +25,7 @@
           :columns="paymentCollectionColumns"
           :dataSource="contractProgressData"
           :rowClickFunction="htRowClickFunction"
+          :moduleObject="moduleObject"
         >
         </ComTable>
       </DataboardContainer>
@@ -39,6 +40,7 @@
           :columns="paymentCollectionColumns"
           :dataSource="paymentCollectionData"
           :rowClickFunction="hkRowClickFunction"
+          :moduleObject="moduleObject"
         >
         </ComTable
       ></DataboardContainer>
