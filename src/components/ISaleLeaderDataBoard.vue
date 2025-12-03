@@ -3,6 +3,7 @@
     <DataboardHeader
       title="项目数据看板"
       rightTitle="合同与回款周度数据概览"
+      :ctrld="moduleObject.id"
       @refreshData="refreshData"
     />
     <div class="ILeaderDataBoard_app_main">
@@ -119,7 +120,7 @@ export default {
           scopedSlots: { customRender: "completionRate" },
         },
         {
-          title: "差额",
+          title: "实际-计划",
           dataIndex: "bzce",
           key: "bzce",
           scopedSlots: { customRender: "gap" },
