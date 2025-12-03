@@ -39,6 +39,10 @@ export default {
       type: String,
       default: "",
     },
+    printClass: {
+      type: String,
+      default: "container",
+    },
   },
   methods: {
     refreshData() {
@@ -46,12 +50,16 @@ export default {
     },
     async toReportView() {
       // 第一步：用 html2canvas 截图原始内容
+      const targetElement = document.querySelector(`#${this.ctrlId} .${this.printClass}`);
       const originalCanvas = await html2canvas(
-        document.getElementById(this.ctrlId),
+        targetElement,
         {
           useCORS: true,
           allowTaint: true,
           backgroundColor: "#ffffff",
+          scrollY: -window.scrollY, // 从页面顶部开始捕获
+          height: targetElement.scrollHeight, // 捕获元素的完整滚动高度
+          windowHeight: targetElement.scrollHeight, // 设置窗口高度为元素的完整高度
         }
       );
       const originalWidth = originalCanvas.width;
