@@ -16,10 +16,10 @@ export function getCurrentWeekNumber(startDate='2025-11-24') {
 }
 export function getProcessColor(value) {
   let color = ['#EF4444', '#00B78E'];
-  if(!value) {
+  if(!value || value == '%') {
     return color[0];
   }
-  if(value == '100%' || value == '100.0%' || value == '100.00%' || value == '100.000%') {
+  if(parseFloat(value) >= 100) {
     return color[1];
   } else {
     return color[0];
