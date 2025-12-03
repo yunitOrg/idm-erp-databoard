@@ -9,7 +9,7 @@
     />
     <div class="ILeaderDataBoard_app_main">
       <div class="data_block">
-        <DataboardContainer title="合同进展看板" :iconUrl="contract_process" >
+        <DataboardContainer title="合同进展看板" titleTip="金额：均为税后净合同额" :iconUrl="contract_process" >
           <div class="grid_block">
             <ComBoard :items="contract_process_grid_list"> </ComBoard >
           </div>
@@ -17,12 +17,12 @@
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
-            <ComTable :columns="contract_table_columns" :dataSource="resultData?.xsht?.xshtDetail" :bordered="true"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="resultData?.xsht?.xshtDetail" :propData="propData" :bordered="true"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
       <div class="data_block data_block_backmoney">
-        <DataboardContainer title="回款进展看板" :iconUrl="payment_collection" >
+        <DataboardContainer title="回款进展看板" titleTip="金额：均为税后净回款额" :iconUrl="payment_collection" >
           <div class="grid_block">
             <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
@@ -30,7 +30,7 @@
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
-            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.hksj?.hkDetail" :bordered="true"> </ComTable>
+            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.hksj?.hkDetail" :propData="propData" :bordered="true"> </ComTable>
           </div>
         </DataboardContainer>
       </div>

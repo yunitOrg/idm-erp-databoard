@@ -20,37 +20,7 @@
       "text": "基本属性",
       "desc": "提供设置组件能达到展示效果的基本属性设置信息",
       "children": [
-        {
-          "type": "input",
-          "layoutType": "inline",
-          "text": "摘要提示",
-          "bindKey": "abstractPlaceholder",
-          "desc": "摘要编辑器提示语",
-          "default": "请输入摘要指令"
-        },
-        {
-          "type": "input",
-          "layoutType": "inline",
-          "text": "搜索提示",
-          "bindKey": "searchPlaceholder",
-          "desc": "搜索框提示语",
-          "default": "请输入内容进行搜索"
-        },
-        {
-          "type": "inputNumber",
-          "layoutType": "inline",
-          "text": "指令行高",
-          "bindKey": "rows",
-          "desc": "摘要指令文本域的可输入展示的行数",
-          "default": 4
-        },
-        {
-          "type": "inputNumber",
-          "layoutType": "inline",
-          "text": "分页大小",
-          "bindKey": "pageSize",
-          "default": 12
-        }
+        
       ]
     },
     {
@@ -378,83 +348,16 @@
     },
     {
       "type": "group",
-      "text": "数据源",
-      "desc": "点击？查看高级设置用法指南",
-      "children": [
-        {
-          "type": "dataSourceSelect",
-          "layoutType": "inline",
-          "text": "数据源",
-          "bindKey": "dataSource"
-        },
-        {
-          "type": "group",
-          "text": "字段设置",
-          "children":[
-            {
-              "type": "input",
-              "layoutType": "inline",
-              "text": "标题",
-              "bindKey": "titleField",
-              "desc": "标题名称",
-              "default":"title"
-            },
-            {
-              "type": "input",
-              "layoutType": "inline",
-              "text": "内容字段",
-              "bindKey": "contentField",
-              "desc": "内容字段",
-              "default":"description"
-            },
-            {
-              "type": "input",
-              "layoutType": "inline",
-              "text": "模板字段",
-              "bindKey": "templateField",
-              "desc": "内容字段",
-              "default":"template"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "group",
       "text": "高级",
       "desc": "点击？查看高级设置用法指南",
       "children": [
         {
           "type": "actionSelect",
           "layoutType": "block",
-          "text": "点击摘要时动作",
-          "bindKey": "clickItemFunction",
-          "desc": "点击摘要的时候会调用设置的自定义函数，接收参数为格式为{_this, item}",
-          "multiple": true
-        },
-        {
-          "type": "actionSelect",
-          "layoutType": "block",
-          "text": "点击确定时动作",
-          "bindKey": "clickSubmitFunction",
-          "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-          "multiple": true
-        },
-        {
-          "type": "actionSelect",
-          "layoutType": "block",
-          "text": "点击取消时动作",
-          "bindKey": "clickCancelFunction",
-          "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-          "multiple": true
-        },
-        {
-          "type": "actionSelect",
-          "layoutType": "block",
-          "text": "组件初始化时动作",
-          "bindKey": "createdFunction",
-          "desc": "点击的时候会调用设置的自定义函数，接收参数为格式为{...自定义的}",
-          "multiple": true
+          "text": "表格行点击自定义函数",
+          "bindKey": "tableRowClickFunction",
+          "desc": "表格行点击自定义函数，接收参数：{_this:当前组件实例,row:当前行数据,index:当前行索引}",
+          "multiple": false
         }
       ]
     }

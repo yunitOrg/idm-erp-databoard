@@ -9,7 +9,7 @@
     />
     <div class="ILeaderDataBoard_app_main">
       <div class="data_block">
-        <DataboardContainer title="回款进展看板" :iconUrl="payment_collection" >
+        <DataboardContainer title="回款进展看板" titleTip="金额：均为税后净回款额" :iconUrl="payment_collection" >
           <div class="grid_block">
             <ComBoard :items="contract_process_grid_list"> </ComBoard >
           </div>
@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="table_block">
-            <ComTable :columns="contract_table_columns" :dataSource="resultData?.hksj?.hkDetail" rowKey="pk"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="resultData?.hksj?.hkDetail" :propData="propData" rowKey="pk"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -29,7 +29,7 @@
             <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
           <div class="table_block">
-            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail" rowKey="pk"> </ComTable>
+            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail" :propData="propData" rowKey="pk"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
