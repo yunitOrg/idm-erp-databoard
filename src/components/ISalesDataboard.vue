@@ -77,53 +77,61 @@ export default {
       paymentCollectionItems: [
         {
           title: "绩效指标金额（万元）",
-          value: "4,500",
+          value: "0",
           imgUrl: performanceIndicatorIcon,
+          key:"jxxbje"
         },
         {
           title: "已回款（万元）",
-          value: "4,500",
+          value: "0",
           imgUrl: paymentReceivedIcon,
+          key:"haveDo"
         },
         {
           title: "完成率",
-          value: 63.0,
+          value: "0.00%",
           isPercent: true,
           flex: "3 3 0%",
           color: "#EF4444",
           imgUrl: completionRateIcon,
+          key:"wcl"
         },
         {
           title: "绩效差额（万元）",
-          value: "-1,665",
+          value: "0",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
+          key:"jxce"
         },
       ],
       acceptanceItems: [
         {
           title: "绩效指标金额（万元）",
-          value: "4,500",
+          value: "0",
           imgUrl: performanceIndicatorIcon,
+          key:"jxxbje"
         },
         {
           title: "已回款（万元）",
-          value: "4,500",
+          value: "0",
           imgUrl: paymentReceivedIcon,
+          key:"haveDo"
         },
         {
           title: "完成率",
-          value: 63.0,
+          value: "0.00%",
           flex: "3 3 0%",
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
+          key:"wcl"
         },
         {
           title: "绩效差额（万元）",
-          value: "-1,665",
+          value: "0",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
+          key:"jxce"
         },
       ],
       paymentCollectionColumns: [
@@ -135,114 +143,30 @@ export default {
         },
         {
           title: "周次",
-          dataIndex: "week",
+          dataIndex: "zc",
         },
         {
           title: "计划金额（万元）",
-          dataIndex: "planAmount",
+          dataIndex: "jhje",
         },
         {
           title: "实际金额（万元）",
-          dataIndex: "actualAmount",
+          dataIndex: "sjje",
         },
         {
           title: "完成率",
           scopedSlots: { customRender: "completionRate" },
+          dataIndex:"wcl"
         },
         {
           title: "实际-计划",
           scopedSlots: { customRender: "gap" },
+          dataIndex:'bzce'
         },
       ],
-      contractProgressData: [
-        {
-          week: "第六周（12.29-01.04）",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 50,
-          gap: "100",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 20,
-          gap: "200",
-        },
-      ],
-      paymentCollectionData: [
-        {
-          week: "第六周（12.29-01.04）",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 50,
-          gap: "100",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 20,
-          gap: "200",
-        },
-      ],
-      tips: "本周数据已锁定，下周数据锁定时间 12月6日 12:00",
+      contractProgressData: [],
+      paymentCollectionData: [],
+      tips: "",
     };
   },
   props: {},
@@ -253,7 +177,9 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
-    refreshData() {},
+    refreshData() {
+      this.initData();
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -453,51 +379,34 @@ export default {
      * 加载动态数据
      */
     initData() {
-      let that = this;
-      //所有地址的url参数转换
-      var params = that.commonParam();
-      switch (this.propData.dataSourceType) {
-        case "customInterface":
-          this.propData.customInterfaceUrl &&
-            window.IDM.http
-              .get(this.propData.customInterfaceUrl, params)
-              .then((res) => {
-                //res.data
-                that.$set(
-                  that.propData,
-                  "fontContent",
-                  that.getExpressData(
-                    "resultData",
-                    that.propData.dataFiled,
-                    res.data
-                  )
-                );
-                // that.propData.fontContent = ;
-              })
-              .catch(function (error) {});
-          break;
-        case "pageCommonInterface":
-          //使用通用接口直接跳过，在setContextValue执行
-          break;
-        case "customFunction":
-          if (
-            this.propData.customFunction &&
-            this.propData.customFunction.length > 0
-          ) {
-            var resValue = "";
-            try {
-              resValue =
-                window[this.propData.customFunction[0].name] &&
-                window[this.propData.customFunction[0].name].call(this, {
-                  ...params,
-                  ...this.propData.customFunction[0].param,
-                  moduleObject: this.moduleObject,
-                });
-            } catch (error) {}
-            that.propData.fontContent = resValue;
-          }
-          break;
-      }
+      const userInfo = window.IDM.user.getCurrentUserInfo();
+      const hideLoading = this.$message.loading("正在加载中...",0);
+      window.IDM.http
+        .get('/DreamWeb/ctrl/insertXsHztj/getSj', {
+          type: 3,
+          userId: userInfo.userId || "20091816572442gv3icmGWxHTzaLeD1",
+        })
+        .then((res) => {
+          const result = res.data.data;
+          console.log(result,"数据");
+
+          this.paymentCollectionItems.forEach((item) => {
+            item.value = result.xsht[item.key] || "";
+          });
+
+          this.contractProgressData = result.xsht.xshtDetail || [];
+
+          this.acceptanceItems.forEach((item) => {
+            item.value = result.hksj[item.key] || "";
+          });
+          
+          this.paymentCollectionData = result.hksj.hkDetail || [];
+
+          this.tips = result.retMsg || "";
+        })
+        .catch(function (error) {}).always(() => {
+          hideLoading();
+        });
     },
     /**
      * 通用的获取表达式匹配后的结果

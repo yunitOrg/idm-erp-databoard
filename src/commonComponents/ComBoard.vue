@@ -13,8 +13,8 @@
           {{ item.title }}
         </div>
         <div class="value" :style="`color: ${item.color}`">
-          <span>{{item.value}}</span
-          >
+          <span v-if="item.isPercent">{{item.value === '%' || !item.value ? '0.00%' : item.value}}</span>
+          <span v-else>{{item.value || '0'}}</span>
         </div>
         <div v-if="item.isPercent" class="progress">
           <div
@@ -82,6 +82,7 @@ export default {
         border-radius: 5px;
         margin-right: 30px;
         position: relative;
+        margin-top: 10px;
 
         .progress-value {
           position: absolute;

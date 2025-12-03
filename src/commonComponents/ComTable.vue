@@ -15,7 +15,7 @@
         :style="`color:${
           parseFloat(text || 0) >= 100 ? '#00B78E ' : '#EF4444'
         }`"
-        >{{ text }}</span
+        >{{ text === '%' ? '0.00%' : text }}</span
       >
       <span
         slot="gap"

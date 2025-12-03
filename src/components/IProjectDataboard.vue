@@ -79,7 +79,7 @@ export default {
         },
         {
           title: "完成率",
-          value: "0%",
+          value: "0.00%",
           isPercent: true,
           color: "#EF4444",
           flex: "3 3 0%",
@@ -109,7 +109,7 @@ export default {
         },
         {
           title: "完成率",
-          value: "0%",
+          value: "0.00%",
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
@@ -138,10 +138,12 @@ export default {
         {
           title: "完成率",
           scopedSlots: { customRender: "completionRate" },
+          dataIndex: "wcl",
         },
         {
           title: "实际-计划",
           scopedSlots: { customRender: "gap" },
+          dataIndex: "bzce",
         },
       ],
       paymentCollectionData: [],
@@ -358,13 +360,13 @@ export default {
      */
     initData() {
       const userInfo = window.IDM.user.getCurrentUserInfo();
+      const hideLoading = this.$message.loading("正在加载中...",0);
       window.IDM.http
-        .get('ctrl/insertXsHztj/getSj', {
+        .get('/DreamWeb/ctrl/insertXsHztj/getSj', {
           type: 2,
-          userId: userInfo.userId,
+          userId: userInfo.userId || "200918165720PCheyy03dNTAj7ngxZB",
         })
         .then((res) => {
-          console.log(res,"数据接口");
           const result = res.data.data;
           this.acceptanceItems.forEach((item) => {
             item.value = result.ysDetail[item.key] || "";
@@ -375,7 +377,9 @@ export default {
           console.log(result,"数据");
           this.paymentCollectionData = result.hksj.hkDetail
         })
-        .catch(function (error) {});
+        .catch(function (error) {}).always(() => {
+          hideLoading();
+        });
     },
     /**
      * 通用的获取表达式匹配后的结果

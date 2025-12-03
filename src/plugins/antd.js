@@ -9,7 +9,8 @@ import {
   Button,
   Pagination,
   Space,
-  Table
+  Table,
+  message
 } from 'ant-design-vue'
 
 Vue.use(ConfigProvider)
@@ -18,3 +19,5 @@ Vue.use(Button)
 Vue.use(Pagination)
 Vue.use(Space)
 Vue.use(Table)
+
+Vue.prototype.$message = message;

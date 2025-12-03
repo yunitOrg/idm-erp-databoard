@@ -67,7 +67,9 @@ export default {
       ctx.drawImage(originalCanvas, 0, 0);
 
       // 第三步：绘制多个水印（平铺）
-      const watermarkText = "© 机密文件 - 仅限内部使用";
+      const userInfo = window.IDM.user.getCurrentUserInfo();
+      const now = new Date();
+      const watermarkText = `${userInfo?.username || ""} ${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate() } ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}` || "© 机密文件 - 仅限内部使用";
       ctx.globalAlpha = 0.48; // 透明度
       ctx.font = "44px Arial";
       ctx.fillStyle = "#ccc";
