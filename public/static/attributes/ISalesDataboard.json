@@ -257,9 +257,17 @@
         {
           "type": "actionSelect",
           "layoutType": "block",
-          "text": "表格行点击自定义函数",
-          "bindKey": "tableRowClickFunction",
-          "desc": "表格行点击自定义函数，接收参数：{_this:当前组件实例,row:当前行数据,index:当前行索引}",
+          "text": "合同进展表格行点击自定义函数",
+          "bindKey": "htTableRowClickFunction",
+          "desc": "合同进度表格行点击自定义函数，接收参数：{_this:当前组件实例,row:当前行数据,index:当前行索引}",
+          "multiple": false
+        },
+        {
+          "type": "actionSelect",
+          "layoutType": "block",
+          "text": "回款进展表格行点击自定义函数",
+          "bindKey": "hkTableRowClickFunction",
+          "desc": "回款进展表格行点击自定义函数，接收参数：{_this:当前组件实例,row:当前行数据,index:当前行索引}",
           "multiple": false
         }
       ]

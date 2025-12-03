@@ -20,7 +20,7 @@
     <div class="container">
       <DataboardContainer title="回款进展看板" :iconUrl="paymentCollectionIcon">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
-        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :propData="propData"> </ComTable>
+        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :rowClickFunction="rowClickFunction"> </ComTable>
       </DataboardContainer>
       <DataboardContainer
         style="margin-top: 16px"
@@ -158,6 +158,9 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
+    rowClickFunction(row,index) {
+      IDM.invokeCustomFunctions.apply(this, [this.propData.tableRowClickFunction, {_this:this,row,index}]); // => [function result 1,function result 2]
+    },
     refreshData() {
       this.initData();
     },

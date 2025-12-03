@@ -53,6 +53,10 @@ export default {
     propData: {
       type: Object,
       default: () => {},
+    },
+    rowClickFunction: {
+      type: Function,
+      default: () => {},
     }
   },
   data() {
@@ -71,7 +75,8 @@ export default {
         },
         on: {
           click: () => {
-            IDM.invokeCustomFunctions.apply(this, [this.propData.tableRowClickFunction, {_this:this,row,index}]); // => [function result 1,function result 2]
+            this.rowClickFunction(row,index);
+            
           },
         },
       };

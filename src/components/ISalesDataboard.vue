@@ -24,7 +24,7 @@
           style="margin-top: 30px"
           :columns="paymentCollectionColumns"
           :dataSource="contractProgressData"
-          :propData="propData"
+          :rowClickFunction="htRowClickFunction"
         >
         </ComTable>
       </DataboardContainer>
@@ -37,7 +37,7 @@
           style="margin-top: 30px"
           :columns="paymentCollectionColumns"
           :dataSource="paymentCollectionData"
-          :propData="propData"
+          :rowClickFunction="hkRowClickFunction"
         >
         </ComTable
       ></DataboardContainer>
@@ -83,7 +83,7 @@ export default {
           key:"jxxbje"
         },
         {
-          title: "已回款（万元）",
+          title: "已签订（万元）",
           value: "0",
           imgUrl: paymentReceivedIcon,
           key:"haveDo"
@@ -179,6 +179,12 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
+    htRowClickFunction(row,index) {
+      IDM.invokeCustomFunctions.apply(this, [this.propData.htTableRowClickFunction, {_this:this,row,index}]); // => [function result 1,function result 2]
+    },
+    hkRowClickFunction(row,index) {
+      IDM.invokeCustomFunctions.apply(this, [this.propData.hkTableRowClickFunction, {_this:this,row,index}]); // => [function result 1,function result 2]
+    },
     refreshData() {
       this.initData();
     },
