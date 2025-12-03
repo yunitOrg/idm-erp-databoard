@@ -11,23 +11,18 @@
       /></span>
       <span
         slot="completionRate"
-        slot-scope="text, record"
+        slot-scope="text"
         :style="`color:${
-          parseFloat(record.wcl || 0) >= 100 ? '#00B78E ' : '#EF4444'
+          parseFloat(text || 0) >= 100 ? '#00B78E ' : '#EF4444'
         }`"
-        >{{ record.wcl }}</span
+        >{{ text }}</span
       >
       <span
         slot="gap"
-        slot-scope="text, record"
-        :style="`color:${record.bzce >= 0 ? '#00B78E' : '#EF4444'}`"
-        >{{ record.bzce }}</span
+        slot-scope="text"
+        :style="`color:${text >= 0 ? '#00B78E' : '#EF4444'}`"
+        >{{ text }}</span
       >
-      <template slot="baseInfoTitle" slot-scope="text">
-        <div style="text-align: center; background: #fafafa;">
-          <span style="margin-left: 8px; font-weight: bold;">基本信息{{ text }}</span>
-        </div>
-      </template>
     </a-table>
   </div>
 </template>
