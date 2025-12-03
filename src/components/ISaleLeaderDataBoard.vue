@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="table_block">
-            <ComTable :columns="contract_table_columns" :dataSource="resultData?.hksj?.hkDetail" :propData="propData" rowKey="pk"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="resultData?.hksj?.hkDetail" :rowClickFunction="rowClickFunctionHK" rowKey="pk"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -29,7 +29,7 @@
             <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
           <div class="table_block">
-            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail" :propData="propData" rowKey="pk"> </ComTable>
+            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail" :rowClickFunction="rowClickFunctionYS" rowKey="pk"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -214,6 +214,22 @@ export default {
   },
   destroyed() {},
   methods:{
+    rowClickFunctionHK(row, index) {
+      this.propData.tableRowClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.tableRowClickFunction,{
+        _this: this,
+        row,
+        index,
+        type: 'HK'
+      }])
+    },
+    rowClickFunctionYS(row, index) {
+      this.propData.tableRowClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.tableRowClickFunction,{
+        _this: this,
+        row,
+        index,
+        type: 'YS'
+      }])
+    },
     refreshData() {
       this.getInitData()
     },

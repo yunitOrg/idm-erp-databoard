@@ -17,7 +17,7 @@
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
-            <ComTable :columns="contract_table_columns" :dataSource="resultData?.xsht?.xshtDetail" :propData="propData" :bordered="true"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="resultData?.xsht?.xshtDetail" :rowClickFunction="rowClickFunctionHT" :bordered="true"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -30,7 +30,7 @@
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
-            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.hksj?.hkDetail" :propData="propData" :bordered="true"> </ComTable>
+            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.hksj?.hkDetail" :rowClickFunction="rowClickFunctionHK" :bordered="true"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -450,6 +450,22 @@ export default {
   },
   destroyed() {},
   methods:{
+    rowClickFunctionHT(row, index) {
+      this.propData.tableRowClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.tableRowClickFunction,{
+        _this: this,
+        row,
+        index,
+        type: 'HT'
+      }])
+    },
+    rowClickFunctionHK(row, index) {
+      this.propData.tableRowClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.tableRowClickFunction,{
+        _this: this,
+        row,
+        index,
+        type: 'HK'
+      }])
+    },
     refreshData() {
       this.getInitData()
     },
