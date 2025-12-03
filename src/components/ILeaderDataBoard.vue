@@ -4,6 +4,7 @@
       title="销售数据看板"
       rightTitle="合同与回款周度数据概览"
       :ctrlId="moduleObject.id"
+      printClass="ILeaderDataBoard_app_main"
       @refreshData="refreshData"
     />
     <div class="ILeaderDataBoard_app_main">

@@ -359,12 +359,10 @@ export default {
      * 加载动态数据
      */
     initData() {
-      const userInfo = window.IDM.user.getCurrentUserInfo();
       const hideLoading = this.$message.loading("正在加载中...",0);
       window.IDM.http
         .get('/DreamWeb/ctrl/insertXsHztj/getSj', {
-          type: 2,
-          userId: userInfo.userid || "200918165720PCheyy03dNTAj7ngxZB",
+          type: 'xdY2'
         })
         .then((res) => {
           const result = res.data.data;
@@ -529,6 +527,9 @@ export default {
   background-color: #f6f6f6;
   .container {
     padding: 20px;
+    height: calc(100vh - 96px);
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 }
 </style>
