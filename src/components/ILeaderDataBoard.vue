@@ -50,7 +50,6 @@ import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import contract_process from "@/assets/contract_process.png"
-import addressIcon from "@/assets/address.png"
 import { getCurrentWeekNumber, getProcessColor, getGapValueColor } from "@/utils"
 
 
@@ -109,7 +108,7 @@ export default {
             return (
               <div class="flex_center">
                 {
-                  this.weekNumber == 1 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                  this.weekNumber == 1 ? <img src={this.getImageSrc('', 'address')} style="height: 26px; margin-right: 14px;" /> : ''
                 }
                 <div>第一周（11.24-11.30）</div>
               </div>
@@ -146,7 +145,7 @@ export default {
             return (
               <div class="flex_center">
                 {
-                  this.weekNumber == 2 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                  this.weekNumber == 2 ? <img src={this.getImageSrc('', 'address')} style="height: 26px; margin-right: 14px;" /> : ''
                 }
                 <div>第二周（12.01-12.07）</div>
               </div>
@@ -183,7 +182,7 @@ export default {
             return (
               <div class="flex_center">
                 {
-                  this.weekNumber == 3 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                  this.weekNumber == 3 ? <img src={this.getImageSrc('', 'address')} style="height: 26px; margin-right: 14px;" /> : ''
                 }
                 <div>第三周（12.08-12.14）</div>
               </div>
@@ -220,7 +219,7 @@ export default {
             return (
               <div class="flex_center">
                 {
-                  this.weekNumber == 4 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                  this.weekNumber == 4 ? <img src={this.getImageSrc('', 'address')} style="height: 26px; margin-right: 14px;" /> : ''
                 }
                 <div>第四周（12.15-12.21）</div>
               </div>
@@ -265,7 +264,7 @@ export default {
             return (
               <div class="flex_center">
                 {
-                  this.weekNumber == 1 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                  this.weekNumber == 1 ? <img src={this.getImageSrc('', 'address')} style="height: 26px; margin-right: 14px;" /> : ''
                 }
                 <div>第一周（11.24-11.30）</div>
               </div>
@@ -302,7 +301,7 @@ export default {
             return (
               <div class="flex_center">
                 {
-                  this.weekNumber == 2 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                  this.weekNumber == 2 ? <img src={this.getImageSrc('', 'address')} style="height: 26px; margin-right: 14px;" /> : ''
                 }
                 <div>第二周（12.01-12.07）</div>
               </div>
@@ -339,7 +338,7 @@ export default {
             return (
               <div class="flex_center">
                 {
-                  this.weekNumber == 3 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                  this.weekNumber == 3 ? <img src={this.getImageSrc('', 'address')} style="height: 26px; margin-right: 14px;" /> : ''
                 }
                 <div>第三周（12.08-12.14）</div>
               </div>
@@ -376,7 +375,7 @@ export default {
             return (
               <div class="flex_center">
                 {
-                  this.weekNumber == 4 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                  this.weekNumber == 4 ? <img src={this.getImageSrc('', 'address')} style="height: 26px; margin-right: 14px;" /> : ''
                 }
                 <div>第四周（12.15-12.21）</div>
               </div>
