@@ -11,7 +11,7 @@
           <div class="grid_block">
             <ComBoard :items="contract_process_grid_list"> </ComBoard >
           </div>
-          <div class="table_block">
+          <div class="table_block" :class="`table_block${weekNumber}`">
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
@@ -28,7 +28,7 @@
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
-            <ComTable :columns="backMoneyColumns" :dataSource="backMoneyTableData"> </ComTable>
+            <ComTable :columns="backMoneyColumns" :dataSource="backMoneyTableData" :bordered="true"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -49,6 +49,7 @@ import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import contract_process from "@/assets/contract_process.png"
+import addressIcon from "@/assets/address.png"
 
 
 export default {
@@ -71,6 +72,7 @@ export default {
         contentField:"description",
         titleField: "title"
       },
+      weekNumber: 0, // 获取当前是第几周
       contract_process_grid_list: [
         {
           title: "绩效指标金额（万元）",
@@ -104,7 +106,16 @@ export default {
           key: "name"
         },
         {
-          title: "第一周（11.24-11.30）",
+          title: () => {
+            return (
+              <div class="flex_center">
+                {
+                  this.weekNumber == 1 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                }
+                <div>第一周（11.24-11.30）</div>
+              </div>
+            );
+          },
           dataIndex: "week",
           children: [
             {
@@ -130,7 +141,16 @@ export default {
           ]
         },
         {
-          title: "第二周（12.01-12.07）",
+          title: () => {
+            return (
+              <div class="flex_center">
+                {
+                  this.weekNumber == 2 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                }
+                <div>第二周（12.01-12.07）</div>
+              </div>
+            );
+          },
           dataIndex: "week",
           children: [
             {
@@ -156,7 +176,16 @@ export default {
           ]
         },
         {
-          title: "第三周（12.08-12.14）",
+          title: () => {
+            return (
+              <div class="flex_center">
+                {
+                  this.weekNumber == 3 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                }
+                <div>第三周（12.08-12.14）</div>
+              </div>
+            );
+          },
           dataIndex: "week",
           children: [
             {
@@ -179,10 +208,19 @@ export default {
               dataIndex: "gap3",
               key: "gap3"
             }
-          ]
+          ],
         },
         {
-          title: "第四周（12.15-12.21）",
+          title: () => {
+            return (
+              <div class="flex_center">
+                {
+                  this.weekNumber == 4 ? <img src={addressIcon} style="height: 26px; margin-right: 14px;" /> : ''
+                }
+                <div>第四周（12.15-12.21）</div>
+              </div>
+            );
+          },
           dataIndex: "week",
           children: [
             {
@@ -208,7 +246,68 @@ export default {
           ]
         }
       ],
-      contract_table_data: [ ],
+      contract_table_data: [
+        {
+          id: 1,
+          week: "王小虎",
+          planAmount1: "4,500",
+          actualAmount1: "4,500",
+          completionRate1: 63.0,
+          gap1: "-1,665",
+          planAmount2: "4,500",
+          actualAmount2: "4,500",
+          completionRate2: 63.0,
+          gap2: "-1,665",
+          planAmount3: "4,500",
+          actualAmount3: "4,500",
+          completionRate3: 63.0,
+          gap3: "-1,665",
+          planAmount4: "4,500",
+          actualAmount4: "4,500",
+          completionRate4: 63.0,
+          gap4: "-1,665",
+        },
+        {
+          id: 2,
+          week: "王小虎",
+          planAmount1: "4,500",
+          actualAmount1: "4,500",
+          completionRate1: 63.0,
+          gap1: "-1,665",
+          planAmount2: "4,500",
+          actualAmount2: "4,500",
+          completionRate2: 63.0,
+          gap2: "-1,665",
+          planAmount3: "4,500",
+          actualAmount3: "4,500",
+          completionRate3: 63.0,
+          gap3: "-1,665",
+          planAmount4: "4,500",
+          actualAmount4: "4,500",
+          completionRate4: 63.0,
+          gap4: "-1,665",
+        },
+        {
+          id: 3,
+          week: "王小虎",
+          planAmount1: "4,500",
+          actualAmount1: "4,500",
+          completionRate1: 63.0,
+          gap1: "-1,665",
+          planAmount2: "4,500",
+          actualAmount2: "4,500",
+          completionRate2: 63.0,
+          gap2: "-1,665",
+          planAmount3: "4,500",
+          actualAmount3: "4,500",
+          completionRate3: 63.0,
+          gap3: "-1,665",
+          planAmount4: "4,500",
+          actualAmount4: "4,500",
+          completionRate4: 63.0,
+          gap4: "-1,665",
+        }
+      ],
       // 回款模块
       backMoneyColumns: [
         {
@@ -354,12 +453,30 @@ export default {
   created() {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
+    this.getCurrentWeekNumber()
   },
   mounted() {
     
   },
   destroyed() {},
   methods:{
+    getCurrentWeekNumber(startDate = '2025-11-24') {
+      const start = new Date(startDate);
+      const now = new Date();
+      
+      // 清空时间部分，只比较日期
+      start.setHours(0, 0, 0, 0);
+      now.setHours(0, 0, 0, 0);
+      
+      // 计算天数差
+      const timeDiff = now.getTime() - start.getTime();
+      const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      
+      // 计算周数（第一周是0-6天，第二周是7-13天，以此类推）
+      const weekNumber = Math.floor(dayDiff / 7) + 1;
+      this.weekNumber = weekNumber;
+      console.log(`第${weekNumber}周`);
+    },
     handleClickDateFilter(item, key) {
       this.$set(this, key, item.value)
     },
@@ -652,6 +769,166 @@ export default {
           color: #333333;
           letter-spacing: 0;
           font-weight: 700;
+        }
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.ILeaderDataBoard_app{
+  .table-wrapper .ant-table .ant-table-thead > tr > th{
+    background: white;
+  }
+  
+  .table_block1{
+    .ant-table-thead{
+      tr{
+        &:nth-child(1){
+          th{
+            &:nth-child(2){
+              background: #F4FAFF;
+            }
+          }
+        }
+        &:nth-child(2){
+          th{
+            &:nth-child(1){
+              background: #F4FAFF;
+            }
+            &:nth-child(2){
+              background: #F4FAFF;
+            }
+            &:nth-child(3){
+              background: #F4FAFF;
+            }
+            &:nth-child(4){
+              background: #F4FAFF;
+            }
+          } 
+        }
+      }
+    }
+    .ant-table-tbody{
+      tr{
+        td{
+          &:nth-child(2),&:nth-child(3),&:nth-child(4),&:nth-child(5){
+            background: #F4FAFF;
+          }
+        }
+      }
+    }
+  }
+  .table_block2{
+    .ant-table-thead{
+      tr{
+        &:nth-child(1){
+          th{
+            &:nth-child(3){
+              background: #F4FAFF;
+            }
+          }
+        }
+        &:nth-child(2){
+          th{
+            &:nth-child(5){
+              background: #F4FAFF;
+            }
+            &:nth-child(6){
+              background: #F4FAFF;
+            }
+            &:nth-child(7){
+              background: #F4FAFF;
+            }
+            &:nth-child(8){
+              background: #F4FAFF;
+            }
+          } 
+        }
+      }
+    }
+    .ant-table-tbody{
+      tr{
+        td{
+          &:nth-child(6),&:nth-child(7),&:nth-child(8),&:nth-child(9){
+            background: #F4FAFF;
+          }
+        }
+      }
+    }
+  }
+  .table_block3{
+    .ant-table-thead{
+      tr{
+        &:nth-child(1){
+          th{
+            &:nth-child(4){
+              background: #F4FAFF;
+            }
+          }
+        }
+        &:nth-child(2){
+          th{
+            &:nth-child(9){
+              background: #F4FAFF;
+            }
+            &:nth-child(10){
+              background: #F4FAFF;
+            }
+            &:nth-child(11){
+              background: #F4FAFF;
+            }
+            &:nth-child(12){
+              background: #F4FAFF;
+            }
+          } 
+        }
+      }
+    }
+    .ant-table-tbody{
+      tr{
+        td{
+          &:nth-child(10),&:nth-child(11),&:nth-child(12),&:nth-child(13){
+            background: #F4FAFF;
+          }
+        }
+      }
+    }
+  }
+  .table_block4{
+    .ant-table-thead{
+      tr{
+        &:nth-child(1){
+          th{
+            &:nth-child(5){
+              background: #F4FAFF;
+            }
+          }
+        }
+        &:nth-child(2){
+          th{
+            &:nth-child(13){
+              background: #F4FAFF;
+            }
+            &:nth-child(14){
+              background: #F4FAFF;
+            }
+            &:nth-child(15){
+              background: #F4FAFF;
+            }
+            &:nth-child(16){
+              background: #F4FAFF;
+            }
+          } 
+        }
+      }
+    }
+    .ant-table-tbody{
+      tr{
+        td{
+          &:nth-child(14),&:nth-child(15),&:nth-child(16),&:nth-child(17){
+            background: #F4FAFF !important;
+          }
         }
       }
     }
