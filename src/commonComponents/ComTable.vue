@@ -12,13 +12,13 @@
       <span
         slot="completionRate"
         slot-scope="text"
-        :style="`color:${utils.getProcessColor(text)}`"
+        :style="`color:${getProcessColor(text)}`"
         >{{ text === '%' ? '0.00%' : text }}</span
       >
       <span
         slot="gap"
         slot-scope="text"
-        :style="`color:${utils.getGapValueColor(text)}`"
+        :style="`color:${getGapValueColor(text)}`"
         >{{ text }}</span
       >
     </a-table>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import utils from '@/utils/index.js'
+import {getProcessColor,getGapValueColor} from '@/utils/index.js'
 export default {
   props: {
     columns: {
@@ -45,6 +45,12 @@ export default {
       type: String,
       default: 'id',
     },
+  },
+  data() {
+    return {
+      getProcessColor,
+      getGapValueColor,
+    }
   },
 };
 </script>

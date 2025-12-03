@@ -14,7 +14,7 @@
     <DataboardHeader
       title="项目数据看板"
       rightTitle="合同与回款周度数据概览"
-      :ctrld="moduleObject.id"
+      :ctrlId="moduleObject.id"
       @refreshData="refreshData"
     />
     <div class="container">
