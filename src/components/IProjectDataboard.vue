@@ -18,13 +18,14 @@
       @refreshData="refreshData"
     />
     <div class="container">
-      <DataboardContainer title="回款进展看板" :iconUrl="paymentCollectionIcon">
+      <DataboardContainer title="回款进展看板"  titleTip="金额：均为税后净回款额" :iconUrl="paymentCollectionIcon">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
         <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :rowClickFunction="rowClickFunction"> </ComTable>
       </DataboardContainer>
       <DataboardContainer
         style="margin-top: 16px"
         title="验收进展看板"
+        titleTip="金额：均为税后净验收额"
         :iconUrl="acceptanceIcon"
         ><ComBoard :items="acceptanceItems"> </ComBoard
       ></DataboardContainer>

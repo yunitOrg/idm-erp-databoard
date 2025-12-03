@@ -18,7 +18,7 @@
       @refreshData="refreshData"
     />
     <div class="container">
-      <DataboardContainer title="合同进展看板" :iconUrl="contractProgressIcon" :tips="tips">
+      <DataboardContainer title="合同进展看板"  titleTip="金额：均为税后净合同额" :iconUrl="contractProgressIcon" :tips="tips">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
         <ComTable
           style="margin-top: 30px"
@@ -31,6 +31,7 @@
       <DataboardContainer
         style="margin-top: 16px"
         title="回款进展看板"
+        titleTip="金额：均为税后净回款额"
         :iconUrl="paymentCollectionIcon"
         ><ComBoard :items="acceptanceItems"> </ComBoard
         ><ComTable
