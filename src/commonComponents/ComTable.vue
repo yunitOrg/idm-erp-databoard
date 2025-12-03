@@ -5,23 +5,23 @@
         slot="flag"
         slot-scope="text, record"
         :style="`color:${
-          record.completionRate >= 100 ? '#00B78E ' : '#EF4444'
+          parseFloat(record.wcl || 0)  >= 100 ? '#00B78E ' : '#EF4444'
         }`"
         ><svg-icon icon-class="flag"
       /></span>
       <span
-        slot="completionRate"
+        slot="wcl"
         slot-scope="text, record"
         :style="`color:${
-          record.completionRate >= 100 ? '#00B78E ' : '#EF4444'
+          parseFloat(record.wcl || 0) >= 100 ? '#00B78E ' : '#EF4444'
         }`"
-        >{{ record.completionRate }}%</span
+        >{{ record.wcl }}</span
       >
       <span
         slot="gap"
         slot-scope="text, record"
-        :style="`color:${record.gap >= 0 ? '#00B78E' : '#EF4444'}`"
-        >{{ record.gap }}</span
+        :style="`color:${record.bzce >= 0 ? '#00B78E' : '#EF4444'}`"
+        >{{ record.bzce }}</span
       >
     </a-table>
   </div>

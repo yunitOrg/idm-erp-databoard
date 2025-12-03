@@ -69,11 +69,13 @@ export default {
           title: "绩效指标金额（万元）",
           value: "4,500",
           imgUrl: performanceIndicatorIcon,
+          key:"jxxbje"
         },
         {
           title: "已回款（万元）",
           value: "4,500",
           imgUrl: paymentReceivedIcon,
+          key:"haveDo"
         },
         {
           title: "完成率",
@@ -82,12 +84,14 @@ export default {
           color: "#EF4444",
           flex: "3 3 0%",
           imgUrl: completionRateIcon,
+          key:"wcl"
         },
         {
           title: "绩效差额（万元）",
           value: "-1,665",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
+          key:"jxce"
         },
       ],
       acceptanceItems: [
@@ -95,11 +99,13 @@ export default {
           title: "计划验收金额（万元）",
           value: "3,850",
           imgUrl: planAcceptanceIcon,
+          key:"jhje"
         },
         {
           title: "实际验收金额（万元）",
           value: "4,500",
           imgUrl: actualAcceptanceIcon,
+          key:"sjje"
         },
         {
           title: "完成率",
@@ -107,6 +113,7 @@ export default {
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
+          key:"wcl"
         },
       ],
       paymentCollectionColumns: [
@@ -118,15 +125,15 @@ export default {
         },
         {
           title: "周次",
-          dataIndex: "week",
+          dataIndex: "zc",
         },
         {
           title: "计划金额（万元）",
-          dataIndex: "planAmount",
+          dataIndex: "jhje",
         },
         {
           title: "实际金额（万元）",
-          dataIndex: "actualAmount",
+          dataIndex: "sjje",
         },
         {
           title: "完成率",
@@ -191,7 +198,9 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
-    refreshData() {},
+    refreshData() {
+      this.initData();
+    },
     /**
      * 提供父级组件调用的刷新prop数据组件
      */
@@ -391,51 +400,32 @@ export default {
      * 加载动态数据
      */
     initData() {
-      let that = this;
-      //所有地址的url参数转换
-      var params = that.commonParam();
-      switch (this.propData.dataSourceType) {
-        case "customInterface":
-          this.propData.customInterfaceUrl &&
-            window.IDM.http
-              .get(this.propData.customInterfaceUrl, params)
-              .then((res) => {
-                //res.data
-                that.$set(
-                  that.propData,
-                  "fontContent",
-                  that.getExpressData(
-                    "resultData",
-                    that.propData.dataFiled,
-                    res.data
-                  )
-                );
-                // that.propData.fontContent = ;
-              })
-              .catch(function (error) {});
-          break;
-        case "pageCommonInterface":
-          //使用通用接口直接跳过，在setContextValue执行
-          break;
-        case "customFunction":
-          if (
-            this.propData.customFunction &&
-            this.propData.customFunction.length > 0
-          ) {
-            var resValue = "";
-            try {
-              resValue =
-                window[this.propData.customFunction[0].name] &&
-                window[this.propData.customFunction[0].name].call(this, {
-                  ...params,
-                  ...this.propData.customFunction[0].param,
-                  moduleObject: this.moduleObject,
-                });
-            } catch (error) {}
-            that.propData.fontContent = resValue;
-          }
-          break;
-      }
+      const userInfo = window.user.getCurrentUserInfo();
+      window.IDM.http
+        .get('ctrl/insertXsHztj/getSj', {
+          type: 2,
+          userId: userInfo.userId,
+        })
+        .then((res) => {
+          console.log(res,"数据接口");
+          const result = res.data;
+          this.acceptanceItems.forEach((item) => {
+            if(item.isPercent){
+              item.value = parseFloat(result.ysDetail[item.key] || 0).toFixed(2);
+            }else{
+              item.value = result.ysDetail[item.key] || "";
+            }
+          });
+          this.paymentCollectionItems.forEach((item) => {
+            if(item.isPercent){
+              item.value = parseFloat(result.ysDetail[item.key] || 0).toFixed(2);
+            }else{
+              item.value = result.hksj.ysDetail[item.key] || "";
+            }
+          });
+          this.paymentCollectionData = result.hksj.hkDetail
+        })
+        .catch(function (error) {});
     },
     /**
      * 通用的获取表达式匹配后的结果
