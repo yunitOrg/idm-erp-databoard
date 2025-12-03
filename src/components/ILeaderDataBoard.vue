@@ -452,7 +452,7 @@ export default {
     },
     getInitData() {
       IDM.http.get('/ctrl/insertXsHztj/getSj', {
-        type: 1,
+        type: "xdX1",
         week: 1,
       }).then((res) => {
         if(res?.data?.type == 'success') {

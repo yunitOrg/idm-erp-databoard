@@ -18,7 +18,7 @@
             </div>
           </div>
           <div class="table_block">
-            <ComTable :columns="contract_table_columns" :dataSource="resultData?.hksj?.hkDetail" rowKey="bdId"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="resultData?.hksj?.hkDetail" rowKey="pk"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -28,7 +28,7 @@
             <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
           <div class="table_block">
-            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail"> </ComTable>
+            <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail" rowKey="pk"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -217,7 +217,7 @@ export default {
     },
     getInitData() {
       IDM.http.get('/ctrl/insertXsHztj/getSj', {
-        type: 4,
+        type: "xdS8",
         week: this.weekNumber,
       }).then((res) => {
         if(res?.data?.type == 'success') {
