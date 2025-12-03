@@ -10,7 +10,7 @@
         ><svg-icon icon-class="flag"
       /></span>
       <span
-        slot="wcl"
+        slot="completionRate"
         slot-scope="text, record"
         :style="`color:${
           parseFloat(record.wcl || 0) >= 100 ? '#00B78E ' : '#EF4444'

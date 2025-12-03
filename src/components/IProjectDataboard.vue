@@ -67,19 +67,19 @@ export default {
       paymentCollectionItems: [
         {
           title: "绩效指标金额（万元）",
-          value: "4,500",
+          value: "0",
           imgUrl: performanceIndicatorIcon,
           key:"jxxbje"
         },
         {
           title: "已回款（万元）",
-          value: "4,500",
+          value: "0",
           imgUrl: paymentReceivedIcon,
           key:"haveDo"
         },
         {
           title: "完成率",
-          value: 63.0,
+          value: "0%",
           isPercent: true,
           color: "#EF4444",
           flex: "3 3 0%",
@@ -88,7 +88,7 @@ export default {
         },
         {
           title: "绩效差额（万元）",
-          value: "-1,665",
+          value: "0",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
           key:"jxce"
@@ -97,19 +97,19 @@ export default {
       acceptanceItems: [
         {
           title: "计划验收金额（万元）",
-          value: "3,850",
+          value: "0",
           imgUrl: planAcceptanceIcon,
           key:"jhje"
         },
         {
           title: "实际验收金额（万元）",
-          value: "4,500",
+          value: "0",
           imgUrl: actualAcceptanceIcon,
           key:"sjje"
         },
         {
           title: "完成率",
-          value: 72.52,
+          value: "0%",
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
@@ -144,50 +144,7 @@ export default {
           scopedSlots: { customRender: "gap" },
         },
       ],
-      paymentCollectionData: [
-        {
-          week: "第六周（12.29-01.04）",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 50,
-          gap: "100",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 120,
-          gap: "-200",
-        },
-        {
-          week: "第1周",
-          planAmount: "1,000",
-          actualAmount: "1,200",
-          completionRate: 20,
-          gap: "200",
-        },
-      ],
+      paymentCollectionData: [],
     };
   },
   props: {},
@@ -400,7 +357,7 @@ export default {
      * 加载动态数据
      */
     initData() {
-      const userInfo = window.user.getCurrentUserInfo();
+      const userInfo = window.IDM.user.getCurrentUserInfo();
       window.IDM.http
         .get('ctrl/insertXsHztj/getSj', {
           type: 2,
@@ -408,21 +365,14 @@ export default {
         })
         .then((res) => {
           console.log(res,"数据接口");
-          const result = res.data;
+          const result = res.data.data;
           this.acceptanceItems.forEach((item) => {
-            if(item.isPercent){
-              item.value = parseFloat(result.ysDetail[item.key] || 0).toFixed(2);
-            }else{
-              item.value = result.ysDetail[item.key] || "";
-            }
+            item.value = result.ysDetail[item.key] || "";
           });
           this.paymentCollectionItems.forEach((item) => {
-            if(item.isPercent){
-              item.value = parseFloat(result.ysDetail[item.key] || 0).toFixed(2);
-            }else{
-              item.value = result.hksj.ysDetail[item.key] || "";
-            }
+            item.value = result.hksj[item.key] || "";
           });
+          console.log(result,"数据");
           this.paymentCollectionData = result.hksj.hkDetail
         })
         .catch(function (error) {});

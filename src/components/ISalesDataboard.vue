@@ -39,6 +39,7 @@
         >
         </ComTable
       ></DataboardContainer>
+      <div class="tips">{{ tips }}</div>
     </div>
   </div>
 </template>
@@ -241,6 +242,7 @@ export default {
           gap: "200",
         },
       ],
+      tips: "本周数据已锁定，下周数据锁定时间 12月6日 12:00",
     };
   },
   props: {},
@@ -645,6 +647,13 @@ export default {
   background-color: #f6f6f6;
   .container {
     padding: 20px;
+
+    .tips {
+      font-size: 22px;
+      color: #333333;
+      text-align: center;
+      margin: 70px 0 20px;
+    }
   }
 }
 </style>

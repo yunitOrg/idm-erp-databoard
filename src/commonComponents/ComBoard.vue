@@ -13,13 +13,13 @@
           {{ item.title }}
         </div>
         <div class="value" :style="`color: ${item.color}`">
-          <span>{{ item.isPercent ? item.value.toFixed(2) : item.value }}</span
-          ><span v-if="item.isPercent">%</span>
+          <span>{{item.value}}</span
+          >
         </div>
         <div v-if="item.isPercent" class="progress">
           <div
             class="progress-value"
-            :style="{ width: item.value + '%', background: item.color }"
+            :style="{ width: item.value, background: item.color }"
           ></div>
         </div>
       </div>
