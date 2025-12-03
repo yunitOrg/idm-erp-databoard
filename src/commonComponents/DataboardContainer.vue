@@ -6,6 +6,9 @@
         <span class="title">
           {{ title }}
         </span>
+        <span class="right-title">
+          金额：均为税后净合同额
+        </span>
       </div>
       <div class="header-right">
         {{tips}}
@@ -47,6 +50,20 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 20px 0  17px;
+
+    .header-left {
+      display: flex;
+      align-items: center;
+
+      .right-title {
+        font-family: PingFangSC-Regular;
+        font-size: 16px;
+        color: #666666;
+        letter-spacing: 0;
+        font-weight: 400;
+        margin-left: 20px;
+      }
+    }
     img {
       width: 38px;
       height: 38px;

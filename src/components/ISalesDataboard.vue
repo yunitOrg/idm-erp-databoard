@@ -24,6 +24,7 @@
           style="margin-top: 30px"
           :columns="paymentCollectionColumns"
           :dataSource="contractProgressData"
+          :propData="propData"
         >
         </ComTable>
       </DataboardContainer>
@@ -36,6 +37,7 @@
           style="margin-top: 30px"
           :columns="paymentCollectionColumns"
           :dataSource="paymentCollectionData"
+          :propData="propData"
         >
         </ComTable
       ></DataboardContainer>
@@ -143,6 +145,7 @@ export default {
         {
           title: "周次",
           dataIndex: "zc",
+          scopedSlots: { customRender: "zc" },
         },
         {
           title: "计划金额（万元）",

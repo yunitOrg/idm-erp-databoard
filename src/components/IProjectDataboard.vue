@@ -20,7 +20,7 @@
     <div class="container">
       <DataboardContainer title="回款进展看板" :iconUrl="paymentCollectionIcon">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
-        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData"> </ComTable>
+        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :propData="propData"> </ComTable>
       </DataboardContainer>
       <DataboardContainer
         style="margin-top: 16px"
@@ -126,6 +126,7 @@ export default {
         {
           title: "周次",
           dataIndex: "zc",
+          scopedSlots: { customRender: "zc" },
         },
         {
           title: "计划金额（万元）",

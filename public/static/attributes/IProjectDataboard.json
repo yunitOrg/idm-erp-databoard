@@ -254,6 +254,14 @@
       "text": "高级",
       "desc": "点击？查看高级设置用法指南",
       "children": [
+        {
+          "type": "actionSelect",
+          "layoutType": "block",
+          "text": "表格行点击自定义函数",
+          "bindKey": "tableRowClickFunction",
+          "desc": "表格行点击自定义函数，接收参数：{_this:当前组件实例,row:当前行数据,index:当前行索引}",
+          "multiple": false
+        }
       ]
     }
   ]

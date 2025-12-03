@@ -1,6 +1,6 @@
 <template>
   <div class="table-wrapper">
-    <a-table :columns="columns" :data-source="dataSource" :pagination="false" :bordered="bordered" :rowKey="rowKey">
+    <a-table :customRow="customRow" :columns="columns" :data-source="dataSource" :pagination="false" :bordered="bordered" :rowKey="rowKey">
       <span
         slot="flag"
         slot-scope="text, record"
@@ -21,12 +21,17 @@
         :style="`color:${getGapValueColor(text)}`"
         >{{ text }}</span
       >
+      <template slot="zc" scope="text,record,index">
+        <img class="address-icon" :src="addressIcon" alt="" v-if="getCurrentWeekNumber() === index">
+        {{ text }}
+      </template>
     </a-table>
   </div>
 </template>
 
 <script>
-import {getProcessColor,getGapValueColor} from '@/utils/index.js'
+import {getProcessColor,getGapValueColor, getCurrentWeekNumber} from '@/utils/index.js'
+import addressIcon from "@/assets/address.png";
 export default {
   props: {
     columns: {
@@ -45,12 +50,32 @@ export default {
       type: String,
       default: 'id',
     },
+    propData: {
+      type: Object,
+      default: () => {},
+    }
   },
   data() {
     return {
       getProcessColor,
       getGapValueColor,
+      getCurrentWeekNumber,
+      addressIcon
     }
+  },
+  methods: {
+    customRow(row, index) {
+      return {
+        style: {
+          backgroundColor: getCurrentWeekNumber() === index  ? '#f5faff' : '#FFFFFF',
+        },
+        on: {
+          click: () => {
+            IDM.invokeCustomFunctions.apply(this, [this.propData.tableRowClickFunction, {_this:this,row,index}]); // => [function result 1,function result 2]
+          },
+        },
+      };
+    },
   },
 };
 </script>
@@ -83,6 +108,11 @@ export default {
         letter-spacing: 0;
         font-weight: 700;
       }
+    }
+
+    .address-icon {
+      width: 26px;
+      margin-right: 10px;
     }
   }
 }
