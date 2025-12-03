@@ -12,15 +12,13 @@
       <span
         slot="completionRate"
         slot-scope="text"
-        :style="`color:${
-          parseFloat(text || 0) >= 100 ? '#00B78E ' : '#EF4444'
-        }`"
+        :style="`color:${utils.getProcessColor(text)}`"
         >{{ text === '%' ? '0.00%' : text }}</span
       >
       <span
         slot="gap"
         slot-scope="text"
-        :style="`color:${text >= 0 ? '#00B78E' : '#EF4444'}`"
+        :style="`color:${utils.getGapValueColor(text)}`"
         >{{ text }}</span
       >
     </a-table>
@@ -28,6 +26,7 @@
 </template>
 
 <script>
+import utils from '@/utils/index.js'
 export default {
   props: {
     columns: {
