@@ -384,7 +384,7 @@ export default {
       window.IDM.http
         .get('/DreamWeb/ctrl/insertXsHztj/getSj', {
           type: 3,
-          userId: userInfo.userId || "20091816572442gv3icmGWxHTzaLeD1",
+          userId: userInfo.userid || "20091816572442gv3icmGWxHTzaLeD1",
         })
         .then((res) => {
           const result = res.data.data;
