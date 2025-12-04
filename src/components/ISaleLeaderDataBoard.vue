@@ -104,7 +104,18 @@ export default {
         {
           title: "项目DT",
           dataIndex: "name",
-          key: "name"
+          key: "name",
+          customRender: (text, record, rowIndex) => {
+            if(text == "合计"){
+              return (
+                <div style="font-weight: 800;">
+                  <div>合计</div>
+                </div>
+              );
+            } else {
+              return text
+            }
+          }
         },
         {
           title: "计划金额（万元）",
@@ -161,7 +172,18 @@ export default {
         {
           title: "项目DT",
           dataIndex: "name",
-          key: "name"
+          key: "name",
+          customRender: (text, record, rowIndex) => {
+            if(text == "合计"){
+              return (
+                <div style="font-weight: 800;">
+                  <div>合计</div>
+                </div>
+              );
+            } else {
+              return text
+            }
+          }
         },
         {
           title: "计划验收金额（万元）",

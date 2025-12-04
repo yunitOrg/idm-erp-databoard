@@ -22,7 +22,8 @@
         >{{ text }}</span
       >
       <template slot="zc" scope="text,record,index">
-        <span>{{ text }}</span>
+        <span v-if="text == '合计'" style="font-weight: 800;">{{ text }}</span>
+        <span v-else>{{ text }}</span>
         <img v-if="getCurrentWeekNumber() === index + 1" class="address-icon" :src="getImageSrc('', 'address')">
       </template>
     </a-table>

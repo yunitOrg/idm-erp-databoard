@@ -109,6 +109,17 @@ export default {
               title: "销售老大",
               dataIndex: "name",
               key: "name",
+              customRender: (text, record, rowIndex) => {
+                if(text == "合计"){
+                  return (
+                    <div style="font-weight: 800;">
+                      <div>合计</div>
+                    </div>
+                  );
+                } else {
+                  return text
+                }
+              }
             }
           ]
         },
@@ -280,6 +291,17 @@ export default {
               title: "销售老大",
               dataIndex: "name",
               key: "name",
+              customRender: (text, record, rowIndex) => {
+                if(text == "合计"){
+                  return (
+                    <div style="font-weight: 800;">
+                      <div>合计</div>
+                    </div>
+                  );
+                } else {
+                  return text
+                }
+              }
             }
           ]
         },
@@ -858,6 +880,7 @@ export default {
 <style lang="scss">
 .ILeaderDataBoard_app{
   .table-wrapper .ant-table .ant-table-thead > tr > th{
+    text-align: center;
     background: white;
   }
   
