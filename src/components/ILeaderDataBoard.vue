@@ -17,7 +17,7 @@
             <div class="tip">
               单位：万元，差额=实际-计划
             </div>
-            <ComTable :columns="contract_table_columns" :dataSource="resultData?.xsht?.xshtDetail" :rowClickFunction="rowClickFunctionHT" :bordered="true"> </ComTable>
+            <ComTable :columns="contract_table_columns" :dataSource="resultData?.xsht?.xshtDetail" :rowClickFunction="rowClickFunctionHT" :bordered="true" planAmount="xshtje" actualAmount="xshtje"> </ComTable>
           </div>
         </DataboardContainer>
       </div>
@@ -51,7 +51,7 @@ import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import contract_process from "@/assets/contract_process.png"
-import { getCurrentWeekNumber, getProcessColor, getGapValueColor } from "@/utils"
+import { getCurrentWeekNumber,getValueColor } from "@/utils"
 
 
 export default {
@@ -90,7 +90,7 @@ export default {
           title: "完成率",
           value: "",
           isPercent: true,
-          flex: "3 3 0%",
+          flex: "1.2",
           imgUrl: completionRateIcon,
         },
         {
@@ -132,13 +132,15 @@ export default {
               title: "完成率",
               dataIndex: "firstWcl",
               key: "firstWcl",
-              scopedSlots: { customRender: "completionRate" },
+              // scopedSlots: { customRender: "completionRate" },
+              customRender: this.renderProcess("firstJhje", "firstSjje")
             },
             {
               title: "差额",
               dataIndex: "firstJxce",
               key: "firstJxce",
-              scopedSlots: { customRender: "gap" },
+              // scopedSlots: { customRender: "gap" },
+              customRender: this.renderGap("firstJhje", "firstSjje")
             }
           ]
         },
@@ -169,13 +171,15 @@ export default {
               title: "完成率",
               dataIndex: "secondWcl",
               key: "secondWcl",
-              scopedSlots: { customRender: "completionRate" },
+              // scopedSlots: { customRender: "completionRate" },
+              customRender: this.renderProcess("secondJhje", "secondSjje")
             },
             {
               title: "差额",
               dataIndex: "secondJxce",
               key: "secondJxce",
-              scopedSlots: { customRender: "gap" },
+              // scopedSlots: { customRender: "gap" },
+              customRender: this.renderGap("secondJhje", "secondSjje")
             }
           ]
         },
@@ -206,13 +210,15 @@ export default {
               title: "完成率",
               dataIndex: "thirdWcl",
               key: "thirdWcl",
-              scopedSlots: { customRender: "completionRate" },
+              // scopedSlots: { customRender: "completionRate" },
+              customRender: this.renderProcess("thirdJhje", "thirdSjje")
             },
             {
               title: "差额",
               dataIndex: "thirdJxce",
               key: "thirdJxce",
-              scopedSlots: { customRender: "gap" },
+              // scopedSlots: { customRender: "gap" },
+              customRender: this.renderGap("thirdJhje", "thirdSjje")
             }
           ],
         },
@@ -243,13 +249,15 @@ export default {
               title: "完成率",
               dataIndex: "fourthWcl",
               key: "fourthWcl",
-              scopedSlots: { customRender: "completionRate" },
+              // scopedSlots: { customRender: "completionRate" },
+              customRender: this.renderProcess("fourthJhje", "fourthSjje")
             },
             {
               title: "差额",
               dataIndex: "fourthJxce",
               key: "fourthJxce",
-              scopedSlots: { customRender: "gap" },
+              // scopedSlots: { customRender: "gap" },
+              customRender: this.renderGap("fourthJhje", "fourthSjje")
             }
           ]
         }
@@ -288,13 +296,15 @@ export default {
               title: "完成率",
               dataIndex: "firstWcl",
               key: "firstWcl",
-              scopedSlots: { customRender: "completionRate" },
+              // scopedSlots: { customRender: "completionRate" },
+              customRender: this.renderProcess("firstJhje", "firstSjje")
             },
             {
               title: "差额",
               dataIndex: "firstJxce",
               key: "firstJxce",
-              scopedSlots: { customRender: "gap" },
+              // scopedSlots: { customRender: "gap" },
+              customRender: this.renderGap("firstJhje", "firstSjje")
             }
           ]
         },
@@ -325,13 +335,15 @@ export default {
               title: "完成率",
               dataIndex: "secondWcl",
               key: "secondWcl",
-              scopedSlots: { customRender: "completionRate" },
+              // scopedSlots: { customRender: "completionRate" },
+              customRender: this.renderProcess("secondJhje", "secondSjje")
             },
             {
               title: "差额",
               dataIndex: "secondJxce",
               key: "secondJxce",
-              scopedSlots: { customRender: "gap" },
+              // scopedSlots: { customRender: "gap" },
+              customRender: this.renderGap("secondJhje", "secondSjje")
             }
           ]
         },
@@ -362,13 +374,15 @@ export default {
               title: "完成率",
               dataIndex: "thirdWcl",
               key: "thirdWcl",
-              scopedSlots: { customRender: "completionRate" },
+              // scopedSlots: { customRender: "completionRate" },
+              customRender: this.renderProcess("thirdJhje", "thirdSjje")
             },
             {
               title: "差额",
               dataIndex: "thirdJxce",
               key: "thirdJxce",
-              scopedSlots: { customRender: "gap" },
+              // scopedSlots: { customRender: "gap" },
+              customRender: this.renderGap("thirdJhje", "thirdSjje")
             }
           ],
         },
@@ -399,13 +413,15 @@ export default {
               title: "完成率",
               dataIndex: "fourthWcl",
               key: "fourthWcl",
-              scopedSlots: { customRender: "completionRate" },
+              // scopedSlots: { customRender: "completionRate" },
+              customRender: this.renderProcess("fourthJhje", "fourthSjje")
             },
             {
               title: "差额",
               dataIndex: "fourthJxce",
               key: "fourthJxce",
-              scopedSlots: { customRender: "gap" },
+              // scopedSlots: { customRender: "gap" },
+              customRender: this.renderGap("fourthJhje", "fourthSjje")
             }
           ]
         }
@@ -425,7 +441,7 @@ export default {
           title: "完成率",
           value: 0,
           isPercent: true,
-          flex: "3 3 0%",
+          flex: "1.2",
           imgUrl: completionRateIcon,
         },
         {
@@ -450,6 +466,28 @@ export default {
   },
   destroyed() {},
   methods:{
+    renderProcess(planAmountKey, actualAmountKey) {
+      return (text, record, index) => {
+        return (
+          <span
+            style={`color:${getValueColor(record[planAmountKey],record[actualAmountKey])}`}
+          >
+            { text === '%' ? '0.00%' : text }
+          </span>
+        );
+      }
+    },
+    renderGap(planAmountKey, actualAmountKey) {
+      return (text, record, index) => {
+        return (
+          <span
+            style={`color:${getValueColor(record[planAmountKey],record[actualAmountKey])}`}
+          >
+            { text }
+          </span>
+        );
+      }
+    },
     rowClickFunctionHT(row, index) {
       this.propData.tableRowClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.tableRowClickFunction,{
         _this: this,
@@ -484,10 +522,10 @@ export default {
           this.backMoneyGridList[1].value = Number(this.resultData.hksj?.haveDo);
           this.backMoneyGridList[2].value = this.resultData.hksj?.wcl;
           this.backMoneyGridList[3].value = this.resultData.hksj?.jxce;
-          this.contract_process_grid_list[2].color = getProcessColor(this.resultData.xsht?.wcl);
-          this.backMoneyGridList[2].color = getProcessColor(this.resultData.hksj?.wcl);
-          this.contract_process_grid_list[3].color = getGapValueColor(this.resultData.xsht?.jxce);
-          this.backMoneyGridList[3].color = getGapValueColor(this.resultData.hksj?.jxce);
+          this.contract_process_grid_list[2].color = getValueColor(this.resultData.xsht?.jxxbje,this.resultData.xsht?.haveDo);
+          this.backMoneyGridList[2].color = getValueColor(this.resultData.hksj?.jxxbje,this.resultData.hksj?.haveDo);
+          this.contract_process_grid_list[3].color = getValueColor(this.resultData.xsht?.jxxbje,this.resultData.xsht?.haveDo);
+          this.backMoneyGridList[3].color = getValueColor(this.resultData.hksj?.jxxbje,this.resultData.hksj?.haveDo);
         } else {
           this.resultData = {}
         }

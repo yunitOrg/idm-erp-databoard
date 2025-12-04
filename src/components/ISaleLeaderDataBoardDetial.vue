@@ -9,21 +9,16 @@
     idm-ctrl="idm_module"
     :id="moduleObject.id"
     :idm-ctrl-id="moduleObject.id"
-    class="idm-sales-databoard-outer"
+    class="idm-sales-leader-databoard-detail-outer"
   >
-    <DataboardHeader
-      title="销售数据看板"
-      rightTitle="合同与回款进展数据概览"
-      showReporter
-      :ctrlId="moduleObject.id"
-      @refreshData="refreshData"
-    />
     <div class="container">
-      <DataboardContainer title="合同进展看板"  titleTip="金额：均为税后净合同额" :iconUrl="contractProgressIcon" :tips="tips">
-        <ComBoard :items="paymentCollectionItems"> </ComBoard>
+      <DataboardContainer
+        title="合同进展看板"
+        titleTip="金额：均为税后净合同额"
+        :iconUrl="contractProgressIcon"
+      >
         <ComTable
-          style="margin-top: 30px"
-          :columns="paymentCollectionColumns"
+          :columns="contractColumns"
           :dataSource="contractProgressData"
           :rowClickFunction="htRowClickFunction"
           :moduleObject="moduleObject"
@@ -35,16 +30,14 @@
         title="回款进展看板"
         titleTip="金额：均为税后净回款额"
         :iconUrl="paymentCollectionIcon"
-        ><ComBoard :items="acceptanceItems"> </ComBoard
         ><ComTable
-          style="margin-top: 30px"
           :columns="paymentCollectionColumns"
           :dataSource="paymentCollectionData"
           :rowClickFunction="hkRowClickFunction"
           :moduleObject="moduleObject"
         >
-        </ComTable
-      ></DataboardContainer>
+        </ComTable>
+      </DataboardContainer>
     </div>
   </div>
 </template>
@@ -60,14 +53,12 @@ import performanceIndicatorIcon from "@/assets/performance_indicator.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
-import { getValueColor } from "@/utils"
+import { getValueColor, getCurrentWeekNumber } from "@/utils";
 
 export default {
-  name: "ISalesDataboard",
+  name: "ISaleLeaderDataBoardDetial",
   components: {
-    DataboardHeader,
     DataboardContainer,
-    ComBoard,
     ComTable,
   },
   data() {
@@ -80,95 +71,52 @@ export default {
       performanceGapIcon,
       paymentReceivedIcon,
       completionRateIcon,
-      paymentCollectionItems: [
+      contractColumns: [
+        {
+          title: "销售老大",
+          dataIndex: "name",
+        },
         {
           title: "绩效指标金额（万元）",
-          value: "0",
-          imgUrl: performanceIndicatorIcon,
-          key:"jxxbje"
-        },
-        {
-          title: "已签订（万元）",
-          value: "0",
-          imgUrl: paymentReceivedIcon,
-          key:"haveDo"
-        },
-        {
-          title: "完成率",
-          value: "0.00%",
-          isPercent: true,
-          flex: "1.2",
-          color: "#EF4444",
-          imgUrl: completionRateIcon,
-          key:"wcl"
-        },
-        {
-          title: "绩效差额（万元）",
-          value: "0",
-          color: "#EF4444",
-          imgUrl: performanceGapIcon,
-          key:"jxce"
-        },
-      ],
-      acceptanceItems: [
-        {
-          title: "绩效指标金额（万元）",
-          value: "0",
-          imgUrl: performanceIndicatorIcon,
-          key:"jxxbje"
-        },
-        {
-          title: "已回款（万元）",
-          value: "0",
-          imgUrl: paymentReceivedIcon,
-          key:"haveDo"
-        },
-        {
-          title: "完成率",
-          value: "0.00%",
-          flex: "1.2",
-          isPercent: true,
-          color: "#EF4444",
-          imgUrl: completionRateIcon,
-          key:"wcl"
-        },
-        {
-          title: "绩效差额（万元）",
-          value: "0",
-          color: "#EF4444",
-          imgUrl: performanceGapIcon,
-          key:"jxce"
-        },
-      ],
-      paymentCollectionColumns: [
-        {
-          title: " ",
-          scopedSlots: { customRender: "flag" },
-          align: "center",
-          width: 200,
-        },
-        {
-          title: "周次",
-          dataIndex: "zc",
-          scopedSlots: { customRender: "zc" },
-        },
-        {
-          title: "计划金额（万元）",
           dataIndex: "jhje",
         },
         {
-          title: "实际金额（万元）",
+          title: "已签订（万元）",
           dataIndex: "sjje",
         },
         {
           title: "完成率",
           scopedSlots: { customRender: "completionRate" },
-          dataIndex:"wcl"
+          dataIndex: "wcl",
         },
         {
-          title: "实际-计划",
+          title: "绩效差额（万元）",
           scopedSlots: { customRender: "gap" },
-          dataIndex:'bzce'
+          dataIndex: "bzce",
+        },
+      ],
+      paymentCollectionColumns: [
+        {
+          title: "销售老大 ",
+          dataIndex: "name",
+        },
+        {
+          title: " 绩效指标金额（万元）",
+          dataIndex: "jhje",
+        },
+        {
+          title: " 已回款 （万元）",
+          dataIndex: "sjje",
+        },
+        {
+          title: "完成率",
+          scopedSlots: { customRender: "completionRate" },
+          dataIndex: "wcl",
+        },
+        {
+          title: "绩效差额（万元）",
+          scopedSlots: { customRender: "gap" },
+          dataIndex: "bzce",
         },
       ],
       contractProgressData: [],
@@ -184,11 +132,17 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
-    htRowClickFunction(row,index) {
-      IDM.invokeCustomFunctions.apply(this, [this.propData.htTableRowClickFunction, {_this:this,row,index}]); // => [function result 1,function result 2]
+    htRowClickFunction(row, index) {
+      IDM.invokeCustomFunctions.apply(this, [
+        this.propData.htTableRowClickFunction,
+        { _this: this, row, index },
+      ]); // => [function result 1,function result 2]
     },
-    hkRowClickFunction(row,index) {
-      IDM.invokeCustomFunctions.apply(this, [this.propData.hkTableRowClickFunction, {_this:this,row,index}]); // => [function result 1,function result 2]
+    hkRowClickFunction(row, index) {
+      IDM.invokeCustomFunctions.apply(this, [
+        this.propData.hkTableRowClickFunction,
+        { _this: this, row, index },
+      ]); // => [function result 1,function result 2]
     },
     refreshData() {
       this.initData();
@@ -392,35 +346,19 @@ export default {
      * 加载动态数据
      */
     initData() {
-      const hideLoading = this.$message.loading("正在加载中...",0);
-      window.IDM.http
-        .get('/DreamWeb/ctrl/insertXsHztj/getSj', {
-          type: 'xdZ6'
+      IDM.http
+        .get("/ctrl/insertXsHztj/getSj", {
+          type: "xdX1",
+          week: 1,
         })
         .then((res) => {
           const result = res.data.data;
-          console.log(result,"数据");
-
-          this.paymentCollectionItems.forEach((item) => {
-            item.value = result.xsht[item.key] || "";
-          });
-          this.paymentCollectionItems[2].color = getValueColor(result.xsht?.jxxbje,result.xsht?.haveDo);
-          this.paymentCollectionItems[3].color = getValueColor(result.xsht?.jxxbje,result.xsht?.haveDo);
-
-          this.contractProgressData = result.xsht.xshtDetail || [];
-
-          this.acceptanceItems.forEach((item) => {
-            item.value = result.hksj[item.key] || "";
-          });
-          this.acceptanceItems[2].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
-          this.acceptanceItems[3].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
-          
-          this.paymentCollectionData = result.hksj.hkDetail || [];
-
-          this.tips = result.retMsg || "";
+          console.log(result, "数据");
+          this.contractProgressData = result.xsht.xshtDetail;
+          this.paymentCollectionData = result.hksj.hkDetail;
         })
-        .catch(function (error) {}).always(() => {
-          hideLoading();
+        .error((err) => {
+          console.log(err);
         });
     },
     /**
@@ -565,13 +503,13 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.idm-sales-databoard-outer {
+.idm-sales-leader-databoard-detail-outer {
   width: 100%;
   width: 100%;
   background-color: #f6f6f6;
   .container {
     padding: 20px;
-    height: calc(100vh - 96px);
+    height: calc(100vh);
     overflow-y: scroll;
     overflow-x: hidden;
 

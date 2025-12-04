@@ -40,9 +40,16 @@
       "comLangue": "vue"
     },
     {
-      "classId": "idm.component.idmErpDataboard.salesweekDataboardsalesweekdataboard",
+      "classId": "idm.component.idmErpDataboard.salesweekDataboard",
       "comName": "销售本周数据看板",
       "className": "ISalesWeekDataboard",
+      "comType": "common",
+      "comLangue": "vue"
+    },
+    {
+      "classId": "idm.component.idmErpDataboard.saleleaderdataboarddetail",
+      "comName": "领导销售数据看板下钻",
+      "className": "ISaleLeaderDataBoardDetial",
       "comType": "common",
       "comLangue": "vue"
     }

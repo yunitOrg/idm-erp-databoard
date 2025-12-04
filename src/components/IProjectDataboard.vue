@@ -14,12 +14,14 @@
     <DataboardHeader
       title="项目数据看板"
       rightTitle="回款与验收进展数据概览"
+      showReporter
       :ctrlId="moduleObject.id"
       @refreshData="refreshData"
     />
     <div class="container">
       <DataboardContainer title="回款进展看板"  titleTip="金额：均为税后净回款额" :iconUrl="paymentCollectionIcon">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
+        <ComBoard style="margin-top: 30px" :items="paymentCollectionPresonItems"> </ComBoard>
         <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :rowClickFunction="rowClickFunction" :moduleObject="moduleObject"> </ComTable>
       </DataboardContainer>
       <DataboardContainer
@@ -46,6 +48,7 @@ import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
 import actualAcceptanceIcon from "@/assets/actual_acceptance.png";
 import planAcceptanceIcon from "@/assets/plan_acceptance.png";
+import { getValueColor } from "@/utils"
 
 export default {
   name: "IProjectDataboard",
@@ -83,7 +86,7 @@ export default {
           value: "0.00%",
           isPercent: true,
           color: "#EF4444",
-          flex: "3 3 0%",
+          flex: "1.2",
           imgUrl: completionRateIcon,
           key:"wcl"
         },
@@ -93,6 +96,34 @@ export default {
           color: "#EF4444",
           imgUrl: performanceGapIcon,
           key:"jxce"
+        },
+      ],
+      paymentCollectionPresonItems: [
+        {
+          title: "已回款（个人）",
+          value: "0",
+          imgUrl: paymentReceivedIcon,
+          key:"yhkgr"
+        },
+        {
+          title: "后6周计划金额（个人）",
+          value: "0",
+          imgUrl: performanceIndicatorIcon,
+          key:"hlzjhje"
+        },
+        {
+          title: "后6周完成金额（个人）",
+          value: "0",
+          flex: "1.2",
+          imgUrl: actualAcceptanceIcon,
+          key:"hlzwcje"
+        },
+        {
+          title: "后6周实际-计划（个人）",
+          value: "0",
+          color: "#EF4444",
+          imgUrl: performanceGapIcon,
+          key:"hlzsjjjhce"
         },
       ],
       acceptanceItems: [
@@ -374,10 +405,18 @@ export default {
           this.acceptanceItems.forEach((item) => {
             item.value = result.ysDetail[item.key] || "";
           });
+          this.acceptanceItems[2].color = getValueColor(result.ysDetail?.jhje,result.ysDetail?.sjje);
+          
           this.paymentCollectionItems.forEach((item) => {
             item.value = result.hksj[item.key] || "";
           });
-          console.log(result,"数据");
+          this.paymentCollectionPresonItems.forEach((item) => {
+            item.value = result.hksj[item.key] || "";
+          });
+          this.paymentCollectionItems[2].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
+          this.paymentCollectionItems[3].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
+          this.paymentCollectionPresonItems[3].color = getValueColor(result.hksj?.hlzjhje,result.hksj?.hlzwcje);
+
           this.paymentCollectionData = result.hksj.hkDetail
         })
         .catch(function (error) {}).always(() => {

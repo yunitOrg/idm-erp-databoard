@@ -36,3 +36,15 @@ export function getGapValueColor(value) {
     return color[0];
   }
 }
+
+export function getValueColor(planAmount,actualAmount) {
+  let color = ['#EF4444', '#00B78E'];
+  if(!planAmount || !actualAmount) {
+    return color[1]
+  }
+  if(Number(actualAmount) - Number(planAmount) >= 0) {
+    return color[1];
+  } else {
+    return color[0];
+  }
+}

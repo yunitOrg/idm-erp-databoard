@@ -5,20 +5,20 @@
         slot="flag"
         slot-scope="text, record"
         :style="`color:${
-          parseFloat(record.wcl || 0)  >= 100 ? '#00B78E ' : '#EF4444'
+          getValueColor(record[planAmountKey], record[actualAmountKey])
         }`"
         ><svg-icon icon-class="flag"
       /></span>
       <span
         slot="completionRate"
-        slot-scope="text"
-        :style="`color:${getProcessColor(text)}`"
+        slot-scope="text,record"
+        :style="`color:${getValueColor(record[planAmountKey], record[actualAmountKey])}`"
         >{{ text === '%' ? '0.00%' : text }}</span
       >
       <span
         slot="gap"
-        slot-scope="text"
-        :style="`color:${getGapValueColor(text)}`"
+        slot-scope="text,record"
+        :style="`color:${getValueColor(record[planAmountKey], record[actualAmountKey])}`"
         >{{ text }}</span
       >
       <template slot="zc" scope="text,record,index">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {getProcessColor,getGapValueColor, getCurrentWeekNumber} from '@/utils/index.js'
+import { getValueColor, getCurrentWeekNumber} from '@/utils/index.js'
 export default {
   props: {
     columns: {
@@ -61,11 +61,18 @@ export default {
       type: Object,
       default: () => {},
     },
+    planAmountKey: {
+      type: String,
+      default: 'jhje',
+    },
+    actualAmountKey: {
+      type: String,
+      default: 'sjje',
+    },
   },
   data() {
     return {
-      getProcessColor,
-      getGapValueColor,
+      getValueColor,
       getCurrentWeekNumber
     }
   },

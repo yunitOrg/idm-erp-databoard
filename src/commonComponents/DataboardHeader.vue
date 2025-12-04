@@ -7,6 +7,9 @@
       <span class="right-title">
         {{ rightTitle }}
       </span>
+      <span v-if="showReporter" class="reporter">
+        汇报人：{{ reporter }}
+      </span>
     </div>
     <div class="databoard-header-right">
       <a-button v-if="showRefreshBtn" @click="refreshData"
@@ -43,6 +46,19 @@ export default {
       type: String,
       default: "container",
     },
+    showReporter: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      reporter: "无",
+    }
+  },
+  created() {
+    const userInfo = window.IDM.user.getCurrentUserInfo();
+    this.reporter = userInfo?.username || "无";
   },
   methods: {
     refreshData() {
@@ -137,6 +153,14 @@ export default {
       letter-spacing: 0;
       font-weight: 400;
       margin-left: 10px;
+    }
+    .reporter {
+      font-family: PingFangSC-Regular;
+      font-size: 18px;
+      color: #666666;
+      letter-spacing: 0;
+      font-weight: 400;
+      margin-left: 20px;
     }
   }
 

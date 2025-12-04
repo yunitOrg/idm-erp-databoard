@@ -4,9 +4,8 @@
       v-for="item in items"
       :key="item.title"
       class="board-item"
-      :style="`width: ${item.width ? item.width : 'auto'};flex: ${
-        item.width ? '0 0 auto' : item.flex ? item.flex : '1 1 auto'
-      }`"
+      :style="`flex: ${item.flex ? item.flex : '1'};cursor: ${handleClick? 'pointer' : 'default'};`"
+      @click="handleClick(item)"
     >
       <div class="left">
         <div class="title">
@@ -40,6 +39,10 @@ export default {
     isWrap: {
       type: Boolean,
       default: false,
+    },
+    handleClick: {
+      type: Function,
+      default: null,
     },
   },
 };

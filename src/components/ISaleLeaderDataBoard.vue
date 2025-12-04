@@ -11,7 +11,7 @@
       <div class="data_block">
         <DataboardContainer title="回款进展看板" titleTip="金额：均为税后净回款额" :iconUrl="payment_collection" >
           <div class="grid_block">
-            <ComBoard :items="contract_process_grid_list"> </ComBoard >
+            <ComBoard :items="contract_process_grid_list" :handleClick="handleClickBoard"> </ComBoard >
           </div>
           <div class="date_filter_block">
             <div @click="handleClickDateFilter(item, 'weekNumber')" v-for="(item) in date_filter_list" :key="item.value" class="list" :class="item.value == weekNumber ? 'active' : ''">
@@ -26,7 +26,7 @@
       <div class="data_block data_block_backmoney">
         <DataboardContainer title="验收进展看板" titleTip="金额：均为税后净验收额" :iconUrl="acceptance" >
           <div class="grid_block">
-            <ComBoard :items="backMoneyGridList"> </ComBoard >
+            <ComBoard :items="backMoneyGridList" :handleClick="handleClickBoard"> </ComBoard >
           </div>
           <div class="table_block">
             <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail" :rowClickFunction="rowClickFunctionYS" rowKey="pk"> </ComTable>
@@ -50,7 +50,7 @@ import DataboardHeader from '@/commonComponents/DataboardHeader.vue'
 import ComTable from "@/commonComponents/ComTable.vue";
 import DataboardContainer from "@/commonComponents/DataboardContainer.vue";
 import ComBoard from "@/commonComponents/ComBoard.vue";
-import { getCurrentWeekNumber, getProcessColor, getGapValueColor } from "@/utils"
+import { getCurrentWeekNumber,getValueColor } from "@/utils"
 
 export default {
   components: { 
@@ -89,7 +89,7 @@ export default {
           value: "",
           isPercent: true,
           color: '',
-          flex: "3 3 0%",
+          flex: "1.2",
           imgUrl: completionRateIcon,
         },
         {
@@ -214,6 +214,12 @@ export default {
   },
   destroyed() {},
   methods:{
+    handleClickBoard(item) {
+      this.propData.boardClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.boardClickFunction,{
+        _this: this,
+        item,
+      }])
+    },
     rowClickFunctionHK(row, index) {
       this.propData.tableRowClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.tableRowClickFunction,{
         _this: this,
@@ -248,9 +254,9 @@ export default {
           this.backMoneyGridList[1].value = this.resultData.yssj?.haveDo;
           this.backMoneyGridList[2].value = this.resultData.yssj?.wcl;
 
-          this.contract_process_grid_list[2].color = getProcessColor(this.resultData.hksj?.wcl);
-          this.backMoneyGridList[2].color = getProcessColor(this.resultData.yssj?.wcl);
-          this.contract_process_grid_list[3].color = getGapValueColor(this.resultData.hksj?.jxce);
+          this.contract_process_grid_list[2].color = getValueColor(this.resultData.hksj?.jxxbje,this.resultData.hksj?.haveDo);
+          this.backMoneyGridList[2].color = getValueColor(this.resultData.yssj?.jxxbje,this.resultData.yssj?.haveDo);
+          this.contract_process_grid_list[3].color = getValueColor(this.resultData.hksj?.jxxbje,this.resultData.hksj?.haveDo);
         } else {
           this.resultData = {}
         }
