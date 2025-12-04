@@ -1,5 +1,5 @@
 {
-  "classId": "idm.component.idmErpDataboard.saleleaderdataboard",
+  "classId": "idm.component.idmErpDataboard.saleleaderdataboarddetail",
   "comName": "领导销售数据看板下钻",
   "className": "ISaleLeaderDataBoardDetial",
   "comType": "common",

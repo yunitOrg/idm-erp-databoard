@@ -29,7 +29,7 @@
         title="验收进展看板"
         titleTip="金额：均为税后净验收额"
         :iconUrl="acceptanceIcon"
-        ><ComBoard :items="acceptanceItems"> </ComBoard
+        ><ComBoard :items="acceptanceItems" :handleClick="handleClickBoard"> </ComBoard
       ></DataboardContainer>
     </div>
   </div>
@@ -190,6 +190,12 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
+    handleClickBoard(item) {
+      this.propData.boardClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.boardClickFunction,{
+        _this: this,
+        item,
+      }])
+    },
     rowClickFunction(row,index) {
       IDM.invokeCustomFunctions.apply(this, [this.propData.tableRowClickFunction, {_this:this,row,index}]); // => [function result 1,function result 2]
     },

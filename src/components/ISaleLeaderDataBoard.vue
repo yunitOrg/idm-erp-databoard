@@ -6,12 +6,13 @@
       :ctrlId="moduleObject.id"
       printClass="ILeaderDataBoard_app_main"
       @refreshData="refreshData"
+      showReporter
     />
     <div class="ILeaderDataBoard_app_main">
       <div class="data_block">
         <DataboardContainer title="回款进展看板" titleTip="金额：均为税后净回款额" :iconUrl="payment_collection" >
           <div class="grid_block">
-            <ComBoard :items="contract_process_grid_list" :handleClick="handleClickBoard"> </ComBoard >
+            <ComBoard :items="contract_process_grid_list"> </ComBoard >
           </div>
           <div class="date_filter_block">
             <div @click="handleClickDateFilter(item, 'weekNumber')" v-for="(item) in date_filter_list" :key="item.value" class="list" :class="item.value == weekNumber ? 'active' : ''">
@@ -26,7 +27,7 @@
       <div class="data_block data_block_backmoney">
         <DataboardContainer title="验收进展看板" titleTip="金额：均为税后净验收额" :iconUrl="acceptance" >
           <div class="grid_block">
-            <ComBoard :items="backMoneyGridList" :handleClick="handleClickBoard"> </ComBoard >
+            <ComBoard :items="backMoneyGridList"> </ComBoard >
           </div>
           <div class="table_block">
             <ComTable :columns="backMoneyColumns" :dataSource="resultData?.yssj?.ysDetail" :rowClickFunction="rowClickFunctionYS" rowKey="pk"> </ComTable>
@@ -214,12 +215,6 @@ export default {
   },
   destroyed() {},
   methods:{
-    handleClickBoard(item) {
-      this.propData.boardClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.boardClickFunction,{
-        _this: this,
-        item,
-      }])
-    },
     rowClickFunctionHK(row, index) {
       this.propData.tableRowClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.tableRowClickFunction,{
         _this: this,

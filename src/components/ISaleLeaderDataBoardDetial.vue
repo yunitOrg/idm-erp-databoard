@@ -43,17 +43,13 @@
 </template>
 
 <script>
-import DataboardHeader from "@/commonComponents/DataboardHeader.vue";
 import DataboardContainer from "@/commonComponents/DataboardContainer.vue";
-import ComBoard from "@/commonComponents/ComBoard.vue";
 import ComTable from "@/commonComponents/ComTable.vue";
 import contractProgressIcon from "@/assets/contract_progress.png";
 import paymentCollectionIcon from "@/assets/payment_collection.png";
 import performanceIndicatorIcon from "@/assets/performance_indicator.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import paymentReceivedIcon from "@/assets/payment_received.png";
-import completionRateIcon from "@/assets/completion_rate.png";
-import { getValueColor, getCurrentWeekNumber } from "@/utils";
 
 export default {
   name: "ISaleLeaderDataBoardDetial",
@@ -70,7 +66,6 @@ export default {
       performanceIndicatorIcon,
       performanceGapIcon,
       paymentReceivedIcon,
-      completionRateIcon,
       contractColumns: [
         {
           title: "销售老大",
