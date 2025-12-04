@@ -100,25 +100,25 @@ export default {
       ],
       paymentCollectionPresonItems: [
         {
-          title: "已回款（个人）",
+          title: "已回款（万元）",
           value: "0",
           imgUrl: paymentReceivedIcon,
           key:"yhkgr"
         },
         {
-          title: "后6周计划金额（个人）",
+          title: "后6周计划金额（万元）",
           value: "0",
           imgUrl: performanceIndicatorIcon,
           key:"hlzjhje"
         },
         {
-          title: "后6周完成金额（个人）",
+          title: "后6周完成金额（万元）",
           value: "0",
           imgUrl: actualAcceptanceIcon,
           key:"hlzwcje"
         },
         {
-          title: "后6周完成率（个人）",
+          title: "后6周完成率",
           value: "0.00%",
           isPercent: true,
           color: "#EF4444",
@@ -127,7 +127,7 @@ export default {
           key:"hlzwcl"
         },
         {
-          title: "后6周实际-计划（个人）",
+          title: "后6周实际-计划（万元）",
           value: "0",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
