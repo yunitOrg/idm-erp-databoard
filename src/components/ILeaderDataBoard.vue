@@ -11,7 +11,7 @@
       <div class="data_block">
         <DataboardContainer title="合同进展看板" titleTip="金额：均为税后净合同额" :iconUrl="contract_process" >
           <div class="grid_block">
-            <ComBoard :items="contract_process_grid_list" :handleClick="handleClickBoard"> </ComBoard >
+            <ComBoard :items="contract_process_grid_list" :handleClick="(item) => handleClickBoard(item,'HT')"> </ComBoard >
           </div>
           <div class="table_block" :class="`table_block${weekNumber}`">
             <div class="tip">
@@ -24,7 +24,7 @@
       <div class="data_block data_block_backmoney">
         <DataboardContainer title="回款进展看板" titleTip="金额：均为税后净回款额" :iconUrl="payment_collection" >
           <div class="grid_block">
-            <ComBoard :items="backMoneyGridList" :handleClick="handleClickBoard"> </ComBoard >
+            <ComBoard :items="backMoneyGridList" :handleClick="(item) => handleClickBoard(item,'HK')"> </ComBoard >
           </div>
           <div class="table_block" :class="`table_block${weekNumber}`">
             <div class="tip">
@@ -480,10 +480,11 @@ export default {
   },
   destroyed() {},
   methods:{
-    handleClickBoard(item) {
+    handleClickBoard(item,type) {
       this.propData.boardClickFunction?.length&&IDM.invokeCustomFunctions.apply(this,[this.propData.boardClickFunction,{
         _this: this,
         item,
+        type
       }])
     },
     renderProcess(planAmountKey, actualAmountKey) {

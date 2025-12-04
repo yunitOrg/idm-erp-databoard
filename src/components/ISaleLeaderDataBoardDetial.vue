@@ -11,7 +11,7 @@
     :idm-ctrl-id="moduleObject.id"
     class="idm-sales-leader-databoard-detail-outer"
   >
-    <div class="container">
+    <div class="container" ref="container">
       <DataboardContainer
         title="合同进展看板"
         titleTip="金额：均为税后净合同额"
@@ -26,6 +26,7 @@
         </ComTable>
       </DataboardContainer>
       <DataboardContainer
+        ref="paymentCollection"
         style="margin-top: 16px"
         title="回款进展看板"
         titleTip="金额：均为税后净回款额"
@@ -124,7 +125,9 @@ export default {
     this.moduleObject = this.$root.moduleObject;
     this.convertAttrToStyleObject();
   },
-  mounted() {},
+  mounted() {
+    this.initData()
+  },
   destroyed() {},
   methods: {
     htRowClickFunction(row, index) {
@@ -138,9 +141,6 @@ export default {
         this.propData.hkTableRowClickFunction,
         { _this: this, row, index },
       ]); // => [function result 1,function result 2]
-    },
-    refreshData() {
-      this.initData();
     },
     /**
      * 提供父级组件调用的刷新prop数据组件
@@ -313,7 +313,6 @@ export default {
         }
       }
       window.IDM.setStyleToPageHead(this.moduleObject.id, styleObject);
-      this.initData();
     },
     /**
      * 通用的url参数对象
@@ -331,13 +330,6 @@ export default {
       return params;
     },
     /**
-     * 重新加载
-     */
-    reload() {
-      //请求数据源
-      this.initData();
-    },
-    /**
      * 加载动态数据
      */
     initData() {
@@ -351,6 +343,20 @@ export default {
           console.log(result, "数据");
           this.contractProgressData = result.xsht.xshtDetail;
           this.paymentCollectionData = result.hksj.hkDetail;
+          this.$nextTick(() => {
+            const type = IDM.url.queryString("type")
+            if(type === 'HK') {
+              const container = this.$refs.container;
+              const target = this.$refs.paymentCollection;
+              if (target && container) {
+                target.$el.scrollIntoView({
+                  behavior: 'smooth', 
+                  block: 'nearest',
+                  inline: 'nearest'
+                });
+              }
+            }
+          })
         })
         .error((err) => {
           console.log(err);
