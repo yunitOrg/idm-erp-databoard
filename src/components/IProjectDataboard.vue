@@ -114,9 +114,17 @@ export default {
         {
           title: "后6周完成金额（个人）",
           value: "0",
-          flex: "1.2",
           imgUrl: actualAcceptanceIcon,
           key:"hlzwcje"
+        },
+        {
+          title: "后6周完成率（个人）",
+          value: "0.00%",
+          isPercent: true,
+          color: "#EF4444",
+          flex: "1.2",
+          imgUrl: completionRateIcon,
+          key:"hlzwcl"
         },
         {
           title: "后6周实际-计划（个人）",
@@ -422,6 +430,7 @@ export default {
           this.paymentCollectionItems[2].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
           this.paymentCollectionItems[3].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
           this.paymentCollectionPresonItems[3].color = getValueColor(result.hksj?.hlzjhje,result.hksj?.hlzwcje);
+          this.paymentCollectionPresonItems[4].color = getValueColor(result.hksj?.hlzjhje,result.hksj?.hlzwcje);
 
           this.paymentCollectionData = result.hksj.hkDetail
         })
