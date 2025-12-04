@@ -20,8 +20,8 @@
     />
     <div class="container">
       <DataboardContainer title="回款进展看板"  titleTip="金额：均为税后净回款额" :iconUrl="paymentCollectionIcon">
-        <ComBoard :items="paymentCollectionItems"> </ComBoard>
-        <ComBoard style="margin-top: 30px" :items="paymentCollectionPresonItems"> </ComBoard>
+        <ComBoard :items="paymentCollectionItems" remark="本部门"> </ComBoard>
+        <ComBoard style="margin-top: 30px" :items="paymentCollectionPresonItems" remark="本D<br/>T"> </ComBoard>
         <ComTable style="margin-top: 30px" showAddress :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :rowClickFunction="rowClickFunction" :moduleObject="moduleObject"> </ComTable>
       </DataboardContainer>
       <DataboardContainer

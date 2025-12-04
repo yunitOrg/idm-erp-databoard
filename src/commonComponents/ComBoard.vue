@@ -1,5 +1,6 @@
 <template>
   <div class="board-wrapper" :style="{ flexWrap: isWrap ? 'wrap' : 'nowrap' }">
+    <div class="remark" v-html="remark"></div>
     <div
       v-for="item in items"
       :key="item.title"
@@ -44,6 +45,10 @@ export default {
       type: Function,
       default: null,
     },
+    remark: {
+      type: String,
+      default: '',
+    }
   },
 };
 </script>
@@ -53,6 +58,16 @@ export default {
   color: #333333;
   display: flex;
   gap: 20px;
+  align-items: center;
+  .remark {
+    width: 30px;
+    font-family: PingFang-SC-Bold;
+    font-size: 18px;
+    color: #333;
+    letter-spacing: 0;
+    font-weight: 700;
+    text-align: center;
+  }
   .board-item {
     flex: 1;
     height: 168px;
