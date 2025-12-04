@@ -22,7 +22,7 @@
       <DataboardContainer title="回款进展看板"  titleTip="金额：均为税后净回款额" :iconUrl="paymentCollectionIcon">
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
         <ComBoard style="margin-top: 30px" :items="paymentCollectionPresonItems"> </ComBoard>
-        <ComTable style="margin-top: 30px" :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :rowClickFunction="rowClickFunction" :moduleObject="moduleObject"> </ComTable>
+        <ComTable style="margin-top: 30px" showAddress :columns="paymentCollectionColumns" :dataSource="paymentCollectionData" :rowClickFunction="rowClickFunction" :moduleObject="moduleObject"> </ComTable>
       </DataboardContainer>
       <DataboardContainer
         style="margin-top: 16px"

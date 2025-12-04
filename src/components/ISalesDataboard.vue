@@ -23,6 +23,7 @@
         <ComBoard :items="paymentCollectionItems"> </ComBoard>
         <ComTable
           style="margin-top: 30px"
+          showAddress
           :columns="paymentCollectionColumns"
           :dataSource="contractProgressData"
           :rowClickFunction="htRowClickFunction"
@@ -38,6 +39,7 @@
         ><ComBoard :items="acceptanceItems"> </ComBoard
         ><ComTable
           style="margin-top: 30px"
+          showAddress
           :columns="paymentCollectionColumns"
           :dataSource="paymentCollectionData"
           :rowClickFunction="hkRowClickFunction"

@@ -69,6 +69,10 @@ export default {
       type: String,
       default: 'sjje',
     },
+    showAddress: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -87,7 +91,7 @@ export default {
     customRow(row, index) {
       return {
         style: {
-          backgroundColor: getCurrentWeekNumber() === index + 1 ? '#f5faff' : '#FFFFFF',
+          backgroundColor: this.showAddress && getCurrentWeekNumber() === index + 1 ? '#f5faff' : '#FFFFFF',
         },
         on: {
           click: () => {
