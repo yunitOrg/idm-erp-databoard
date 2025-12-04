@@ -101,9 +101,16 @@ export default {
       ],
       contract_table_columns: [
         {
-          title: "销售老大",
-          dataIndex: "name",
-          key: "name"
+          title: "",
+          dataIndex: "name1",
+          key: "name1",
+          children: [
+            {
+              title: "销售老大",
+              dataIndex: "name",
+              key: "name",
+            }
+          ]
         },
         {
           title: () => {
@@ -265,9 +272,16 @@ export default {
       // 回款模块
       backMoneyColumns: [
         {
-          title: "销售老大",
-          dataIndex: "name",
-          key: "name"
+          title: "",
+          dataIndex: "name1",
+          key: "name1",
+          children: [
+            {
+              title: "销售老大",
+              dataIndex: "name",
+              key: "name",
+            }
+          ]
         },
         {
           title: () => {
