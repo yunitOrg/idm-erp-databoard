@@ -4,11 +4,11 @@
       <span
         slot="flag"
         slot-scope="text, record"
-        :style="`color:${
-          getValueColor(record[planAmountKey], record[actualAmountKey])
-        }`"
-        ><svg-icon icon-class="flag"
-      /></span>
+      >
+        <img v-if="getFlagImgName(record[planAmountKey], record[actualAmountKey]) == 'flag1'" :src="getImageSrc('', 'flag1')" style="width: 16px;" alt="">
+        <img v-else :src="getImageSrc('', 'flag2')" style="width: 16px;" alt="">
+        <!-- <svg-icon icon-class="flag" /> -->
+      </span>
       <span
         slot="completionRate"
         slot-scope="text,record"
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { getValueColor, getCurrentWeekNumber} from '@/utils/index.js'
+import { getValueColor, getCurrentWeekNumber, getFlagImgName} from '@/utils/index.js'
 export default {
   props: {
     columns: {
@@ -78,7 +78,8 @@ export default {
   data() {
     return {
       getValueColor,
-      getCurrentWeekNumber
+      getCurrentWeekNumber,
+      getFlagImgName
     }
   },
   methods: {

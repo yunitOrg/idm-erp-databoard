@@ -48,3 +48,14 @@ export function getValueColor(planAmount,actualAmount) {
     return color[0];
   }
 }
+export function getFlagImgName(planAmount,actualAmount) {
+  let color = ['#EF4444', '#00B78E'];
+  if(!planAmount || !actualAmount) {
+    return "flag1"
+  }
+  if(Number(actualAmount) - Number(planAmount) >= 0) {
+    return "flag1";
+  } else {
+    return "flag2";
+  }
+}
