@@ -89,8 +89,16 @@ export default {
           dataIndex: "jhje",
         },
         {
-          title: "已签订（万元）",
-          dataIndex: "sjje",
+          title: "截止11.23已签订（万元）",
+          dataIndex: "jiezhidaoNov",
+        },
+        {
+          title: "后6周已签订（万元）",
+          dataIndex: "lastSixWek",
+        },
+        {
+          title: "后6周计划签订（万元）",
+          dataIndex: "lastPlanSixWek",
         },
         {
           title: "完成率",
@@ -129,12 +137,20 @@ export default {
           }
         },
         {
-          title: " 绩效指标金额（万元）",
+          title: "绩效指标金额 （万元）",
           dataIndex: "jhje",
         },
         {
-          title: " 已回款 （万元）",
-          dataIndex: "sjje",
+          title: "截止11.23已回款（万元）",
+          dataIndex: "jiezhidaoNov",
+        },
+        {
+          title: "后6周已回款（万元）",
+          dataIndex: "lastSixWek",
+        },
+        {
+          title: "后6周计划回款（万元）",
+          dataIndex: "lastPlanSixWek",
         },
         {
           title: "完成率",

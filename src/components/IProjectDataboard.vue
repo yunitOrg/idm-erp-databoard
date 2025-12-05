@@ -79,7 +79,8 @@ export default {
           title: "已回款（万元）",
           value: "0",
           imgUrl: paymentReceivedIcon,
-          key:"haveDo"
+          key:"haveDo",
+          note:"(本部门)截止目前最新的已回款数据"
         },
         {
           title: "完成率",
@@ -88,14 +89,16 @@ export default {
           color: "#EF4444",
           flex: "1.2",
           imgUrl: completionRateIcon,
-          key:"wcl"
+          key:"wcl",
+          note:"(本部门)已回款数据/绩效指标数据*100"
         },
         {
           title: "绩效差额（万元）",
           value: "0",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
-          key:"jxce"
+          key:"jxce",
+          note:"(本部门)截止到11月23号已回款数据+后6周待回款计划-绩效指标数据"
         },
       ],
       paymentCollectionPresonItems: [

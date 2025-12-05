@@ -93,7 +93,8 @@ export default {
           title: "已签订（万元）",
           value: "0",
           imgUrl: paymentReceivedIcon,
-          key:"haveDo"
+          key:"haveDo",
+          note:"截止目前最新的已签订数据"
         },
         {
           title: "完成率",
@@ -102,14 +103,16 @@ export default {
           flex: "1.2",
           color: "#EF4444",
           imgUrl: completionRateIcon,
-          key:"wcl"
+          key:"wcl",
+          note:"已签订数据/绩效指标数据"
         },
         {
           title: "绩效差额（万元）",
           value: "0",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
-          key:"jxce"
+          key:"jxce",
+          note:"截止到11月23号已回款数据+后6周待签订计划-绩效指标数据"
         },
       ],
       acceptanceItems: [
@@ -123,7 +126,8 @@ export default {
           title: "已回款（万元）",
           value: "0",
           imgUrl: paymentReceivedIcon,
-          key:"haveDo"
+          key:"haveDo",
+          note:"截止目前最新的已回款数据"
         },
         {
           title: "完成率",
@@ -132,14 +136,16 @@ export default {
           isPercent: true,
           color: "#EF4444",
           imgUrl: completionRateIcon,
-          key:"wcl"
+          key:"wcl",
+          note:"已回款数据/绩效指标数据*100"
         },
         {
           title: "绩效差额（万元）",
           value: "0",
           color: "#EF4444",
           imgUrl: performanceGapIcon,
-          key:"jxce"
+          key:"jxce",
+          note:"截止到11月23号已回款数据+后6周待回款计划-绩效指标数据"
         },
       ],
       paymentCollectionColumns: [

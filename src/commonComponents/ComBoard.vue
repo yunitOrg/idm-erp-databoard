@@ -1,6 +1,6 @@
 <template>
   <div class="board-wrapper" :style="{ flexWrap: isWrap ? 'wrap' : 'nowrap' }">
-    <div class="remark" v-html="remark"></div>
+    <div class="remark" v-if="remark" v-html="remark"></div>
     <div
       v-for="item in items"
       :key="item.title"
@@ -21,6 +21,9 @@
             class="progress-value"
             :style="{ width: item.value, background: item.color }"
           ></div>
+        </div>
+        <div v-if="item.note" class="note">
+          注：{{ item.note }}
         </div>
       </div>
       <div class="right">
@@ -74,12 +77,13 @@ export default {
     display: flex;
     background: #f4faff;
     border-radius: 10px;
-    padding: 28px 20px 20px 40px;
+    padding: 10px 20px 10px 40px;
 
     .left {
       display: flex;
       flex-direction: column;
       flex: 1;
+      justify-content: space-around;
       .title {
         font-family: PingFang-SC-Bold;
         font-size: 18px;
@@ -93,14 +97,15 @@ export default {
         color: #333333;
         letter-spacing: 0;
         font-weight: 700;
+        line-height: 50px;
       }
       .progress {
         height: 10px;
         background: #e5e7eb;
         border-radius: 5px;
-        margin-right: 30px;
         position: relative;
-        margin-top: 10px;
+        margin-right: 30px;
+        box-sizing: border-box;
 
         .progress-value {
           position: absolute;
@@ -109,6 +114,14 @@ export default {
           height: 10px;
           border-radius: 5px;
         }
+      }
+      .note {
+        font-family: PingFangSC-Regular;
+        font-size: 14px;
+        color: #666666;
+        letter-spacing: 0;
+        font-weight: 400;
+        padding-right: 14px;
       }
     }
     .right {
