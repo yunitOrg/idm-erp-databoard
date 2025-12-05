@@ -51,6 +51,7 @@ import paymentCollectionIcon from "@/assets/payment_collection.png";
 import performanceIndicatorIcon from "@/assets/performance_indicator.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import paymentReceivedIcon from "@/assets/payment_received.png";
+import { getGapValueColor } from "@/utils";
 
 export default {
   name: "ISaleLeaderDataBoardDetial",
@@ -98,8 +99,17 @@ export default {
         },
         {
           title: "绩效差额（万元）",
-          scopedSlots: { customRender: "gap" },
+          // scopedSlots: { customRender: "gap" },
           dataIndex: "bzce",
+          customRender:(text, record, index) => {
+            return (
+              <span
+                style={`color:${getGapValueColor(text)}`}
+              >
+                { text }
+              </span>
+            );
+          }
         },
       ],
       paymentCollectionColumns: [
@@ -133,8 +143,17 @@ export default {
         },
         {
           title: "绩效差额（万元）",
-          scopedSlots: { customRender: "gap" },
+          // scopedSlots: { customRender: "gap" },
           dataIndex: "bzce",
+          customRender:(text, record, index) => {
+            return (
+              <span
+                style={`color:${getGapValueColor(text)}`}
+              >
+                { text }
+              </span>
+            );
+          }
         },
       ],
       contractProgressData: [],
