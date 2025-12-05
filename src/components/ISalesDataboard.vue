@@ -112,7 +112,7 @@ export default {
           color: "#EF4444",
           imgUrl: performanceGapIcon,
           key:"jxce",
-          note:"截止到11月23号已回款数据+后6周待签订计划-绩效指标数据"
+          note:"截止到11月23号已签订数据+后6周待签订计划-绩效指标数据"
         },
       ],
       acceptanceItems: [
