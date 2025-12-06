@@ -62,6 +62,7 @@ import performanceIndicatorIcon from "@/assets/performance_indicator.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
+import paymentToReceiveIcon from "@/assets/payment_to_receive.png"
 import { getValueColor } from "@/utils"
 
 export default {
@@ -82,6 +83,7 @@ export default {
       performanceGapIcon,
       paymentReceivedIcon,
       completionRateIcon,
+      paymentToReceiveIcon,
       paymentCollectionItems: [
         {
           title: "绩效指标金额（万元）",
@@ -95,6 +97,12 @@ export default {
           imgUrl: paymentReceivedIcon,
           key:"haveDo",
           note:"截止目前最新的已签订数据"
+        },
+        {
+          title: "剩余待签订（万元）",
+          value: "0",
+          imgUrl: paymentToReceiveIcon,
+          key:"dqd",
         },
         {
           title: "完成率",
@@ -112,7 +120,7 @@ export default {
           color: "#EF4444",
           imgUrl: performanceGapIcon,
           key:"jxce",
-          note:"截止到11月23号已签订数据+后6周待签订计划-绩效指标数据"
+          note:"最新已签订+剩余待签订-绩效指标金额"
         },
       ],
       acceptanceItems: [
@@ -130,6 +138,12 @@ export default {
           note:"截止目前最新的已回款数据"
         },
         {
+          title: "剩余待回款（万元）",
+          value: "0",
+          imgUrl: paymentToReceiveIcon,
+          key:"dqd",
+        },
+        {
           title: "完成率",
           value: "0.00%",
           flex: "1.2",
@@ -145,7 +159,7 @@ export default {
           color: "#EF4444",
           imgUrl: performanceGapIcon,
           key:"jxce",
-          note:"截止到11月23号已回款数据+后6周待回款计划-绩效指标数据"
+          note:"最新已回款+剩余待签订-绩效指标金额"
         },
       ],
       paymentCollectionColumns: [
@@ -412,16 +426,16 @@ export default {
           this.paymentCollectionItems.forEach((item) => {
             item.value = result.xsht[item.key] || "";
           });
-          this.paymentCollectionItems[2].color = getValueColor(result.xsht?.jxxbje,result.xsht?.haveDo);
           this.paymentCollectionItems[3].color = getValueColor(result.xsht?.jxxbje,result.xsht?.haveDo);
+          this.paymentCollectionItems[4].color = getValueColor(result.xsht?.jxxbje,result.xsht?.haveDo);
 
           this.contractProgressData = result.xsht.xshtDetail || [];
 
           this.acceptanceItems.forEach((item) => {
             item.value = result.hksj[item.key] || "";
           });
-          this.acceptanceItems[2].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
           this.acceptanceItems[3].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
+          this.acceptanceItems[4].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
           
           this.paymentCollectionData = result.hksj.hkDetail || [];
 

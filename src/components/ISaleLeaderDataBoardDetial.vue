@@ -97,7 +97,7 @@ export default {
           dataIndex: "lastSixWek",
         },
         {
-          title: "后6周计划签订（万元）",
+          title: "剩余待签订（万元）",
           dataIndex: "lastPlanSixWek",
         },
         {
@@ -149,7 +149,7 @@ export default {
           dataIndex: "lastSixWek",
         },
         {
-          title: "后6周计划回款（万元）",
+          title: "剩余待回款（万元）",
           dataIndex: "lastPlanSixWek",
         },
         {

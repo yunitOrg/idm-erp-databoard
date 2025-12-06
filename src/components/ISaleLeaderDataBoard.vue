@@ -46,6 +46,7 @@ import completionRateIcon from "@/assets/completion_rate.png";
 import performanceGapIcon from "@/assets/performance_gap.png";
 import contract_process from "@/assets/contract_process.png"
 import acceptance from "@/assets/acceptance.png"
+import paymentToReceiveIcon from "@/assets/payment_to_receive.png"
 
 import DataboardHeader from '@/commonComponents/DataboardHeader.vue'
 import ComTable from "@/commonComponents/ComTable.vue";
@@ -68,6 +69,7 @@ export default {
       paymentReceivedIcon,
       completionRateIcon,
       performanceGapIcon,
+      paymentToReceiveIcon,
       acceptance,
       moduleObject:{},
       propData:this.$root.propData.compositeAttr||{
@@ -87,6 +89,11 @@ export default {
           note:"截止目前最新的已回款数据"
         },
         {
+          title: "剩余待回款（万元）",
+          value: "",
+          imgUrl: paymentToReceiveIcon,
+        },
+        {
           title: "完成率",
           value: "",
           isPercent: true,
@@ -100,7 +107,7 @@ export default {
           value: "",
           color: '',
           imgUrl: performanceGapIcon,
-          note:"截止到11月23号已回款数据+后6周待回款计划-绩效指标数据"
+          note:"最新已回款+剩余待签订-绩效指标金额"
         }
       ],
       contract_table_columns: [
@@ -268,15 +275,16 @@ export default {
           this.resultData = res.data.data ?? {};
           this.contract_process_grid_list[0].value = this.resultData.hksj?.jxxbje;
           this.contract_process_grid_list[1].value = this.resultData.hksj?.haveDo;
-          this.contract_process_grid_list[2].value = this.resultData.hksj?.wcl;
-          this.contract_process_grid_list[3].value = this.resultData.hksj?.jxce;
+          this.contract_process_grid_list[2].value = this.resultData.hksj?.dqd;
+          this.contract_process_grid_list[3].value = this.resultData.hksj?.wcl;
+          this.contract_process_grid_list[4].value = this.resultData.hksj?.jxce;
           this.backMoneyGridList[0].value = this.resultData.yssj?.jxxbje;
           this.backMoneyGridList[1].value = this.resultData.yssj?.haveDo;
           this.backMoneyGridList[2].value = this.resultData.yssj?.wcl;
 
-          this.contract_process_grid_list[2].color = getValueColor(this.resultData.hksj?.jxxbje,this.resultData.hksj?.haveDo);
-          this.backMoneyGridList[2].color = getValueColor(this.resultData.yssj?.jxxbje,this.resultData.yssj?.haveDo);
           this.contract_process_grid_list[3].color = getValueColor(this.resultData.hksj?.jxxbje,this.resultData.hksj?.haveDo);
+          this.backMoneyGridList[2].color = getValueColor(this.resultData.yssj?.jxxbje,this.resultData.yssj?.haveDo);
+          this.contract_process_grid_list[4].color = getValueColor(this.resultData.hksj?.jxxbje,this.resultData.hksj?.haveDo);
         } else {
           this.resultData = {}
         }

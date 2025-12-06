@@ -48,6 +48,7 @@ import paymentReceivedIcon from "@/assets/payment_received.png";
 import completionRateIcon from "@/assets/completion_rate.png";
 import actualAcceptanceIcon from "@/assets/actual_acceptance.png";
 import planAcceptanceIcon from "@/assets/plan_acceptance.png";
+import paymentToReceiveIcon from "@/assets/payment_to_receive.png"
 import { getValueColor } from "@/utils"
 
 export default {
@@ -68,6 +69,7 @@ export default {
       performanceGapIcon,
       paymentReceivedIcon,
       completionRateIcon,
+      paymentToReceiveIcon,
       paymentCollectionItems: [
         {
           title: "绩效指标金额（万元）",
@@ -81,6 +83,12 @@ export default {
           imgUrl: paymentReceivedIcon,
           key:"haveDo",
           note:"(本部门)截止目前最新的已回款数据"
+        },
+        {
+          title: "剩余待回款（万元）",
+          value: "0",
+          imgUrl: paymentToReceiveIcon,
+          key:"dqd",
         },
         {
           title: "完成率",
@@ -98,7 +106,7 @@ export default {
           color: "#EF4444",
           imgUrl: performanceGapIcon,
           key:"jxce",
-          note:"(本部门)截止到11月23号已回款数据+后6周待回款计划-绩效指标数据"
+          note:"(本部门)最新已回款数据+剩余待回款-绩效指标数据"
         },
       ],
       paymentCollectionPresonItems: [
@@ -430,8 +438,8 @@ export default {
           this.paymentCollectionPresonItems.forEach((item) => {
             item.value = result.hksj[item.key] || "";
           });
-          this.paymentCollectionItems[2].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
           this.paymentCollectionItems[3].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
+          this.paymentCollectionItems[4].color = getValueColor(result.hksj?.jxxbje,result.hksj?.haveDo);
           this.paymentCollectionPresonItems[3].color = getValueColor(result.hksj?.hlzjhje,result.hksj?.hlzwcje);
           this.paymentCollectionPresonItems[4].color = getValueColor(result.hksj?.hlzjhje,result.hksj?.hlzwcje);
 
